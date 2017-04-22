@@ -42,6 +42,10 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 				$_SESSION ['moderator'] = 1;
 
 			}
+			else if ($result ['moderator'] == 3) {
+				$_SESSION ['moderator'] = 3;
+
+			}
 			else {
 				$_SESSION ['moderator'] = 0;
 			}

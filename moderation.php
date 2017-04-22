@@ -1,6 +1,7 @@
 <?php
         //Déconnection si l'utilisateur n'est pas modérateur  
     session_start();
+    require "conf.inc.php";
     include "lib.php";
     VerifyModerator ();
     /*
@@ -30,11 +31,8 @@
         </div>
         <div>
             <?php
-                if ($NoModerator == true ) {
-                    //header("Location: index.php"); //PB REDIRECTION
-                    exit (); // Stop l'exécution du reste du script
-                }
-                else if ($NoModerator == false ){
+         
+            
                     $connection = dbConnect ();
                     $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0"); 
                     $query -> execute(); 
@@ -74,10 +72,16 @@
                                 echo "<td>".$listOfStatus[$user["active_account"]]."</td>"; 
                                 //Lien vers deleteUser.php?+id de l'utilisateur à supprimer
                                 echo "<td><a href='deleteUser.php?id=".$user["user_id"]."'>Supprimer</a><a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>";
+                                $supermodo =1;
+                                 if ($supermodo ==1){ //A MODIFIER
+                                    echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Nommer modérateur</a></td>";
+                                    echo "</tr>";
+                                }
                                 echo "</tr>";
+
                             }
                         }
-                }
+                
                 ?>
             </table>
         </div>
@@ -102,7 +106,14 @@
                 </thead>
                     <?php 
                         foreach ($users as $user) {
-                            if ($user ["moderator"] ==1) {
+
+
+                            //SUPERMODERATOR: à remplacer par du JS
+                            $supermodo = 1;
+
+
+
+                            if (($user ["moderator"] ==1) OR ($user ["moderator"] ==3)  ){
                                 echo "<tr>";
                                 echo "<td>".$user["user_id"]."</td>";
                                 echo "<td>".$user["pseudo"]."</td>";
@@ -115,6 +126,10 @@
                                 //date ("format", time ...) affiche une date avec le format voulu
                                 echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
                                 echo "<td>".$listOfCountry[$user["country"]]."</td>";
+                                if (($supermodo ==1) AND ($user ["moderator"] !=3) ){ //A MODIFIER
+                                    echo "<td><a href='deleteUser.php?id=".$user["user_id"]."'>Supprimer</a></td>";
+                                    echo "</tr>";
+                                }
                             }
                         }
                 

@@ -9,8 +9,8 @@ CREATE TABLE USERS (
 	birthday DATE NOT NULL,
 	register_date DATE NOT NULL,
 	country CHAR (2) NOT NULL,
-	pwd VARCHAR (60) NOT NULL, 
-	moderator TINYINT NOT NULL, 
+	pwd VARCHAR (60) NOT NULL,
+	moderator TINYINT NOT NULL DEFAULT 0,
 	preferences INTEGER,
 	access_token VARCHAR (60),
 	update_date DATE,
@@ -21,12 +21,12 @@ CREATE TABLE FOLLOWER (
 	user_account VARCHAR (60)REFERENCES USERS (email),
 	follower_account VARCHAR (60)REFERENCES USERS (email),
 	PRIMARY KEY (user_account, follower_account)
-);	
+);
 
 CREATE TABLE MUSIC_TYPE (
 	type_ref CHAR (3) PRIMARY KEY,
 	type_name VARCHAR (60)
-	
+
 );
 
 CREATE TABLE ARTICLE (
@@ -40,24 +40,24 @@ CREATE TABLE ARTICLE (
 
 CREATE TABLE MUSIC (
 	music_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-	music_name VARCHAR (80)NOT NULL, 
-	author_comment TEXT, 
-	lyrics TEXT,  
+	music_name VARCHAR (80)NOT NULL,
+	author_comment TEXT,
+	lyrics TEXT,
 	music_image VARCHAR (150), #url
-	music_type CHAR (3) REFERENCES MUSIC_TYPE (type_ref)	
+	music_type CHAR (3) REFERENCES MUSIC_TYPE (type_ref)
 );
 
 CREATE TABLE VISIT (
-	visit_user INTEGER REFERENCES USERS (user_id), 
+	visit_user INTEGER REFERENCES USERS (user_id),
 	visit_music INTEGER REFERENCES MUSIC (music_id),
 	visit_date DATE	 NOT NULL,
 	PRIMARY KEY (visit_user, visit_music)
 );
 CREATE TABLE UPLOAD (
-	upload_user INTEGER REFERENCES USERS (user_id), 
+	upload_user INTEGER REFERENCES USERS (user_id),
 	upload_music INTEGER REFERENCES MUSIC (music_id),
 	visibility BOOLEAN,
-	webradio BOOLEAN, 
+	webradio BOOLEAN,
 	upload_date DATE NOT NULL,
 	PRIMARY KEY (upload_user, upload_music)
 );
@@ -69,4 +69,3 @@ CREATE TABLE OPINION (
 	commentary VARCHAR (255),
 	PRIMARY KEY (opinion_user, opinion_music)
 );
-

@@ -129,9 +129,11 @@ if( !empty($_POST["firstname"]) &&
 
         $connection = dbConnect();
                 // ":pseudo" (variable sql)   modif!!!!!
-            $querry = $connection -> prepare("INSERT INTO USERS (email, pseudo, gender, firstname, lastname, birthday, register_date, country, pwd, active_account) VALUES (:email, :pseudo, :gender, :firstname, :lastname, :birthday, :register_date, :country, :pwd, 1)"); 
+            $querry = $connection -> prepare("INSERT INTO USERS (email, pseudo, gender, firstname, lastname, birthday, register_date, country, pwd, active_account) VALUES (:email, :pseudo, :gender, :firstname, :lastname, :birthday, :register_date, :country, :pwd, :active_account)"); 
 
             $pwd = password_hash ($_POST["pwd"], PASSWORD_DEFAULT);
+            $active_account = 1;
+
 
             $querry -> execute([     // la ou il y a   :pseudo;, on met la valeur de $_POST["pseudo"]
                 "email" => $_POST["email"],
@@ -140,9 +142,10 @@ if( !empty($_POST["firstname"]) &&
                 "firstname" => $_POST["firstname"],
                 "lastname" => $_POST["lastname"],               
                 "birthday" => $_POST["birthday"],
-                "register_date" => $_POST["birthday"],
+                "register_date" => $_POST["birthday"], //A CHANGER
                 "country" => $_POST["country"],
-                "pwd" => $pwd
+                "pwd" => $pwd,
+                "active_account" => $active_account
                 ]);
             //IL FAUT SE CONNECTER AUTOMATIQUEMENT APRES L'INSCRIPTION //REDIRECTION SUR CONNECT.PHP
            	header("Location: index.php");

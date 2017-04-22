@@ -1,9 +1,26 @@
 <?php
 
 define ("HOST", "localhost");
-define ("DBNAME", "test2");
+define ("DBNAME", "play_share");
 define ("DBUSER", "root");
 define ("DBPWD", "root"); //Windows:    define ("DBPWD", "");
+
+
+$listOfGenre=[
+				"roc" => "Rock",
+				"met" => "Metal",
+				"rap" => "Rap",
+				"blu" => "Blues",
+				"chafr" => "Chanson Française",
+				"cho" => "Chorale",
+				"cou" => "Country",
+				"dis" => "Disco",
+				"ele" => "Electro",
+				"cla" => "Musique classique",
+				"tec" => "Techno",
+				"hip" => "Hip Hop",
+				"reg" => "Reggae"
+				];
 
 
 $listOfCountry=[
@@ -23,7 +40,7 @@ $listOfStatus = [
 	"Actif",
 	"Banni",
 	"Inactif"
-];	
+];
 
 $defaultGender = "m"; //valeur cochée par défaut la première fois qu'on va sur la page
 
