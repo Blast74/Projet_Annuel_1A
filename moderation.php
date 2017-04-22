@@ -1,8 +1,9 @@
 <?php
-    include "navbar.php";
+        //Déconnection si l'utilisateur n'est pas modérateur  
+    session_start();
     include "lib.php";
-    //Déconnection si l'utilisateur n'est pas modérateur  
-
+    VerifyModerator ();
+    /*
     if (isset($_SESSION['id'])) {
         if ($_SESSION['moderator'] != 1) {
             $NoModerator = true;
@@ -15,7 +16,8 @@
         header("Location: index.php");  // modifier navbar et lib.php  il faut la redirection soit faite avant le traitement
         exit ();
     }
-
+    */
+    include "navbar.php";
 ?>
     
     <div class="container">

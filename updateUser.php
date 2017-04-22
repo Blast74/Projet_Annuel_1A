@@ -2,9 +2,6 @@
     include 'navbar.php';
     require "lib.php";
     require_once "conf.inc.php";
-
-
-
     //Récupération des informations de l'utilisateur 
     if (!empty($_GET["id"]) && count ($_GET)==1 && is_numeric($_GET["id"]) ){
     $connection = dbConnect ();
