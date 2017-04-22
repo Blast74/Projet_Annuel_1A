@@ -1,5 +1,5 @@
 <?php
-session_start();//a mettre dans tous les fichiers manuellement ou lib.php
+//a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
 ?>
