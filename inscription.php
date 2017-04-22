@@ -1,4 +1,5 @@
 <?php
+    session_start ();
     include 'navbar.php';
     require "lib.php";
     require_once "conf.inc.php";
