@@ -86,7 +86,7 @@ include "header.php";
                                 </ul>
                             </li>';
                         }
-                         else if ((isset($_SESSION['id'])) &&  ($_SESSION['moderator'] == 1) OR ($_SESSION['moderator'] == 3)  ) {  //MODERATEUR ==1 !!!
+                         else if ((isset($_SESSION['id'])) &&  ($_SESSION['moderator'] == 1) OR ($_SESSION['moderator'] == 2)  ) {  //MODERATEUR ==1 !!!
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION <b class="caret"></b></a>
                                 <ul class="dropdown-menu">

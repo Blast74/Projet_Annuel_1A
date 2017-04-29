@@ -14,19 +14,33 @@ function dbConnect (){
 }
 
 function VerifyModerator () {
-
     if (isset($_SESSION['id'])) {
-        if ($_SESSION['moderator'] != 1) {
-            $NoModerator = true;
-        }
-        else if ($_SESSION['moderator'] == 1) {
-            $NoModerator = false;
+        if (($_SESSION['moderator'] != 1) AND ($_SESSION['moderator'] != 2)  ){
+            header("Location: index.php");  
+            exit ();
         }
     }
     else {
-        header("Location: index.php");  // modifier navbar et lib.php  il faut la redirection soit faite avant le traitement
+        header("Location: index.php");  
         exit ();
     }
-
-    return $NoModerator;
 }
+
+function verifyAdministrator () {
+    $Administrator = false;
+    if (isset($_SESSION['id'])) { 
+        if ($_SESSION['moderator'] != 2  ){ //Si pas admin
+            header("Location: index.php");  
+            exit ();
+        }
+        else if ($_SESSION['moderator'] == 2) {  //Si admin
+            $Administrator = true;
+            return $Administrator;
+        }
+    }
+    else {
+        header("Location: index.php");  
+        exit ();
+    }
+}
+

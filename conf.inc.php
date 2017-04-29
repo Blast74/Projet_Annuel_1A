@@ -40,7 +40,7 @@ $listOfStatus = [
 	"Actif",
 	"Banni",
 	"Inactif"
-];
+];	
 
 $defaultGender = "m"; //valeur cochée par défaut la première fois qu'on va sur la page
 
