@@ -44,3 +44,14 @@ function verifyAdministrator () {
     }
 }
 
+function errors ($formPost, $formErrors) {
+    $_SESSION["form_post"] = $formPost;
+    $_SESSION["form_errors"] = $formErrors;
+    if (empty ($_GET['id'])){
+        header("Location: inscription.php");
+    }
+    else {
+        header("Location: updateUser.php?id=".$_GET["id"]);
+    }
+}
+

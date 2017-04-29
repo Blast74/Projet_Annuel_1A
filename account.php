@@ -1,26 +1,27 @@
 <?php
-    session_start;
+    session_start();
     include "navbar.php";
     include "lib.php";
+
 ?>
 
-
+    
     <div class="container">
 
-
+       
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Mes informations</h1>
             </div>
         </div>
         <div>
-            <?php
+            <?php 
                 $connection = dbConnect ();
-                $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account=1");
-                $query -> execute();
+                $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account=1"); 
+                $query -> execute(); 
                 $users = $query -> fetchAll (); //PAS DE FETCHALL
             ?>
-            <table>
+            <table> 
                 <thead>
                     <tr> <!-- A MODIFIER POUR AVOIR LES BONNES VALEURS-->
                         <th>Prénom</th>
@@ -47,7 +48,7 @@
                             echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
                             echo "<td>".$listOfCountry[$user["country"]]."</td>";
                             echo "<td>".$user["comment"]."</td>";
-                            echo "<td>".$listOfStatus[$user["status"]]."</td>";
+                            echo "<td>".$listOfStatus[$user["status"]]."</td>"; 
                             //Lien vers deleteUser.php?+id de l'utilisateur à supprimer
                             echo "<td><a href='deleteUser.php?id=".$user["id"]."'>Supprimer</a><a href='updateUser.php?id=".$user["id"]."'>Modifier</a></td>";
                             echo "</tr>";
@@ -56,7 +57,7 @@
               </table>
 
         </div>
-
+       
 
         <hr>
 <?php

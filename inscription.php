@@ -30,6 +30,7 @@
                 echo "</div>";
                 ?>
                 <form method="POST" action="saveUser.php" >
+                    <input type="hidden" name="user_informations" value="create">
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Prénom:</label>
