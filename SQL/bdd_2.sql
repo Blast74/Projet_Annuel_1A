@@ -68,7 +68,7 @@ CREATE TABLE USERS(
         register_date  Date NOT NULL ,
         country        Char (2) NOT NULL ,
         pwd            Varchar (60) NOT NULL ,
-        moderator      TinyINT NOT NULL ,
+        moderator      TinyINT NOT NULL DEFAULT 0,
         access_token   Varchar (60) ,
         update_date    Date ,
         active_account TinyINT
@@ -94,8 +94,9 @@ CREATE TABLE TROPHY(
 #------------------------------------------------------------
 
 CREATE TABLE LINKED(
-        music_id    Int NOT NULL PRIMARY KEY ,
-        subtype_ref Int NOT NULL PRIMARY KEY
+        music_id    Int NOT NULL ,
+        subtype_ref Int NOT NULL ,
+        PRIMARY KEY (music_id ,subtype_ref )
 );
 
 
@@ -107,8 +108,9 @@ CREATE TABLE VISIT(
         visit_music Int NOT NULL ,
         visit_user  Int ,
         visit_date  Date ,
-        music_id    Int NOT NULL PRIMARY KEY,
-        user_id     Int NOT NULL PRIMARY KEY
+        music_id    Int NOT NULL ,
+        user_id     Int NOT NULL ,
+        PRIMARY KEY (music_id ,user_id )
 );
 
 
@@ -119,8 +121,9 @@ CREATE TABLE VISIT(
 CREATE TABLE FOLLOW(
         user_account     Int ,
         follower_account Int NOT NULL ,
-        user_id          Int NOT NULL PRIMARY KEY,
-        user_id_USERS    Int NOT NULL PRIMARY KEY
+        user_id          Int NOT NULL ,
+        user_id_USERS    Int NOT NULL ,
+        PRIMARY KEY (user_id ,user_id_USERS )
 );
 
 
@@ -134,8 +137,9 @@ CREATE TABLE OPINION(
         mark            Int ,
         commentary      Varchar (255) ,
         commentary_date Date NOT NULL ,
-        user_id         Int NOT NULL PRIMARY KEY,
-        music_id        Int NOT NULL PRIMARY KEY
+        user_id         Int NOT NULL ,
+        music_id        Int NOT NULL ,
+        PRIMARY KEY (user_id ,music_id )
 );
 
 
@@ -146,8 +150,9 @@ CREATE TABLE OPINION(
 CREATE TABLE PREFERENCE_SUBTYPE(
         pref_subtype_user Int NOT NULL ,
         pref_subtype      Char (6) NOT NULL ,
-        subtype_ref       Int NOT NULL PRIMARY KEY,
-        user_id           Int NOT NULL PRIMARY KEY
+        subtype_ref       Int NOT NULL ,
+        user_id           Int NOT NULL ,
+        PRIMARY KEY (subtype_ref ,user_id )
 );
 
 ALTER TABLE ARTICLES ADD CONSTRAINT FK_ARTICLES_user_id FOREIGN KEY (user_id) REFERENCES USERS(user_id);

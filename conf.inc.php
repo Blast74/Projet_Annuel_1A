@@ -1,9 +1,9 @@
 <?php
 
 define ("HOST", "localhost");
-define ("DBNAME", "play_share");
+define ("DBNAME", "zebrolfrertest");
 define ("DBUSER", "root");
-define ("DBPWD", "root"); //Windows:    define ("DBPWD", "");
+define ("DBPWD", ""); //Windows:    define ("DBPWD", "");
 
 
 $listOfGenre=[
@@ -40,7 +40,7 @@ $listOfStatus = [
 	"Actif",
 	"Banni",
 	"Inactif"
-];	
+];
 
 $defaultGender = "m"; //valeur cochée par défaut la première fois qu'on va sur la page
 
