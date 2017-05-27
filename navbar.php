@@ -2,6 +2,8 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
+require "./lib/libSQL.php";
+require "lib.php"
 ?>
 
 
@@ -70,7 +72,7 @@ include "header.php";
                             </li>";
                         }
                         //Affiche directement le nom de l'utilisateur si il est connecté
-                        else if ((isset($_SESSION['id'])) &&  ($_SESSION['moderator'] == 0) ) {
+                        else if ((isset($_SESSION['id']))) {
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -89,7 +91,7 @@ include "header.php";
                                 </ul>
                             </li>';
                         }
-                         else if ((isset($_SESSION['id'])) &&  ($_SESSION['moderator'] == 1) OR ($_SESSION['moderator'] == 2)  ) {  //MODERATEUR ==1 !!!
+                        if ((isset($_SESSION['id'])) && ((checkModerator($_SESSION["id"])) || (checkSuperModerator($_SESSION["id"])))) {  //MODERATEUR ==1 !!!
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION <b class="caret"></b></a>
                                 <ul class="dropdown-menu">

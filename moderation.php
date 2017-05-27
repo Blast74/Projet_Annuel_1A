@@ -1,29 +1,27 @@
 <?php
-        //Déconnection si l'utilisateur n'est pas modérateur  
+        //Déconnection si l'utilisateur n'est pas modérateur
     session_start();
     require "conf.inc.php";
-    include "lib.php";
-    VerifyModerator ();
     include "navbar.php";
 ?>
 
-   
-    <div class="container">       
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">INFORMATIONS UTILISATEURS</h1>
             </div>
         </div>
         <div>
-            <?php         
+            <?php
                 $connection = dbConnect ();
-                $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0"); 
-                $query -> execute(); 
-                $users = $query -> fetchAll ();                
+                $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
+                $query -> execute();
+                $users = $query -> fetchAll ();
             ?>
-            <table> 
+            <table>
                 <thead>
-                    <tr> 
+                    <tr>
                         <th>Identifiant</th>
                         <th>Pseudo</th>
                         <th>Prénom</th>
@@ -36,7 +34,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <?php 
+                <?php
                     foreach ($users as $user) { //$user["moderator"] 1 = MODERATEUR  //$user["moderator"] 2 = ADMIN
                         if (($user["moderator"] != 1) AND ($user["moderator"] != 2) ){
                             echo "<tr>";
@@ -51,11 +49,11 @@
                             //date ("format", time ...) affiche une date avec le format voulu
                             echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
                             echo "<td>".$listOfCountry[$user["country"]]."</td>";
-                            echo "<td>".$listOfStatus[$user["active_account"]]."</td>"; 
+                            echo "<td>".$listOfStatus[$user["active_account"]]."</td>";
                             //Lien vers deleteUser.php?+id de l'utilisateur à supprimer
                             echo "<td><a href='deleteUser.php?id=".$user["user_id"]."'>Supprimer</a><a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>";
-                      
-                             if ($_SESSION['moderator'] ==2 ){ //A MODIFIER
+
+                             if (checkSuperModerator($_SESSION["id"]) ){ //A MODIFIER
                                 echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Nommer modérateur</a></td>";
                                 echo "</tr>";
                             }
@@ -63,7 +61,7 @@
 
                         }
                     }
-                
+
                 ?>
             </table>
         </div>
@@ -73,9 +71,9 @@
             </div>
         </div>
             <div>
-            <table> 
+            <table>
                 <thead>
-                    <tr> 
+                    <tr>
                         <th>Identifiant</th>
                         <th>Pseudo</th>
                         <th>Prénom</th>
@@ -86,7 +84,7 @@
                         <th>Pays</th>
                     </tr>
                 </thead>
-                    <?php 
+                    <?php
                         foreach ($users as $user) {
                             if (($user ["moderator"] ==1) OR ($user ["moderator"] ==2)  ){
                                 echo "<tr>";
@@ -101,20 +99,20 @@
                                 //date ("format", time ...) affiche une date avec le format voulu
                                 echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
                                 echo "<td>".$listOfCountry[$user["country"]]."</td>";
-                                if ($_SESSION['moderator']==2){
-                                    if ($user ["moderator"] ==1){ // 2 = ADMIN
+                                if (checkSuperModerator($_SESSION["id"])){
+                                    if ($user ["moderator"] == 0){ // 2 = ADMIN
                                         echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Retirer les droits</a></td>";
-                                 
+
                                     }
                                 }
                                 echo "</tr>";
                             }
-                        }               
+                        }
                      ?>
               </table>
 
         </div>
-       
+
 
         <hr>
 <?php
