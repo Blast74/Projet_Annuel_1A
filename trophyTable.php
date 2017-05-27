@@ -1,21 +1,21 @@
-<?php 
+<?php
     session_start();
     include "navbar.php";
  ?>
- 
+
     <!-- Page Content -->
     <div class="container">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Services
+                <h1 class="page-header">Table des Trophés
                     <small>Subheading</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a>
                     </li>
-                    <li class="active">Services</li>
+                    <li class="active">Table des Trophés</li>
                 </ol>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Services Panels</h2>
+                <h2 class="page-header">Mes trophés récents</h2>
             </div>
             <div class="col-md-3 col-sm-6">
                 <div class="panel panel-default text-center">
@@ -100,7 +100,7 @@
         <!-- Service Tabs -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Service Tabs</h2>
+                <h2 class="page-header">Mes trophés</h2>
             </div>
             <div class="col-lg-12">
 
@@ -145,7 +145,7 @@
         <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Service List</h2>
+                <h2 class="page-header">trophée</h2>
             </div>
             <div class="col-md-4">
                 <div class="media">
@@ -153,7 +153,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-tree fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service One</h4>
@@ -165,7 +165,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-car fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Two</h4>
@@ -177,7 +177,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-support fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Three</h4>
@@ -191,7 +191,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-database fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Four</h4>
@@ -203,7 +203,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-bomb fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Five</h4>
@@ -215,7 +215,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-bank fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Six</h4>
@@ -229,7 +229,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-paper-plane fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Seven</h4>
@@ -241,7 +241,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-space-shuttle fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Eight</h4>
@@ -253,7 +253,7 @@
                         <span class="fa-stack fa-2x">
                               <i class="fa fa-circle fa-stack-2x text-primary"></i>
                               <i class="fa fa-recycle fa-stack-1x fa-inverse"></i>
-                        </span> 
+                        </span>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">Service Nine</h4>
@@ -268,4 +268,6 @@
 
     <?php
     include 'footer.php';
+    $test = get_defined_vars();
+    var_dump($test);
     ?>

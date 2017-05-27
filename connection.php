@@ -21,18 +21,18 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 	if (!empty($result) && password_verify ($_POST["pwd"], $result["pwd"])) {
 		//Création du token d'accès
 		$accessToken = md5(uniqid().$_POST["email"].time());
-  		$query = $connection->prepare("SELECT email FROM USERS WHERE email=:email;");
+  		$query = $connection->prepare("SELECT email, user_id FROM USERS WHERE email=:email;");
         $query -> execute (["email"=>$_POST["email"]]);
         $result = $query -> fetch();
 
-  	
+
   		//Enregistrer la clé et l'ID de l'utilisateur dans la BDD
 		$query = $connection->prepare("UPDATE USERS SET access_token =:access_token  WHERE email=:email;");
-		$query -> execute (["access_token"=>$accessToken,"email"=>$_POST["email"] ]); 
+		$query -> execute (["access_token"=>$accessToken,"email"=>$_POST["email"] ]);
 
 		//SESSION:
-		$_SESSION ['id'] = md5 (uniqid().$_POST['email'].time());
-				
+		$_SESSION ['id'] = $accessToken;
+		$_SESSION['user'] = $result['user_id'];
 		//Vérification du statut modérateur
 		$query = $connection->prepare("SELECT moderator FROM USERS where email=:email;");
 		$query -> execute (["email"=>$_POST["email"]]);

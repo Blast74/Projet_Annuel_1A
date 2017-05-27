@@ -1,6 +1,8 @@
 <?php
+    session_start();
     include "navbar.php";
     include "lib.php";
+
 ?>
 
     

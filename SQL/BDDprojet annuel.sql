@@ -43,8 +43,9 @@ CREATE TABLE MUSIC (
 	music_name VARCHAR (80)NOT NULL,
 	author_comment TEXT,
 	lyrics TEXT,
-	music_image VARCHAR (150), #url
-	music_type CHAR (3) REFERENCES MUSIC_TYPE (type_ref)
+	music_image VARCHAR (255), #url
+	music_type CHAR (3) REFERENCES MUSIC_TYPE (type_ref),
+	music_source VARCHAR(255)
 );
 
 CREATE TABLE VISIT (

@@ -25,7 +25,7 @@
     ];
    }
 
-var_dump($_SESSION['form_errors']);
+//var_dump($_SESSION['form_errors']);
 
 
 
@@ -53,52 +53,53 @@ var_dump($_SESSION['form_errors']);
                 echo "</div>";
                 ?>
 
-                <form method="POST" action="saveUser.php?id=<?php echo $_GET['id']?>">
+                <form method="POST" action="saveUser.php?id=<?php echo $_GET['id']?>?TEST">
+                    <input type='hidden' name="user_informations" value="update"> <!--TRAITEMENT DIFFERENT POUR SsaveUser.php -->
                     <div class="control-group form-group">
                         <div class="controls">
                             <label><?php echo "Prénom : ".$data["firstname"]; ?></label>
-                            <input type="text" name="firstname" placeholder="Votre prénom" class="form-control" required="required" value="<?php echo (isset($_SESSION["form_post"]["firstname"]))?$_SESSION["form_post"]["firstname"]:""; ?>">
+                            <input type="text" name="firstname" placeholder="Votre prénom" class="form-control" value="<?php echo (isset($_SESSION["form_post"]["firstname"]))?$_SESSION["form_post"]["firstname"]:""; ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label><?php echo "Nom : ".$data["lastname"]; ?></label>
-                            <input type="text" name="lastname" placeholder="Votre nom" class="form-control" required="required" value="<?php echo (isset($_SESSION["form_post"]["lastname"]))?$_SESSION["form_post"]["lastname"]:""; ?>">
+                            <input type="text" name="lastname" placeholder="Votre nom" class="form-control"  value="<?php echo (isset($_SESSION["form_post"]["lastname"]))?$_SESSION["form_post"]["lastname"]:""; ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label><?php echo "Pseudo : ".$data["pseudo"]; ?></label>
-                            <input type="text" name="pseudo" placeholder="Votre pseudo" class="form-control" required="required" value="<?php echo (isset($_SESSION["form_post"]["pseudo"]))?$_SESSION["form_post"]["pseudo"]:""; ?>">
+                            <input type="text" name="pseudo" placeholder="Votre pseudo" class="form-control"  value="<?php echo (isset($_SESSION["form_post"]["pseudo"]))?$_SESSION["form_post"]["pseudo"]:""; ?>">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label><?php echo "Adresse email : ".$data["email"]; ?></label>
-                            <input type="email" name="email" placeholder="Votre email" class="form-control" id="phone" required="required" value="<?php echo (isset($_SESSION["form_post"]["email"]))?$_SESSION["form_post"]["email"]:""; ?>">
+                            <input type="email" name="email" placeholder="Votre email" class="form-control" id="phone" value="<?php echo (isset($_SESSION["form_post"]["email"]))?$_SESSION["form_post"]["email"]:""; ?>">
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Mot de passe:</label>
-                            <input type="password" name="pwd" placeholder="Votre mot de passe" required="required" class="form-control">
+                            <input type="password" name="pwd" placeholder="Votre mot de passe"  class="form-control">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Confirmation du mot de passe:</label>
-                            <input type="password" name="pwd2" placeholder="Confirmez mot de passe" required="required" class="form-control">
+                            <input type="password" name="pwd2" placeholder="Confirmez mot de passe"  class="form-control">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls"><!--MODIFIER L'AFFICHAGE -->
                             <label><?php echo "Date de naissance : ".$data["birthday"]; ?></label><br>
-                            <input type="date" name="birthday" placeholder="année-mois-jour" required="required" value="<?php echo (isset($_SESSION["form_post"]["birthday"]))?$_SESSION["form_post"]["birthday"]:""; ?>">
+                            <input type="date" name="birthday" placeholder="année-mois-jour"  value="<?php echo (isset($_SESSION["form_post"]["birthday"]))?$_SESSION["form_post"]["birthday"]:""; ?>">
                         </div>
                     </div>
                     <div class="control-group form-group">
