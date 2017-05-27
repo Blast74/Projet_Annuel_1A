@@ -24,7 +24,7 @@ include "header.php";
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="news.php">NEWS</a>
-                    </li>        
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown"> MUSIQUES <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -45,10 +45,10 @@ include "header.php";
                             </li>
                         </ul>
                     </li>
-                    <?php 
+                    <?php
                          // A CHANGER PLUS TARD + PRESENTATION CSS
-                        if ( !isset($_SESSION['id'])){ 
-                            echo 
+                        if ( !isset($_SESSION['id'])){
+                            echo
                             '<li class="dropdown">
                                 <a  class="dropdown-toggle" data-toggle="dropdown">Se connecter <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -59,7 +59,7 @@ include "header.php";
                                             <label>Mot de passe:</label><br>
                                             <input type="password" name="pwd" placeholder="Votre mot de passe" required="required">
                                             <input type="submit" value="Se connecter">
-                                        </form>                                        
+                                        </form>
 
                                     </li>
                                     <li>
@@ -74,11 +74,14 @@ include "header.php";
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+                                <li>
+                                   <a href="libTrophy.php">Mes Trophés</a>
+                               </li>
                                      <li>
-                                        <a href="upload.php">Gérer mes musiques</a> 
+                                        <a href="upload.php">Gérer mes musiques</a>
                                     </li>
                                     <li>
-                                        <a href="account.php">Gérer mes informations personnelles</a> 
+                                        <a href="account.php">Gérer mes informations personnelles</a>
                                     </li>
                                     <li>
                                         <a href="disconnect.php">Se déconnecter</a>
@@ -90,8 +93,9 @@ include "header.php";
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+
                                      <li>
-                                        <a href="moderation.php">Gérer les utilisateurs</a> 
+                                        <a href="moderation.php">Gérer les utilisateurs</a>
                                     </li>
                                     <li>
                                         <a href="disconnect.php">Se déconnecter</a>

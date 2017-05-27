@@ -30,12 +30,10 @@ CREATE TABLE MUSIC(
         lyrics         Text ,
         music_image    Text ,
         note_music     Int ,
-        isDeleted      Bool NOT NULL ,
-        webradio       Bool NOT NULL ,
+        isDeleted      Bool NOT NULL DEFAULT 0,
         dateupload     Date ,
-        upload_user    Int ,
         upload_music   Int ,
-        visibility     Bool NOT NULL ,
+        visibility     Bool NOT NULL DEFAULT 1,
         upload_date    Date ,
         user_id        Int NOT NULL
 );

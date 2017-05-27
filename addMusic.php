@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include 'navbar.php';
     require "lib.php";
     require_once "conf.inc.php";
@@ -7,11 +8,11 @@
 
     <div class="container">
 
-  
+
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Ajout d'une musique</h1>
-               
+
      </div>
         </div>
         <!-- FORMULAIRE -->
@@ -19,11 +20,11 @@
             <div class="col-md-8">
                 <?php //Affichage des erreurs s'il y en a
                 echo '<div class="control-group form-group">';
-                if (isset ($_SESSION["form_errors"])){ 
-       
+                if (isset ($_SESSION["form_errors"])){
+
                     foreach ($_SESSION["form_errors"] as $error)
                     {
-                        echo "<li>".$errors[$error];     
+                        echo "<li>".$errors[$error];
                     }
                 }
                 echo "</div>";
@@ -36,10 +37,10 @@
                             <p class="help-block"></p>
                         </div>
                     </div>
-                 
-                            
-                            
-                        
+
+
+
+
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Album (Optionnel) :</label>
@@ -74,13 +75,13 @@
                                  $selected =(isset($_SESSION["form_post"]["genre"]) && $_SESSION["form_post"]["genre"] == $key)?"selected='selected'":"";
 
                                 echo "<option value='".$key."' ".$selected.">" .$value."</option>";
-                            } 
+                            }
                             ?>
                       </select>
                     </div>
 
                     <input type="file" name="file" accept=".mp3" />
-                    
+
                     <br>
 
                     <label>Ajoutez une image pour votre musique (Optionnel) :</label><br>
@@ -95,11 +96,8 @@
 
         <?php
             include 'footer.php';
-            unset($_SESSION["form_post"] ); 
+            $test = get_defined_vars();
+            var_dump($test);
+            unset($_SESSION["form_post"] );
             unset($_SESSION["form_errors"] );
         ?>
-
-
-
-
-    
