@@ -2,6 +2,7 @@
 	session_start();
 	require "conf.inc.php";
 	require "lib.php";
+	require './lib/libSQL.php';
 // <form method=POST action="connection.php"> == <form method=POST> car ça redirige sur la même page
 
 
@@ -32,27 +33,7 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 
 		//SESSION:
 		$_SESSION ['id'] = $accessToken;
-		$_SESSION['user'] = $result['user_id'];
-		//Vérification du statut modérateur
-		$query = $connection->prepare("SELECT moderator FROM USERS where email=:email;");
-		$query -> execute (["email"=>$_POST["email"]]);
-		$result = $query -> fetch();
 
-			if ($result ['moderator'] == 1) {
-				$_SESSION ['moderator'] = 1;
-
-			}
-			else if ($result ['moderator'] == 2) {
-				$_SESSION ['moderator'] = 2;
-
-			}
-			else {
-				$_SESSION ['moderator'] = 0;
-			}
-			//redirection
-			header("Location: index.php");
-		}
-		else {
             	echo "Vérifiez vos identifiants";
             	//header("Location: connection.php");
         }

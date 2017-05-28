@@ -2,7 +2,7 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
-require "./lib/libSQL.php";
+require "lib/libSQL.php";
 require "lib.php"
 ?>
 

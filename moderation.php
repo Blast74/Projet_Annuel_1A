@@ -35,6 +35,7 @@
                     </tr>
                 </thead>
                 <?php
+
                     foreach ($users as $user) { //$user["moderator"] 1 = MODERATEUR  //$user["moderator"] 2 = ADMIN
                         if (($user["moderator"] != 1) AND ($user["moderator"] != 2) ){
                             echo "<tr>";
@@ -51,14 +52,16 @@
                             echo "<td>".$listOfCountry[$user["country"]]."</td>";
                             echo "<td>".$listOfStatus[$user["active_account"]]."</td>";
                             //Lien vers deleteUser.php?+id de l'utilisateur à supprimer
-                            echo "<td><a href='deleteUser.php?id=".$user["user_id"]."'>Supprimer</a><a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>";
+                            echo '<td><input type="button" name="" value="Supprimer" onclick=""></td>'; //<a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>
+                            echo '<td><input type="button" name="" value="Modifier" onclick=""></td>'; //<a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>
 
-                             if (checkSuperModerator($_SESSION["id"]) ){ //A MODIFIER
-                                echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Nommer modérateur</a></td>";
-                                echo "</tr>";
-                            }
-                            echo "</tr>";
-
+                            if (($user ["moderator"] == 0) ){ //A MODIFIER
+                               echo '<td><input type="button" name="" value="Ajouter un Modérateur" onclick=""></td>'; //
+                               echo "</tr>";
+                           }else {
+                               echo '<td><input type="button" name="" value="Retirer un Modérateur" onclick=""></td>'; //
+                               echo "</tr>";
+                           }
                         }
                     }
 
@@ -99,13 +102,15 @@
                                 //date ("format", time ...) affiche une date avec le format voulu
                                 echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
                                 echo "<td>".$listOfCountry[$user["country"]]."</td>";
-                                if (checkSuperModerator($_SESSION["id"])){
-                                    if ($user ["moderator"] == 0){ // 2 = ADMIN
-                                        echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Retirer les droits</a></td>";
-
-                                    }
-                                }
-                                echo "</tr>";
+                                // echo '<td><input type="button" name="" value="Supprimer" onclick=""></td>'; //<a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>
+                                echo '<td><input type="button" name="" value="Modifier" onclick=""></td>'; //<a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>
+                                if (($user ["moderator"] == 1) ){ //A MODIFIER
+                                   echo '<td><input type="button" name="" value="Ajouter un Supermodérateur" onclick=""></td>'; //
+                                   echo "</tr>";
+                               }else {
+                                   echo '<td><input type="button" name="" value="Retirer un Supermodérateur" onclick=""></td>'; //
+                                   echo "</tr>";
+                               }
                             }
                         }
                      ?>
