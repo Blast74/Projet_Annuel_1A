@@ -2,7 +2,7 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
-require "admin/libSQL.php";
+require "admin\libSQL.php";
 require "lib.php"
 ?>
 
@@ -80,7 +80,7 @@ require "lib.php"
                                    <a href="libTrophy.php">Mes Trophés</a>
                                </li>
                                      <li>
-                                        <a href="addMusic.php">Gérer mes musiques</a>
+                                        <a href="upload.php">Gérer mes musiques</a>
                                     </li>
                                     <li>
                                         <a href="account.php">Gérer mes informations personnelles</a>
