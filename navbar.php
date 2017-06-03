@@ -29,19 +29,19 @@ include "header.php";
                         <a class="dropdown-toggle" data-toggle="dropdown"> MUSIQUES <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="review.php"> Musiques récentes </a> <!-- Se déconnecté si déjà connecté -->
+                                <a href="music.php"> Musiques récentes </a> <!-- Se déconnecté si déjà connecté -->
                             </li>
                             <li>
-                                <a href="review.php"> Rock </a>
+                                <a href="music.php"> Rock </a>
                             </li>
                             <li>
-                                <a href="review.php"> Rap </a>
+                                <a href="music.php"> Rap </a>
                             </li>
                             <li>
-                                <a href="review.php"> Electro </a>
+                                <a href="music.php"> Electro </a>
                             </li>
                             <li>
-                                <a href="review.php"> Musiques...</a>
+                                <a href="music.php"> Musiques...</a>
                             </li>
                         </ul>
                     </li>
@@ -78,7 +78,7 @@ include "header.php";
                                    <a href="libTrophy.php">Mes Trophés</a>
                                </li>
                                      <li>
-                                        <a href="upload.php">Gérer mes musiques</a>
+                                        <a href="addMusic.php">Gérer mes musiques</a>
                                     </li>
                                     <li>
                                         <a href="account.php">Gérer mes informations personnelles</a>
