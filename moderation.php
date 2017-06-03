@@ -1,137 +1,122 @@
 <?php
+        //Déconnection si l'utilisateur n'est pas modérateur  
     session_start();
     require "conf.inc.php";
+    include "lib.php";
+    VerifyModerator ();
     include "navbar.php";
-
-    // $connection = dbConnect ();
-    // $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
-    // $query -> execute();
-    // $users = $query -> fetchAll ();
 ?>
-        <div class="container">
-            </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">UTILISATEURS :</h1>
-                </div>
+   
+    <div class="container">       
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">INFORMATIONS UTILISATEURS</h1>
             </div>
-            <div id="ListParamUsers">
-                <p>Trier Par:</p>
-            <select id="sortBySelectUsers">
-                <option value="user_id" selected="selected">id</option>
-                <option value="pseudo" >Pseudo</option>
-                <option value="prenom" >Prénom</option>
-                <option value="nom" >Nom</option>
-                <option value="email" >Mail</option>
-                <option value="birthday" >Date de naissance</option>
-                <option value="gender" >Genre</option>
-                <option value="country" >Pays</option>
-                <option value="active_account">Statut</option>
-            <select>
-            <select id="sortByOptionSelectUsers">
-                <option value="ASC">Croissant</option>
-                <option value="DESC">Décroissant</option>
-            </select>
-            <input id=tagButtonView type="button" onclick='recupParam("Users")' value ="Actualiser"></input>
-            <br>
-            <p>Nombre d'utilisateurs souhaités :</p>
-            <select id="nbusersSelectUsers">
-                <option value="5" selected="selected">5</option>
-                <option value="10" >10</option>
-                <option value="20" >20</option>
-                <option value="30" >30</option>
-            <select>
-            </div>
-            <div id="userslistAjax">
-
         </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">MODERATEURS :</h1>
-                </div>
+        <div>
+            <?php         
+                $connection = dbConnect ();
+                $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0"); 
+                $query -> execute(); 
+                $users = $query -> fetchAll ();                
+            ?>
+            <table> 
+                <thead>
+                    <tr> 
+                        <th>Identifiant</th>
+                        <th>Pseudo</th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Mail</th>
+                        <th>Date de naissance</th>
+                        <th>Genre</th>
+                        <th>Pays</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <?php 
+                    foreach ($users as $user) { //$user["moderator"] 1 = MODERATEUR  //$user["moderator"] 2 = ADMIN
+                        if (($user["moderator"] != 1) AND ($user["moderator"] != 2) ){
+                            echo "<tr>";
+                            echo "<td>".$user["user_id"]."</td>";
+                            echo "<td>".$user["pseudo"]."</td>";
+                            echo "<td>".$user["firstname"]."</td>";
+                            echo "<td>".$user["lastname"]."</td>";
+                            echo "<td>".$user["email"]."</td>";
+                            //date
+                            echo "<td>".date ("d/m/Y", strtotime($user["birthday"]))."</td>";
+                            //strtotime (secondes par rapport au 1er janvier 1970)
+                            //date ("format", time ...) affiche une date avec le format voulu
+                            echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
+                            echo "<td>".$listOfCountry[$user["country"]]."</td>";
+                            echo "<td>".$listOfStatus[$user["active_account"]]."</td>"; 
+                            //Lien vers deleteUser.php?+id de l'utilisateur à supprimer
+                            echo "<td><a href='deleteUser.php?id=".$user["user_id"]."'>Supprimer</a><a href='updateUser.php?id=".$user["user_id"]."'>Modifier</a></td>";
+                      
+                             if ($_SESSION['moderator'] ==2 ){ //A MODIFIER
+                                echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Nommer modérateur</a></td>";
+                                echo "</tr>";
+                            }
+                            echo "</tr>";
+
+                        }
+                    }
+                
+                ?>
+            </table>
+        </div>
+         <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">INFORMATIONS MODERATEURS</h1>
             </div>
-            <div id="ListParamMod">
-                <p>Trier Par:</p>
-            <select id="sortBySelectMod">
-                <option value="user_id" selected="selected">id</option>
-                <option value="pseudo" >Pseudo</option>
-                <option value="prenom" >Prénom</option>
-                <option value="nom" >Nom</option>
-                <option value="email" >Mail</option>
-                <option value="birthday" >Date de naissance</option>
-                <option value="gender" >Genre</option>
-                <option value="country" >Pays</option>
-                <option value="active_account">Statut</option>
-            <select>
-            <select id="sortByOptionSelectMod">
-                <option value="ASC">Croissant</option>
-                <option value="DESC">Décroissant</option>
-            </select>
-            <input id=tagButtonView type="button" onclick='recupParam("Mod")' value ="Actualiser"></input>
-            <br>
-            <p>Nombre d'utilisateurs souhaités :</p>
-            <select id="nbusersSelectMod">
-                <option value="5" selected="selected">5</option>
-                <option value="10" >10</option>
-                <option value="20" >20</option>
-                <option value="30" >30</option>
-            <select>
-            </div>
+        </div>
             <div>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Identifiant</th>
-                                <th>Pseudo</th>
-                                <th>Prénom</th>
-                                <th>Nom</th>
-                                <th>Mail</th>
-                                <th>Date de naissance</th>
-                                <th>Genre</th>
-                                <th>Pays</th>
-                                <th>Statut</th>
-                                <th>Date d'enregistrement</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-<!-- PHP
-        foreach ($users as $user) {
-          if (($user ["moderator"] ==1) OR ($user ["moderator"] ==2)){
-            echo "<tr>";
-            echo "<td>".$user["user_id"]."</td>";
-            echo "<td>".$user["pseudo"]."</td>";
-            echo "<td>".$user["firstname"]."</td>";
-            echo "<td>".$user["lastname"]."</td>";
-            echo "<td>".$user["email"]."</td>";
-            echo "<td>".date("d/m/Y", strtotime($user["birthday"]))."</td>";
-            echo "<td>".$listOfGender[$user["gender"]]."</td>";
-            echo "<td>".$listOfCountry[$user["country"]]."</td>";
-            echo '<td><input type="button" value="Modifier" onclick=""></td>';
-            if (($user ["moderator"] == 1 && checkSuperModerator($_SESSION["id"])) ){
-              echo '<td><input type="button" value="Ajouter un Supermodérateur" onclick=""></td>'; //
-              echo "</tr>";
-            }if (($user ["moderator"] == 2 && checkSuperModerator($_SESSION["id"])) ){
-              echo '<td><input type="button" value="Retirer un Supermodérateur" onclick=""></td>';
-              echo "</tr>";
-            }else {
-              echo "</tr>";
-            }
-          }
-        } -->
-
-           </table>
+            <table> 
+                <thead>
+                    <tr> 
+                        <th>Identifiant</th>
+                        <th>Pseudo</th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Mail</th>
+                        <th>Date de naissance</th>
+                        <th>Genre</th>
+                        <th>Pays</th>
+                    </tr>
+                </thead>
+                    <?php 
+                        foreach ($users as $user) {
+                            if (($user ["moderator"] ==1) OR ($user ["moderator"] ==2)  ){
+                                echo "<tr>";
+                                echo "<td>".$user["user_id"]."</td>";
+                                echo "<td>".$user["pseudo"]."</td>";
+                                echo "<td>".$user["firstname"]."</td>";
+                                echo "<td>".$user["lastname"]."</td>";
+                                echo "<td>".$user["email"]."</td>";
+                                //date
+                                echo "<td>".date ("d/m/Y", strtotime($user["birthday"]))."</td>";
+                                //strtotime (secondes par rapport au 1er janvier 1970)
+                                //date ("format", time ...) affiche une date avec le format voulu
+                                echo "<td>".$listOfGender[$user["gender"]]."</td>"; //Affiche 'Homme' au lieu de 'm'
+                                echo "<td>".$listOfCountry[$user["country"]]."</td>";
+                                if ($_SESSION['moderator']==2){
+                                    if ($user ["moderator"] ==1){ // 2 = ADMIN
+                                        echo "<td><a href='updateModerator.php?id=".$user["user_id"]."'>Retirer les droits</a></td>";
+                                 
+                                    }
+                                }
+                                echo "</tr>";
+                            }
+                        }               
+                     ?>
+              </table>
 
         </div>
-
+       
 
         <hr>
-//
-
-<script src="admin\libMod.js"></script>
-<!-- <script src="admin\libSupMod.js"></script> -->
-
 <?php
     include "footer.php";
 ?>

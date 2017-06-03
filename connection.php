@@ -1,16 +1,21 @@
 <?php
 	session_start();
-	require "\conf.inc.php";
-	require "\lib.php";
-	include "admin\libSQL.php";
+	require "conf.inc.php";
+	require "lib.php";
+// <form method=POST action="connection.php"> == <form method=POST> car ça redirige sur la même page
 
 
+//valeurs existent
+// récupération en BDD du mot de passe haché
+// comparaison du mot de passe saisi avec le mot de passe haché (fonction native)
+// redirection ou affichage de l'erreur
 
 if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 	$connection = dbConnect ();
 	$query = $connection->prepare("SELECT pwd FROM USERS where email=:email;");
 	$query -> execute (["email"=>$_POST["email"]]);
 	$result = $query -> fetch();
+
 
 	//Verification du mot de passe
 	if (!empty($result) && password_verify ($_POST["pwd"], $result["pwd"])) {
@@ -20,21 +25,43 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
         $query -> execute (["email"=>$_POST["email"]]);
         $result = $query -> fetch();
 
+
   		//Enregistrer la clé et l'ID de l'utilisateur dans la BDD
 		$query = $connection->prepare("UPDATE USERS SET access_token =:access_token  WHERE email=:email;");
 		$query -> execute (["access_token"=>$accessToken,"email"=>$_POST["email"] ]);
 
 		//SESSION:
 		$_SESSION ['id'] = $accessToken;
+		$_SESSION['user'] = $result['user_id'];
+		//Vérification du statut modérateur
+		$query = $connection->prepare("SELECT moderator FROM USERS where email=:email;");
+		$query -> execute (["email"=>$_POST["email"]]);
+		$result = $query -> fetch();
 
-            	header("Location:index.php");
+			if ($result ['moderator'] == 1) {
+				$_SESSION ['moderator'] = 1;
+
+			}
+			else if ($result ['moderator'] == 2) {
+				$_SESSION ['moderator'] = 2;
+
+			}
+			else {
+				$_SESSION ['moderator'] = 0;
+			}
+			//redirection
+			header("Location: index.php");
+		}
+		else {
+            	echo "Vérifiez vos identifiants";
             	//header("Location: connection.php");
-        }else {
-				    	echo "identifiants incorrect";
-				    	//header("Location: connection.php");
-				}
+        }
 }
 else {
     	echo "Veuillez saisir des identifiants";
     	//header("Location: connection.php");
 }
+
+
+
+?>

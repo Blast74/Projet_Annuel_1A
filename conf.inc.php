@@ -3,7 +3,7 @@
 define ("HOST", "localhost");
 define ("DBNAME", "zebrolfrertest");
 define ("DBUSER", "root");
-define ("DBPWD", "root"); //Windows:    define ("DBPWD", "");
+define ("DBPWD", ""); //Windows:    define ("DBPWD", "");
 
 
 $listOfGenre=[
@@ -53,21 +53,6 @@ $errors = [
 	6 =>"Veuillez sélectionner un genre dans la liste",
 	7 =>"Veuillez sélecitonner un pays dans la liste",
 	8 => "Le captcha n'est pas correct",
-	9 => "Le mail existe déjà",
-	10 => "Le pseudo existe déjà",
-	11 => "Ne pas remplir un champs avec uniquement des espaces !",
-	12 => "Le titre doit faire entre 3 et 30 caractères",
-	13 => "Le nom de l'album doit faire entre 3 et 30 caractères",
-	14 => "Le titre de cette musique existe déjà",
-	15 => "Veuillez choisir un fichier à uploader",
-	16 => "Veuillez sélectionner le bon format (.mp3)",
-	17 => "Le fichier est trop gros",
-	18 => "Problème d'upload du fichier",
-	19 => "La taille de l'image est trop grande",
-	20 => "Sélectionner un format .jpeg, .jpg ou .png pour votre image"
-
-];
-
-$messages = [
-	1 => "Votre musique à bien été ajouté !"
+	9 => "le mail existe déjà",
+	10 => "le pseudo existe déjà"
 ];

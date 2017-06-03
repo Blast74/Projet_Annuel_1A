@@ -32,8 +32,9 @@ CREATE TABLE MUSIC(
         note_music     Int ,
         isDeleted      Bool NOT NULL DEFAULT 0,
         dateupload     Date ,
-        upload_music   Text ,
+        upload_music   Int ,
         visibility     Bool NOT NULL DEFAULT 1,
+        upload_date    Date ,
         user_id        Int NOT NULL
 );
 

@@ -2,8 +2,6 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
-require "admin/libSQL.php";
-require "lib.php"
 ?>
 
 
@@ -72,7 +70,7 @@ require "lib.php"
                             </li>";
                         }
                         //Affiche directement le nom de l'utilisateur si il est connecté
-                        else if ((isset($_SESSION['id']))) {
+                        else if ((isset($_SESSION['id'])) &&  ($_SESSION['moderator'] == 0) ) {
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -80,7 +78,7 @@ require "lib.php"
                                    <a href="libTrophy.php">Mes Trophés</a>
                                </li>
                                      <li>
-                                        <a href="addMusic.php">Gérer mes musiques</a>
+                                        <a href="upload.php">Gérer mes musiques</a>
                                     </li>
                                     <li>
                                         <a href="account.php">Gérer mes informations personnelles</a>
@@ -91,12 +89,16 @@ require "lib.php"
                                 </ul>
                             </li>';
                         }
-                        if ((isset($_SESSION['id'])) && ((checkModerator($_SESSION["id"])) || (checkSuperModerator($_SESSION["id"])))) {  //MODERATEUR ==1 !!!
+                         else if ((isset($_SESSION['id'])) &&  ($_SESSION['moderator'] == 1) OR ($_SESSION['moderator'] == 2)  ) {  //MODERATEUR ==1 !!!
                             echo '<li class="dropdown">
-                                <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION<b class="caret"></b></a>
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+
                                      <li>
                                         <a href="moderation.php">Gérer les utilisateurs</a>
+                                    </li>
+                                    <li>
+                                        <a href="disconnect.php">Se déconnecter</a>
                                     </li>
                                 </ul>
                             </li>';

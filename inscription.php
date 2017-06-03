@@ -1,17 +1,18 @@
 <?php
     session_start ();
     include 'navbar.php';
+    require "lib.php";
     require_once "conf.inc.php";
 ?>
 
 
     <div class="container">
 
-
+  
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Inscrivez vous !</h1>
-
+               
      </div>
         </div>
         <!-- FORMULAIRE -->
@@ -19,11 +20,11 @@
             <div class="col-md-8">
                 <?php //Affichage des erreurs s'il y en a
                 echo '<div class="control-group form-group">';
-                if (isset ($_SESSION["form_errors"])){
-
+                if (isset ($_SESSION["form_errors"])){ 
+       
                     foreach ($_SESSION["form_errors"] as $error)
                     {
-                        echo "<li>".$errors[$error];
+                        echo "<li>".$errors[$error];     
                     }
                 }
                 echo "</div>";
@@ -103,7 +104,7 @@
                                  $selected =(isset($_SESSION["form_post"]["country"]) && $_SESSION["form_post"]["country"] == $key)?"selected='selected'":"";
 
                                 echo "<option value='".$key."' ".$selected.">" .$value."</option>";
-                            }
+                            } 
                             ?>
                       </select>
                     </div>
@@ -116,6 +117,11 @@
 
         <?php
             include 'footer.php';
-            unset($_SESSION["form_post"] );
+            unset($_SESSION["form_post"] ); 
             unset($_SESSION["form_errors"] );
         ?>
+
+
+
+
+    
