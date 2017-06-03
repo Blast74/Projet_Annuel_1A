@@ -4,6 +4,7 @@ function listUsers(nbusers, idSession, sortBy, sortByOption){
   xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
           var container = document.getElementById('userslistAjax');
+          //.responseText ne renvoie que ce qui est affiché par le script php dans un navigateur (echo, print_f, vardump, balises html)
           container.innerHTML = `${xmlhttp.responseText}`;
       }
   };
@@ -24,5 +25,5 @@ function recupParam(str){
   var nbusers = nbusersSelect.options[nbusersSelect.selectedIndex].value;
   var idSession = '<?php echo $_SESSION["id"]; ?>';
   listUsers(nbusers, idSession, sortBy, sortByOption);
-  
+
 }
