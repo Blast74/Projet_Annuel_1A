@@ -15,6 +15,8 @@ if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisa
   die ();
 }
 
+$imageFilesAuthorized = ["png", "jpg", "jpeg"];
+
 define("MUSIC_DIR_PATH", "./musics");
 define("MUSIC_IMAGE_DIR_PATH", "./music_images");
 //$authorizedFormat = mp3;
@@ -90,22 +92,27 @@ if( isset($_POST["titre"]) &&
           $listOfErrors[] = 15;
         }
 
-var_dump ($_FILES);
-die ();
+
+
+
 
         //Vérification de l'image
+
+
         $imageFile = $_FILES["img"];
         if (!empty ($imageFile ["size"])){
-
           //Taille du fichier
-          if ($imageFile["size"] > 9040685 ) {
+          if ($imageFile["size"] > 9040685 ) { //CHANGER VERIF TAILLE
             $error = true;
-            $listOfErrors[] = 17;
+            $listOfErrors[] = 19;
           }
           //Format du fichier
+          $imageExtension = pathinfo ($_FILES ["img"]["name"]);
+          $musicImageDirPath = MUSIC_IMAGE_DIR_PATH.uniqid().".".$imageExtension;
+          echo $musicImageDirPath;
           if ($musicFile ["type"] != "audio/mp3" ) {
             $error = true;
-            $listOfErrors[] = 16;
+            $listOfErrors[] = 20;
           }
         }
 
@@ -153,17 +160,17 @@ die ();
               //uploadDate
               //Chemin de la musique
 
-              $imagePath = 'dans ton cul';
-              $musicPath = 432; //CHANGER LE CHAMP DANS LA BDD !!!!
+
+
               $uploadDate = date ('Y-m-d');
 
               $querry -> execute([
                   "music_name" => $_POST["titre"],
                   "author_comment" => $_POST["comment"],
                   "lyrics" => $_POST["lyrics"],
-                  "music_image" => $imagePath,
+                  "music_image" => $musicImageDirPath,
                   "dateupload" => $uploadDate,
-                  "upload_music" => $musicPath,
+                  "upload_music" => $musicDirPath,
                   "user_id" => $_SESSION['user']
                   ]);
             $listOfMessages [] = 1;
