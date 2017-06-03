@@ -97,6 +97,7 @@ if( isset($_POST["titre"]) &&
 
 
         $imageFile = $_FILES["img"];
+        $musicImageDirPath = NULL;
         if (!empty ($imageFile ["size"])){
           //Taille du fichier
           if ($imageFile["size"] > 9040685 ) { //CHANGER VERIF TAILLE
@@ -105,20 +106,21 @@ if( isset($_POST["titre"]) &&
           }
           //Format du fichier
           $imageExtension = pathinfo ($_FILES ["img"]["name"]);
-          $musicImageDirPath = MUSIC_IMAGE_DIR_PATH."/".uniqid().".".$imageExtension["extension"];
-          echo $musicImageDirPath;
+
+          var_dump (!in_array($imageExtension["extension"], $imageFilesAuthorized));
           die ();
-          if ($musicFile ["type"] != "audio/mp3" ) {
+          if ($musicFile ["type"] != "audio/mp3" ){
             $error = true;
             $listOfErrors[] = 20;
+          }
+          if ($error = false) { //Enregistrement de l'image sur le serveur
+            //Si  la musique est enregistrée :
 
+            //path
+            $musicImageDirPath = MUSIC_IMAGE_DIR_PATH."/".uniqid().".".$imageExtension["extension"];
 
           }
         }
-        else {
-          $musicImageDirPath = NULL;
-        }
-
 
 
         //Connexion à la BDD s'il n'y pas d'erreurs et dernière vérification
@@ -150,25 +152,18 @@ if( isset($_POST["titre"]) &&
           if ($musicFile ["error"] == 0 ) {
             //  move_uploaded_file($musicFile["tmp_name"], $musicDirPath);
 
-            //Vérification que l'image y est A FAIRE
+
 
           }
           if (move_uploaded_file($musicFile["tmp_name"], $musicDirPath) == false) {
             $error = true;
             $listOfErrors [] = 18;
-          } else {
+          }else {
               //Ajout des infos en BDD
               $connection = dbConnect();
               $querry = $connection -> prepare("INSERT INTO MUSIC (music_name, author_comment, lyrics, music_image, dateupload, upload_music, user_id) VALUES (:music_name,  :author_comment, :lyrics, :music_image, STR_TO_DATE (:dateupload, '%Y-%m-%d') , :upload_music, :user_id)");
-              //uploadDate
               //Chemin de la musique
-
-
-
-
-
               $uploadDate = date ('Y-m-d');
-
               $querry -> execute([
                   "music_name" => $_POST["titre"],
                   "author_comment" => $_POST["comment"],
