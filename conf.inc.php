@@ -62,7 +62,9 @@ $errors = [
 	15 => "Veuillez choisir un fichier à uploader",
 	16 => "Veuillez sélectionner le bon format (.mp3)",
 	17 => "Le fichier est trop gros",
-	18 => "Problème d'upload du fichier"
+	18 => "Problème d'upload du fichier",
+	19 => "La taille de l'image est trop grande",
+	20 => "Sélectionner un format .jpeg, .jpg ou .png pour votre image"
 
 ];
 
