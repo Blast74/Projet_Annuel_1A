@@ -3,10 +3,7 @@ session_start();
 require "conf.inc.php";
 require "lib.php";
 
-//fonction id ();
-//vérification
-//nom musique + id user
-//
+
 
 $verifyUser = getUser ($_SESSION["id"]);
 
@@ -100,6 +97,7 @@ if( isset($_POST["titre"]) &&
 
 
         $imageFile = $_FILES["img"];
+        $musicImageDirPath = NULL;
         if (!empty ($imageFile ["size"])){
           //Taille du fichier
           if ($imageFile["size"] > 9040685 ) { //CHANGER VERIF TAILLE
@@ -108,14 +106,21 @@ if( isset($_POST["titre"]) &&
           }
           //Format du fichier
           $imageExtension = pathinfo ($_FILES ["img"]["name"]);
-          $musicImageDirPath = MUSIC_IMAGE_DIR_PATH.uniqid().".".$imageExtension;
-          echo $musicImageDirPath;
-          if ($musicFile ["type"] != "audio/mp3" ) {
+
+          var_dump (!in_array($imageExtension["extension"], $imageFilesAuthorized));
+          die ();
+          if ($musicFile ["type"] != "audio/mp3" ){
             $error = true;
             $listOfErrors[] = 20;
           }
-        }
+          if ($error = false) { //Enregistrement de l'image sur le serveur
+            //Si  la musique est enregistrée :
 
+            //path
+            $musicImageDirPath = MUSIC_IMAGE_DIR_PATH."/".uniqid().".".$imageExtension["extension"];
+
+          }
+        }
 
 
         //Connexion à la BDD s'il n'y pas d'erreurs et dernière vérification
@@ -124,7 +129,7 @@ if( isset($_POST["titre"]) &&
             $connection = dbConnect ();
             $query = $connection->prepare("SELECT music_name FROM MUSIC WHERE music_name=:music_name AND user_id =:user_id AND isDeleted = 0");
             $query -> execute (["music_name"=>$_POST["titre"],
-                                "user_id"=> $_SESSION["user"]
+                                "user_id"=> $verifyUser["user_id"]
                                 ]);
             $result = $query -> fetch(); //fetch retourne le 1er enregistrement
 
@@ -147,23 +152,18 @@ if( isset($_POST["titre"]) &&
           if ($musicFile ["error"] == 0 ) {
             //  move_uploaded_file($musicFile["tmp_name"], $musicDirPath);
 
-            //Vérification que l'image y est A FAIRE
+
 
           }
           if (move_uploaded_file($musicFile["tmp_name"], $musicDirPath) == false) {
             $error = true;
             $listOfErrors [] = 18;
-          } else {
+          }else {
               //Ajout des infos en BDD
               $connection = dbConnect();
               $querry = $connection -> prepare("INSERT INTO MUSIC (music_name, author_comment, lyrics, music_image, dateupload, upload_music, user_id) VALUES (:music_name,  :author_comment, :lyrics, :music_image, STR_TO_DATE (:dateupload, '%Y-%m-%d') , :upload_music, :user_id)");
-              //uploadDate
               //Chemin de la musique
-
-
-
               $uploadDate = date ('Y-m-d');
-
               $querry -> execute([
                   "music_name" => $_POST["titre"],
                   "author_comment" => $_POST["comment"],
@@ -171,7 +171,7 @@ if( isset($_POST["titre"]) &&
                   "music_image" => $musicImageDirPath,
                   "dateupload" => $uploadDate,
                   "upload_music" => $musicDirPath,
-                  "user_id" => $_SESSION['user']
+                  "user_id" => $verifyUser['user_id']
                   ]);
             $listOfMessages [] = 1;
             $_SESSION ["form_message"] = $listOfMessages;
