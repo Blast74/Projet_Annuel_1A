@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include 'navbar.php';
 ?>
 
@@ -9,9 +10,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Nous contacter
-                   
+
                 </h1>
-               
+
             </div>
         </div>
         <!-- /.row -->
@@ -29,12 +30,12 @@
                 <p>
                     101 rue du colonel Fabien<br>Angicourt, 60940<br>
                 </p>
-                <p><i class="fa fa-phone"></i> 
+                <p><i class="fa fa-phone"></i>
                     <abbr title="Phone">P</abbr>: 03 44 00 00 00</p>
-                <p><i class="fa fa-envelope-o"></i> 
+                <p><i class="fa fa-envelope-o"></i>
                     <abbr title="Email">E</abbr>: <a href="mailto:name@example.com">name@example.com</a>
                 </p>
-                <p><i class="fa fa-clock-o"></i> 
+                <p><i class="fa fa-clock-o"></i>
                     <abbr title="Hours">H</abbr>: Lundi - Vendredi: 9:00 à 19:00 heures </p>
                 <ul class="list-unstyled list-inline list-social-icons">
                     <li>

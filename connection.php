@@ -1,22 +1,16 @@
 <?php
 	session_start();
-	require "conf.inc.php";
-	require "lib.php";
-	require './lib/libSQL.php';
-// <form method=POST action="connection.php"> == <form method=POST> car ça redirige sur la même page
+	require "\conf.inc.php";
+	require "\lib.php";
+	include "admin\libSQL.php";
 
 
-//valeurs existent
-// récupération en BDD du mot de passe haché
-// comparaison du mot de passe saisi avec le mot de passe haché (fonction native)
-// redirection ou affichage de l'erreur
 
 if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 	$connection = dbConnect ();
 	$query = $connection->prepare("SELECT pwd FROM USERS where email=:email;");
 	$query -> execute (["email"=>$_POST["email"]]);
 	$result = $query -> fetch();
-
 
 	//Verification du mot de passe
 	if (!empty($result) && password_verify ($_POST["pwd"], $result["pwd"])) {
@@ -26,7 +20,6 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
         $query -> execute (["email"=>$_POST["email"]]);
         $result = $query -> fetch();
 
-
   		//Enregistrer la clé et l'ID de l'utilisateur dans la BDD
 		$query = $connection->prepare("UPDATE USERS SET access_token =:access_token  WHERE email=:email;");
 		$query -> execute (["access_token"=>$accessToken,"email"=>$_POST["email"] ]);
@@ -34,15 +27,14 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 		//SESSION:
 		$_SESSION ['id'] = $accessToken;
 
-            	echo "Vérifiez vos identifiants";
+            	header("Location:index.php");
             	//header("Location: connection.php");
-        }
+        }else {
+				    	echo "identifiants incorrect";
+				    	//header("Location: connection.php");
+				}
 }
 else {
     	echo "Veuillez saisir des identifiants";
     	//header("Location: connection.php");
 }
-
-
-
-?>
