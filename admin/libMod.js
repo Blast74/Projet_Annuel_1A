@@ -10,6 +10,9 @@ function listUsers(nbusers, idSession, sortBy, sortByOption){
   xmlhttp.open("GET", `admin/listMod.php?access_token=${idSession}&nbusers=${nbusers}&sortBy=${sortBy}&sortByOption=${sortByOption}`, true);
   xmlhttp.send();
 }
+function AddPageTable(){
+
+}
 function recupParam(str){
   document.getElementById('userslistAjax').innerHTML = "";
   var test = document.getElementsByName('userModList');
@@ -21,4 +24,5 @@ function recupParam(str){
   var nbusers = nbusersSelect.options[nbusersSelect.selectedIndex].value;
   var idSession = '<?php echo $_SESSION["id"]; ?>';
   listUsers(nbusers, idSession, sortBy, sortByOption);
+  
 }
