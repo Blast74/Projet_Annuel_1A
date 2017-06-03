@@ -83,9 +83,13 @@ if( !empty($_POST["titre"]) &&
 
         }else{  //enregistrement du formulaire dans la BDD
 
-        $connection = dbConnect();
+        if ($_SESSION[]) {
+            # code...
+        }
+
+        $addMusic = dbConnect();
                 // ":pseudo" (variable sql)   modif!!!!!
-            $querry = $connection -> prepare("INSERT INTO music (music_name, author_comment, lyrics, music_image) VALUES (:music_name, :author_comment, :lyrics)");
+            $querry = $addMusic -> prepare("INSERT INTO music (music_name, author_comment, lyrics, music_image) VALUES (:music_name, :author_comment, :lyrics)");
 
 echo $_POST["genre"];
             $querry -> execute([     // la ou il y a   :pseudo;, on met la valeur de $_POST["pseudo"]
