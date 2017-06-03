@@ -34,6 +34,7 @@ CREATE TABLE MUSIC(
         dateupload     Date ,
         upload_music   Text ,
         visibility     Bool NOT NULL DEFAULT 1,
+        upload_date    Date ,
         user_id        Int NOT NULL
 );
 
