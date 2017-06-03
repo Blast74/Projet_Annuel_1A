@@ -24,5 +24,5 @@ function recupParam(str){
   var nbusers = nbusersSelect.options[nbusersSelect.selectedIndex].value;
   var idSession = '<?php echo $_SESSION["id"]; ?>';
   listUsers(nbusers, idSession, sortBy, sortByOption);
-  console.log(document.getElementById('userslistAjax').childNodes);
+  
 }
