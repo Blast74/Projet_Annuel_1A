@@ -1,19 +1,14 @@
 <?php
     session_start();
     include 'navbar.php';
-    require "lib.php";
+    require_once "lib.php";
     require_once "conf.inc.php";
 ?>
-
-
     <div class="container">
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Ajout d'une musique</h1>
-
-     </div>
+    <div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Ajout d'une musique</h1>
+    </div>
         </div>
         <!-- FORMULAIRE -->
         <div class="row">
@@ -27,9 +22,17 @@
                         echo "<li>".$errors[$error];
                     }
                 }
+                if (isset ($_SESSION["form_message"])){
+
+                    foreach ($_SESSION["form_message"] as $message)
+                    {
+                        echo "<li>".$messages[$message];
+                    }
+                }
                 echo "</div>";
                 ?>
-                <form method="POST" action="saveMusic.php" >
+                <form method="POST" action="saveMusic.php"  enctype="multipart/form-data">
+                <!--enctype = nécessaire pour uploader sinon $_FILES est null -->
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Titre :</label>
@@ -37,9 +40,6 @@
                             <p class="help-block"></p>
                         </div>
                     </div>
-
-
-
 
                     <div class="control-group form-group">
                         <div class="controls">
@@ -80,9 +80,8 @@
                       </select>
                     </div>
 
-                    <input type="file" name="file" accept=".mp3" />
+                    <input type="file" name="music" accept=".mp3"/>
 
-                    <br>
 
                     <label>Ajoutez une image pour votre musique (Optionnel) :</label><br>
                     <input type="file" name="img" accept=".png,.jpg,.jpeg" />
@@ -96,8 +95,7 @@
 
         <?php
             include 'footer.php';
-            $test = get_defined_vars();
-            var_dump($test);
             unset($_SESSION["form_post"] );
             unset($_SESSION["form_errors"] );
+            unset($_SESSION ["form_message"]);
         ?>

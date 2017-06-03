@@ -3,10 +3,7 @@ session_start();
 require "conf.inc.php";
 require "lib.php";
 
-//fonction id ();
-//vérification
-//nom musique + id user
-//
+
 
 $verifyUser = getUser ($_SESSION["id"]);
 
@@ -108,12 +105,18 @@ if( isset($_POST["titre"]) &&
           }
           //Format du fichier
           $imageExtension = pathinfo ($_FILES ["img"]["name"]);
-          $musicImageDirPath = MUSIC_IMAGE_DIR_PATH.uniqid().".".$imageExtension;
+          $musicImageDirPath = MUSIC_IMAGE_DIR_PATH."/".uniqid().".".$imageExtension["extension"];
           echo $musicImageDirPath;
+          die ();
           if ($musicFile ["type"] != "audio/mp3" ) {
             $error = true;
             $listOfErrors[] = 20;
+
+
           }
+        }
+        else {
+          $musicImageDirPath = NULL;
         }
 
 
@@ -124,7 +127,7 @@ if( isset($_POST["titre"]) &&
             $connection = dbConnect ();
             $query = $connection->prepare("SELECT music_name FROM MUSIC WHERE music_name=:music_name AND user_id =:user_id AND isDeleted = 0");
             $query -> execute (["music_name"=>$_POST["titre"],
-                                "user_id"=> $_SESSION["user"]
+                                "user_id"=> $verifyUser["user_id"]
                                 ]);
             $result = $query -> fetch(); //fetch retourne le 1er enregistrement
 
@@ -162,6 +165,8 @@ if( isset($_POST["titre"]) &&
 
 
 
+
+
               $uploadDate = date ('Y-m-d');
 
               $querry -> execute([
@@ -171,7 +176,7 @@ if( isset($_POST["titre"]) &&
                   "music_image" => $musicImageDirPath,
                   "dateupload" => $uploadDate,
                   "upload_music" => $musicDirPath,
-                  "user_id" => $_SESSION['user']
+                  "user_id" => $verifyUser['user_id']
                   ]);
             $listOfMessages [] = 1;
             $_SESSION ["form_message"] = $listOfMessages;
