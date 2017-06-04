@@ -1,6 +1,6 @@
+<!-- librairie php admin -->
 <?php
 require_once 'conf.mod.php';
-require_once '../lib.php';
 
 //verifie le niveau de modération
 function checkMod($idSession){
@@ -34,7 +34,7 @@ function OptionModeration ($user, $idSession){
     switch ($user["moderator"]) {
       case 0:
         if(($checkMod[1]=="Moderator" || $checkMod[1]=="Supermoderator")) {
-          $returnOption .= '<td name = "userModList"><input type="button" value="Modifier" onclick=""></td>';
+          $returnOption .= '<td name = "userModList"><input type="button" value="Modifier" onclick="paramRight(this)"></td>';
 
         }if($checkMod[1]=="Supermoderator") {
           $returnOption .= '<td name = "userModList"><input type="button" value="Ajouter un Modérateur" onclick=""></td>';
@@ -43,11 +43,11 @@ function OptionModeration ($user, $idSession){
 
       case 1:
         if($user["moderator"] == 1 && $checkMod[1]=="Supermoderator") {
-          $returnOption .= '<td name = "userModList"><input type="button" value="Modifier" onclick=""></td>';
+          $returnOption .= '<td name = "userModList"><input type="button" value="Modifier" onclick="paramRight(this)"></td>';
 
         }
         if($user["access_token"] == $idSession && $checkMod[1]=="Moderator") {
-          $returnOption .= '<td name = "userModList"><input type="button" value="Modifier" onclick=""></td>';
+          $returnOption .= '<td name = "userModList"><input type="button" value="Modifier" onclick="paramRight(this)"></td>';
 
         }if ($user["access_token"] == $idSession) {
           $returnOption .= '<td name = "userModList"><input type="button" value="Retirer un Modérateur" onclick=""></td>';

@@ -41,6 +41,9 @@
                 <option value="30" >30</option>
             <select>
             </div>
+            <div id="resultRightOperation">
+
+            </div>
              <div id="userslistAjax">
 
         </div>
@@ -125,8 +128,6 @@
 
 
         <hr>
-//
-
 <script src="admin\libMod.js"></script>
 <!-- <script src="admin\libSupMod.js"></script> -->
 
