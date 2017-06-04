@@ -1,6 +1,5 @@
 <?php
     session_start();
-    require "conf.inc.php";
     include "navbar.php";
 
     // $connection = dbConnect ();
@@ -19,7 +18,6 @@
             <div id="ListParamUsers">
                 <p>Trier Par:</p>
             <select id="sortBySelectUsers">
-                <option value="user_id" selected="selected">id</option>
                 <option value="pseudo" >Pseudo</option>
                 <option value="prenom" >Prénom</option>
                 <option value="nom" >Nom</option>
@@ -43,10 +41,13 @@
                 <option value="30" >30</option>
             <select>
             </div>
-            <div id="userslistAjax">
+            <div id="resultRightOperation">
+
+            </div>
+             <div id="userslistAjax">
 
         </div>
-            <div class="row">
+        <!--    <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">MODERATEURS :</h1>
                 </div>
@@ -96,7 +97,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-<!-- PHP
+ PHP
         foreach ($users as $user) {
           if (($user ["moderator"] ==1) OR ($user ["moderator"] ==2)){
             echo "<tr>";
@@ -119,16 +120,14 @@
               echo "</tr>";
             }
           }
-        } -->
+        }
 
            </table>
 
-        </div>
+        </div> -->
 
 
         <hr>
-//
-
 <script src="admin\libMod.js"></script>
 <!-- <script src="admin\libSupMod.js"></script> -->
 

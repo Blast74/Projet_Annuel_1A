@@ -31,6 +31,7 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 				    	echo "identifiants incorrect";
 				    	//header("Location: connection.php");
 				}
+
 }
 else {
     	echo "Veuillez saisir des identifiants";

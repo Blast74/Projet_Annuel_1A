@@ -2,8 +2,8 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
-require "admin/libSQL.php";
-require "lib.php"
+require "admin/libModOne.php";
+require_once "lib.php"
 ?>
 
 
@@ -91,7 +91,8 @@ require "lib.php"
                                 </ul>
                             </li>';
                         }
-                        if ((isset($_SESSION['id'])) && ((checkModerator($_SESSION["id"])) || (checkSuperModerator($_SESSION["id"])))) {  //MODERATEUR ==1 !!!
+                        $checkMod  = checkMod($_SESSION["id"]);
+                        if ((isset($_SESSION['id'])) && $checkMod[0]) {  //MODERATEUR <=1
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -101,7 +102,7 @@ require "lib.php"
                                 </ul>
                             </li>';
                         }
-
+                        //var_dump($checkMod);
                     ?>
                 </ul>
             </div>
