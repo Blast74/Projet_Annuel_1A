@@ -1,33 +1,33 @@
 <?php
-require 'conf.mod.php';
+require_once 'conf.mod.php';
 require_once '../lib.php';
 
 //verifie le niveau de modération
-function checkMod($idSession, $return){
+function checkMod($idSession){
   $connection = dbConnect();
-  $query = $connection->prepare("SELECT * FROM USERS where access_token=:access_token;");
+  $query = $connection->prepare("SELECT * FROM USERS where access_token=:access_token");
   $query -> execute (["access_token" => $idSession]);
   $result = $query->fetch();
 
   switch ($result["moderator"]) {
     case 0:
-      return $return["user"];
+      return CHECKUSER;
       break;
     case 1:
-      return $return["moderator"];
+      return CHECKMODERATOR;
       break;
     case 2:
-      return $return["supermoderator"];
+      return CHECKSUPERMODERATOR;
       break;
 
     default:
-      return $return["error"];
+      return CHECKERROR;
       break;
   }
 }
 //attribut les droit en fonction de l'access_token
-function OptionModeration ($user, $idSession, $returnCheck){
-  $checkMod = checkMod($idSession, $returnCheck);
+function OptionModeration ($user, $idSession){
+  $checkMod = checkMod($idSession);
   if ($checkMod[0]) {
 
     $returnOption = '';
@@ -73,6 +73,8 @@ function OptionModeration ($user, $idSession, $returnCheck){
         break;
     }
     $returnOption .= '</tr>';
+  }else {
+    var_dump($checkMod);
   }
   return $returnOption;
 }
