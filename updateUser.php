@@ -3,24 +3,25 @@
     include 'navbar.php';
     require "lib.php";
     require_once "conf.inc.php";
-    //Récupération des informations de l'utilisateur
+    //Récupération des informations de l'utilisateur 
     if (!empty($_GET["id"]) && count ($_GET)==1 && is_numeric($_GET["id"]) ){
     $connection = dbConnect ();
     $query = $connection -> prepare ("SELECT * FROM USERS WHERE user_id=:id");
     $query -> execute ($_GET);//$_GET contient un id d'utilisateur
     //Alimenter le tableau data avec le contenu de la BDD
     $result = $query -> fetch();
-    $data = [ //Les données de data permettent de mettre les valeurs de la BDD dans les champs du formulaire
+    $data = [ //Les données de data permettent de mettre les valeurs de la BDD dans les champs du formulaire 
+    "user_id"=>$result["user_id"], 
       "email"=>$result["email"],
       "pseudo"=>$result["pseudo"],
       "gender"=>$result["gender"],
       "firstname"=>$result["firstname"],
       "lastname"=>$result["lastname"],
       "birthday"=>$result["birthday"],
-      "country"=>$result["country"],
+      "country"=>$result["country"],   
       "pwd"=>$result["pwd"],
       "update_date"=>$result["gender"],
-      "active_account"=>$result["active_account"]
+      "active_account"=>$result["active_account"]  
     ];
    }
 
@@ -33,7 +34,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">MODIFIER LES INFORMATIONS</h1>
+                <h1 class="page-header">MODIFIER LES INFORMATIONS</h1>              
             </div>
         </div>
         <!-- FORMULAIRE -->
@@ -41,13 +42,13 @@
             <div class="col-md-8">
                 <?php //Affichage des erreurs s'il y en a
                 echo '<div class="control-group form-group">';
-
-                if (isset ($_SESSION["form_errors"])){
+                
+                if (isset ($_SESSION["form_errors"])){      
                     foreach ($_SESSION["form_errors"] as $error)
                     {
-                        echo "<li>".$errors[$error];
+                        echo "<li>".$errors[$error];     
                     }
-                     $data = $_SESSION["form_post"];
+                     $data = $_SESSION["form_post"]; 
                 }
                 echo "</div>";
                 ?>
@@ -127,7 +128,7 @@
                                  $selected =(isset($_SESSION["form_post"]["country"]) && $_SESSION["form_post"]["country"] == $key)?"selected='selected'":"";
 
                                 echo "<option value='".$key."' ".$selected.">" .$value."</option>";
-                            }
+                            } 
                             ?>
                       </select>
                     </div>
@@ -141,6 +142,11 @@
 
         <?php
             include 'footer.php';
-            unset($_SESSION["form_post"] );
+            unset($_SESSION["form_post"] ); 
             unset($_SESSION["form_errors"] );
         ?>
+
+
+
+
+    

@@ -4,8 +4,6 @@
 	require "lib.php";
 	include "admin/libSQL.php";
 
-
-
 if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 	$connection = dbConnect ();
 	$query = $connection->prepare("SELECT pwd FROM USERS where email=:email;");

@@ -78,6 +78,40 @@
                             }
                             ?>
                       </select>
+
+
+                    </div>
+                    <div class="control-group form-group">
+                        <label>Sous-genre :</label><br>
+                        <select name="subtype">
+                            <?php
+                            foreach ($subtypeList as  $key) {
+                                 $selected =(isset($_SESSION["form_post"]["Sous-genre"]) && $_SESSION["form_post"]["Sous-genre"] == $key)?"selected='selected'":"";
+
+                                echo "<option value='".$key."' ".$selected.">" .$value."</option>";
+                            }
+
+
+                            ?>
+
+                      </select>
+
+
+                    </div>
+                    <div class="control-group form-group">
+                        <label>Sous-genre :</label><br>
+                        <select name="subtype">
+                            <?php
+                            foreach ($subtypeList as  $key) {
+                                 $selected =(isset($_SESSION["form_post"]["Sous-genre"]) && $_SESSION["form_post"]["Sous-genre"] == $key)?"selected='selected'":"";
+
+                                echo "<option value='".$key."' ".$selected.">" .$value."</option>";
+                            }
+
+
+                            ?>
+
+                      </select>
                     </div>
 
                     <input type="file" name="music" accept=".mp3"/>
