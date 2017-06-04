@@ -1,5 +1,5 @@
 
-function listUsers(nbusers, idSession, sortBy, sortByOption){
+function listUsers(nbusers, idSession, sortBy, sortByOption, str){
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -10,7 +10,10 @@ function listUsers(nbusers, idSession, sortBy, sortByOption){
   xmlhttp.open("GET", `admin/listMod.php?access_token=${idSession}&nbusers=${nbusers}&sortBy=${sortBy}&sortByOption=${sortByOption}`, true);
   xmlhttp.send();
 }
-function AddPageTable(){
+function changePageTable(nbPage,str){
+  recupParam(str);
+
+
 
 }
 function recupParam(str){
@@ -23,6 +26,7 @@ function recupParam(str){
   var nbusersSelect = document.getElementById(`nbusersSelect${str}`);
   var nbusers = nbusersSelect.options[nbusersSelect.selectedIndex].value;
   var idSession = '<?php echo $_SESSION["id"]; ?>';
-  listUsers(nbusers, idSession, sortBy, sortByOption);
-  
+  listUsers(nbusers, idSession, sortBy, sortByOption, str);
+  console.log(document.getElementById('userslistAjax').childNodes.tables);
+
 }

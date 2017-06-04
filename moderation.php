@@ -2,6 +2,7 @@
     session_start();
     require "conf.inc.php";
     include "navbar.php";
+    require 'admin/conf.mod.php'
 
     // $connection = dbConnect ();
     // $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
@@ -43,10 +44,10 @@
                 <option value="30" >30</option>
             <select>
             </div>
-            <div id="userslistAjax">
+             <div id="userslistAjax">
 
         </div>
-            <div class="row">
+        <!--    <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">MODERATEURS :</h1>
                 </div>
@@ -96,7 +97,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-<!-- PHP
+ PHP
         foreach ($users as $user) {
           if (($user ["moderator"] ==1) OR ($user ["moderator"] ==2)){
             echo "<tr>";
@@ -119,11 +120,11 @@
               echo "</tr>";
             }
           }
-        } -->
+        }
 
            </table>
 
-        </div>
+        </div> -->
 
 
         <hr>
