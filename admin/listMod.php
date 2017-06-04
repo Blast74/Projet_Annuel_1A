@@ -4,19 +4,16 @@ session_start();
   require 'libSQL.php';
   require 'libCountPage.php';
   require 'libModOne.php';
-  require 'conf.mod.php';
+
   $connection = dbConnect ();
-  $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0 ORDER BY :colTable DESC");
-  $query -> execute(
-                      ["colTable"=>$_REQUEST["sortBy"]]
-                    );
-  $resultSQL = $query -> fetchAll ();
-  $users = $resultSQL; //array_slice($resultSQL,0,$_REQUEST["nbusers"]+1);
-  $result = pageSelectorGen(count($resultSQL), $_REQUEST["nbusers"]);
-  $result .= ' <table width="100%" >
+  $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
+  $query -> execute();
+  $users = $query -> fetchAll ();
+   //array_slice($resultSQL,0,$_REQUEST["nbusers"]+1);
+   //  $result = pageSelectorGen(count($resultSQL), $_REQUEST["nbusers"]);
+  $result = ' <table width="100%" >
                       <thead>
                           <tr>
-                              <th>Identifiant</th>
                               <th>Pseudo</th>
                               <th>Prénom</th>
                               <th>Nom</th>
@@ -32,7 +29,6 @@ session_start();
                       </thead>';
   foreach ($users as $user) {
       $result .= '<tr name = "userModList">';
-      $result .= '<td name = "userModList">'.$user['user_id'].'</td>';
       $result .= '<td name = "userModList">'.$user['pseudo'].'</td>';
       $result .= '<td name = "userModList">'.$user['firstname'].'</td>';
       $result .= '<td name = "userModList">'.$user['lastname'].'</td>';
@@ -65,11 +61,12 @@ session_start();
           $result .= '<td name = "userModList">Inconnu</td>';
           break;
       }
-      $result .= OptionModeration($user,$_SESSION["id"],$returnModCheck);
+      $result .= OptionModeration($user,$_SESSION["id"]);
 
 
   }
   $result .= '</table>';
   echo $result;
+  //echo var_dump(get_defined_vars());
 
 ?>
