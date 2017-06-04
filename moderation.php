@@ -1,8 +1,6 @@
 <?php
     session_start();
-    require "conf.inc.php";
     include "navbar.php";
-    require 'admin/conf.mod.php'
 
     // $connection = dbConnect ();
     // $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
@@ -20,7 +18,6 @@
             <div id="ListParamUsers">
                 <p>Trier Par:</p>
             <select id="sortBySelectUsers">
-                <option value="user_id" selected="selected">id</option>
                 <option value="pseudo" >Pseudo</option>
                 <option value="prenom" >Prénom</option>
                 <option value="nom" >Nom</option>
