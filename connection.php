@@ -1,10 +1,8 @@
 <?php
 	session_start();
-	require "\conf.inc.php";
-	require "\lib.php";
-	include "admin\libSQL.php";
-
-
+	require "conf.inc.php";
+	require "lib.php";
+	include "admin/libSQL.php";
 
 if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 	$connection = dbConnect ();

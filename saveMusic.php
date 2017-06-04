@@ -5,6 +5,7 @@ require "lib.php";
 
 
 
+
 $verifyUser = getUser ($_SESSION["id"]);
 
 if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisateur en BDD
@@ -13,25 +14,18 @@ if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisa
 }
 
 $imageFilesAuthorized = ["png", "jpg", "jpeg"];
-
-define("MUSIC_DIR_PATH", "./musics");
-define("MUSIC_IMAGE_DIR_PATH", "./music_images");
 //$authorizedFormat = mp3;
+
+
+
 $error = false;
 $listOfErrors = [];
-
-if (!file_exists(MUSIC_DIR_PATH)){ //Dossier musiques
-  mkdir(MUSIC_DIR_PATH); //créer le dossier s'il n'existe pas
-}
-if (!file_exists(MUSIC_IMAGE_DIR_PATH)){ //Dossier d'image des musiques
-  mkdir(MUSIC_IMAGE_DIR_PATH);
-}
 
 
 if( isset($_POST["titre"]) &&
     isset($_POST["genre"]) &&
     isset($_FILES ["music"]) &&
-    count($_POST) == 5 ){
+    count($_POST) == 6 ){
         $_POST["titre"] = trim($_POST["titre"]);
 
         //Titre : entre 3 et 30
@@ -69,6 +63,11 @@ if( isset($_POST["titre"]) &&
             $error = true;
             $listOfErrors[] = 6;
         }
+        //VERIFICATION SOUS TYPE à FAIRE
+        if( in_array($_POST["subtype"], $subtypeList) ){
+            $error = true;
+            $listOfErrors[] = 21;
+        }
         //Vérification du la musique
         $musicFile = $_FILES["music"];
         if (!empty ($musicFile ["size"])){
@@ -89,16 +88,14 @@ if( isset($_POST["titre"]) &&
           $listOfErrors[] = 15;
         }
 
-
-
-
-
         //Vérification de l'image
-
 
         $imageFile = $_FILES["img"];
         $musicImageDirPath = NULL;
+
+
         if (!empty ($imageFile ["size"])){
+
           //Taille du fichier
           if ($imageFile["size"] > 9040685 ) { //CHANGER VERIF TAILLE
             $error = true;
@@ -107,29 +104,29 @@ if( isset($_POST["titre"]) &&
           //Format du fichier
           $imageExtension = pathinfo ($_FILES ["img"]["name"]);
 
-          var_dump (!in_array($imageExtension["extension"], $imageFilesAuthorized));
-          die ();
-          if ($musicFile ["type"] != "audio/mp3" ){
+          if (in_array($imageExtension["extension"], $imageFilesAuthorized) != true){
             $error = true;
             $listOfErrors[] = 20;
+
           }
-          if ($error = false) { //Enregistrement de l'image sur le serveur
+
+
+          if ($error == false) { //Enregistrement de l'image sur le serveur
             //Si  la musique est enregistrée :
-
             //path
-            $musicImageDirPath = MUSIC_IMAGE_DIR_PATH."/".uniqid().".".$imageExtension["extension"];
-
+            $userMusicImageFolder = createDirectory ("music_images","");
+            $musicImageDirPath  = $userMusicImageFolder.uniqid().'.'.$imageExtension["extension"];
+            //Copie de l'image temporaire sur le serveur
+            move_uploaded_file($_FILES ["img"]["tmp_name"], $musicImageDirPath);
           }
         }
-
-
         //Connexion à la BDD s'il n'y pas d'erreurs et dernière vérification
         if (!$error) {
             //Vérifie si la musique est déjà dans la BDD
             $connection = dbConnect ();
-            $query = $connection->prepare("SELECT music_name FROM MUSIC WHERE music_name=:music_name AND user_id =:user_id AND isDeleted = 0");
+            $query = $connection->prepare("SELECT music_name FROM MUSIC WHERE music_name=:music_name AND email =:email AND isDeleted = 0");
             $query -> execute (["music_name"=>$_POST["titre"],
-                                "user_id"=> $verifyUser["user_id"]
+                                "email"=> $verifyUser["email"]
                                 ]);
             $result = $query -> fetch(); //fetch retourne le 1er enregistrement
 
@@ -147,32 +144,31 @@ if( isset($_POST["titre"]) &&
         else {
           //On met la musique et l'image au bon endroit
 
-
-          $musicDirPath = MUSIC_DIR_PATH."/id:".$verifyUser["user_id"]."-".$_POST["titre"].".mp3";
-          if ($musicFile ["error"] == 0 ) {
-            //  move_uploaded_file($musicFile["tmp_name"], $musicDirPath);
+          $userMusicFolder = createDirectory ("musics", $verifyUser["email"]);
+          $musicDirPath = $userMusicFolder.$_POST["titre"].".mp3";
 
 
-
-          }
           if (move_uploaded_file($musicFile["tmp_name"], $musicDirPath) == false) {
             $error = true;
             $listOfErrors [] = 18;
           }else {
               //Ajout des infos en BDD
               $connection = dbConnect();
-              $querry = $connection -> prepare("INSERT INTO MUSIC (music_name, author_comment, lyrics, music_image, dateupload, upload_music, user_id) VALUES (:music_name,  :author_comment, :lyrics, :music_image, STR_TO_DATE (:dateupload, '%Y-%m-%d') , :upload_music, :user_id)");
+              $querry = $connection -> prepare("INSERT INTO MUSIC (music_name, subtype_type, subtype_name, author_comment, lyrics, music_image, dateupload, upload_music, email) VALUES (:music_name, :subtype_type, :subtype_name, :author_comment, :lyrics, :music_image, STR_TO_DATE (:dateupload, '%Y-%m-%d') , :upload_music, :email)");
               //Chemin de la musique
               $uploadDate = date ('Y-m-d');
               $querry -> execute([
                   "music_name" => $_POST["titre"],
+                  "subtype_type" => $_POST ["genre"],
+                  "subtype_name" => $_POST ["subtype"],
                   "author_comment" => $_POST["comment"],
                   "lyrics" => $_POST["lyrics"],
                   "music_image" => $musicImageDirPath,
                   "dateupload" => $uploadDate,
                   "upload_music" => $musicDirPath,
-                  "user_id" => $verifyUser['user_id']
+                  "email" => $verifyUser['email']
                   ]);
+
             $listOfMessages [] = 1;
             $_SESSION ["form_message"] = $listOfMessages;
             header("Location: addMusic.php");

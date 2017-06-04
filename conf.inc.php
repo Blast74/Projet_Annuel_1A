@@ -22,6 +22,22 @@ $listOfGenre=[
 				"reg" => "Reggae"
 				];
 
+$subtypeList=[
+				"roc" => ["Rock", "Pop-Rock", "Folkrock"],
+				"met" => ["Deathmetal", "Metal-Metal", "Trashmetal"],
+				"rap" => ["Rap", "Rap Americain", "Gangsta Rap"],
+				"blu" => ["Blues", "Deepblues"],
+				"chafr" => ["Chanson Française", "Variété", "Hard-Chanson Française"],
+				"cho" => ["Chorale", "Acid Chorale", "Choralcore", "Drum and Chorale"],
+				"cou" => ["Country", "Hardcountry", "Trance Country Psychédélique"],
+				"dis" => ["Disco"],
+				"ele" => ["Electro", "GOA", "House", "EDM", ],
+				"cla" => ["Violon", "Haubois", "Flute à bec"],
+				"tec" => ["Techno"],
+				"hip" => ["Hip Hop"],
+				"reg" => ["Reggae"]
+				];
+
 
 $listOfCountry=[
 				"fr" => "France",
@@ -64,7 +80,8 @@ $errors = [
 	17 => "Le fichier est trop gros",
 	18 => "Problème d'upload du fichier",
 	19 => "La taille de l'image est trop grande",
-	20 => "Sélectionner un format .jpeg, .jpg ou .png pour votre image"
+	20 => "Sélectionner un format .jpeg, .jpg ou .png pour votre image",
+	21 => "Veuillez sélectionner un sous-genre dans la liste"
 
 ];
 
