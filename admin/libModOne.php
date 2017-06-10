@@ -1,28 +1,34 @@
-<!-- librairie php admin -->
 <?php
+// <!-- librairie php admin -->
 require_once 'conf.mod.php';
 
 //verifie le niveau de modération
 function checkMod($idSession){
-  $connection = dbConnect();
-  $query = $connection->prepare("SELECT * FROM USERS where access_token=:access_token");
-  $query -> execute (["access_token" => $idSession]);
-  $result = $query->fetch();
+  if (!empty($idSession)) {
 
-  switch ($result["moderator"]) {
-    case 0:
-      return CHECKUSER;
-      break;
-    case 1:
-      return CHECKMODERATOR;
-      break;
-    case 2:
-      return CHECKSUPERMODERATOR;
-      break;
+    $connection = dbConnect();
+    $query = $connection->prepare("SELECT * FROM USERS where access_token=:access_token");
+    $query -> execute (["access_token" => $idSession]);
+    $result = $query->fetch();
 
-    default:
-      return CHECKERROR;
-      break;
+      switch ($result["moderator"]) {
+
+        case 1:
+          return CHECKUSER;
+          break;
+        case 2:
+          return CHECKMODERATOR;
+          break;
+        case 3:
+          return CHECKSUPERMODERATOR;
+          break;
+         default:
+           return CHECKERROR;
+           break;
+      }
+
+  }else {
+    return CHECKERROR;
   }
 }
 //attribut les droit en fonction de l'access_token
@@ -77,6 +83,15 @@ function OptionModeration ($user, $idSession){
     var_dump($checkMod);
   }
   return $returnOption;
+}
+
+function getJSAccessToken(){
+  if (isset($_SESSION["id"])) {
+    echo $_SESSION["id"];
+  } else {
+    echo "NULL";
+  }
+
 }
 
 //old

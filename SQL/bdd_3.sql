@@ -53,7 +53,7 @@ CREATE TABLE USERS(
         register_date  Date NOT NULL ,
         country        Char (2) NOT NULL ,
         pwd            Varchar (60) NOT NULL ,
-        moderator      TinyINT NOT NULL DEFAULT 0,
+        moderator      TinyINT NOT NULL DEFAULT 1,
         access_token   Varchar (60) ,
         update_date    Date ,
         trophy_points  Int NOT NULL DEFAULT 0 ,
@@ -119,12 +119,12 @@ ALTER TABLE LIKED ADD CONSTRAINT FK_LIKED_music_id FOREIGN KEY (music_id) REFERE
 
 
 INSERT INTO `users` ( `email`, `pseudo`, `image`, `gender`, `firstname`, `lastname`, `birthday`, `register_date`, `country`, `pwd`, `moderator`, `access_token`, `update_date`, `active_account`) VALUES
-        ('venzo.terence@gmail.com', 'terence74', NULL, 'm', 'Terence', 'Venzo', '1991-03-01', '1991-03-01', 'fr', '$2y$10$pVPoizfLjqBUFAwlhJCSmebwSZBHF2sZKv2ctB2w7K1JWOLakggNe', 2, NULL, NULL, 1),
-        ('venzo.terence@hotmail.fr', 'salut74', NULL, 'm', 'Terence', 'Venzo', '1994-12-11', '1994-12-11', 'fr', '$2y$10$cmgfyXfUme3/RpFtxmLktuP/N.3ASk8ULDOC3hAifew/x7q8mAUxy', 0, NULL, NULL, 1),
-        ('venzo.terence@free.fr', 'terence74960', NULL, 'm', 'Terence', 'Venzo', '1994-12-12', '1994-12-12', 'fr', '$2y$10$ttsclwCYEcb50TX7SQ.mfevgbQSlzr6i5l7DS6Yt2AsCJHsjlwzdC', 0, NULL, NULL, 1),
-        ('terence74@gmail.com', 'Terence75012', NULL, 'm', 'Terence', 'Venzo', '1994-06-30', '1994-06-30', 'fr', '$2y$10$uSkCzaJTfvTIDnLy.aEHlO3M4Zr7dZKgOZ1DE3itcKBOwGREgGgdi', 0, NULL, NULL, 1),
-        ('zrfzrfz@efzefe.fr', 'efzfzrfzr', NULL, 'm', 'czefzrfzf', 'zfzerfz', '1994-09-08', '1994-09-08', 'fr', '$2y$10$cNdhV7gCy.49llC/qVLis.AEZofYBzODguMgWKx9Y6lxt0y6fzm72', 1, NULL, NULL, 1),
-        ('iozejfioze@zehfhiozejfo.ffr', 'iozefzeiof', NULL, 'm', 'efuzoeufhoefh', 'ehfiohozefo', '1994-06-21', '1994-06-21', 'fr', '$2y$10$a5kLxzAiybm22l.WUx0i7uXHYOfkjQ6i0Gav367kQl.Da3Rah.h8e', 1, NULL, NULL, 1),
-        ('izejfioejff@eufhiqehoe.fr', 'lejfzpoefk', NULL, 'm', 'ukzefuizefize', 'iefjziofjipoe', '1993-06-18', '1993-06-18', 'fr', '$2y$10$GcQp9/WuE7Uvn9cO4TT9pOXkUzwgxPxfHUeqAUYF7n201bVkatnQC', 0, NULL, NULL, 1),
-        ('moqejfepojkfpq@efqlefjpod.com', 'ioqejfqopjoejjf', NULL, 'm', 'zefiozhofir', 'pcdkspkvzef', '1996-08-15', '1996-08-15', 'fr', '$2y$10$GJZqZDGiOxFHwPDB3YrWg.xK59BNFp8jo.FtiKPc3W82Vs5a89K82', 0, NULL, NULL, 1),
-        ('dhdjfckzjuk@djzuejsiz.fr', 'usqhlfezuehp', NULL, 'm', 'iqfheuhqzhf', 'cieofnomzeif', '1988-03-08', '1988-03-08', 'fr', '$2y$10$2J2DgxvqSz0fsyipiFdTMuwqSfAN2m34uJRyStxjFCuqAq7uo4YNi', 0, NULL, NULL, 1);
+        ('venzo.terence@gmail.com', 'terence74', NULL, 'm', 'Terence', 'Venzo', '1991-03-01', '1991-03-01', 'fr', '$2y$10$pVPoizfLjqBUFAwlhJCSmebwSZBHF2sZKv2ctB2w7K1JWOLakggNe', 3, NULL, NULL, 1),
+        ('venzo.terence@hotmail.fr', 'salut74', NULL, 'm', 'Terence', 'Venzo', '1994-12-11', '1994-12-11', 'fr', '$2y$10$cmgfyXfUme3/RpFtxmLktuP/N.3ASk8ULDOC3hAifew/x7q8mAUxy', 1, NULL, NULL, 1),
+        ('venzo.terence@free.fr', 'terence74960', NULL, 'm', 'Terence', 'Venzo', '1994-12-12', '1994-12-12', 'fr', '$2y$10$ttsclwCYEcb50TX7SQ.mfevgbQSlzr6i5l7DS6Yt2AsCJHsjlwzdC', 1, NULL, NULL, 1),
+        ('terence74@gmail.com', 'Terence75012', NULL, 'm', 'Terence', 'Venzo', '1994-06-30', '1994-06-30', 'fr', '$2y$10$uSkCzaJTfvTIDnLy.aEHlO3M4Zr7dZKgOZ1DE3itcKBOwGREgGgdi', 2, NULL, NULL, 1),
+        ('zrfzrfz@efzefe.fr', 'efzfzrfzr', NULL, 'm', 'czefzrfzf', 'zfzerfz', '1994-09-08', '1994-09-08', 'fr', '$2y$10$cNdhV7gCy.49llC/qVLis.AEZofYBzODguMgWKx9Y6lxt0y6fzm72', 2, NULL, NULL, 1),
+        ('iozejfioze@zehfhiozejfo.ffr', 'iozefzeiof', NULL, 'm', 'efuzoeufhoefh', 'ehfiohozefo', '1994-06-21', '1994-06-21', 'fr', '$2y$10$a5kLxzAiybm22l.WUx0i7uXHYOfkjQ6i0Gav367kQl.Da3Rah.h8e', 2, NULL, NULL, 1),
+        ('izejfioejff@eufhiqehoe.fr', 'lejfzpoefk', NULL, 'm', 'ukzefuizefize', 'iefjziofjipoe', '1993-06-18', '1993-06-18', 'fr', '$2y$10$GcQp9/WuE7Uvn9cO4TT9pOXkUzwgxPxfHUeqAUYF7n201bVkatnQC', 1, NULL, NULL, 1),
+        ('moqejfepojkfpq@efqlefjpod.com', 'ioqejfqopjoejjf', NULL, 'm', 'zefiozhofir', 'pcdkspkvzef', '1996-08-15', '1996-08-15', 'fr', '$2y$10$GJZqZDGiOxFHwPDB3YrWg.xK59BNFp8jo.FtiKPc3W82Vs5a89K82', 1, NULL, NULL, 1),
+        ('dhdjfckzjuk@djzuejsiz.fr', 'usqhlfezuehp', NULL, 'm', 'iqfheuhqzhf', 'cieofnomzeif', '1988-03-08', '1988-03-08', 'fr', '$2y$10$2J2DgxvqSz0fsyipiFdTMuwqSfAN2m34uJRyStxjFCuqAq7uo4YNi', 1, NULL, NULL, 1);

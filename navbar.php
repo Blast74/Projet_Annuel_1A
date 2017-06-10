@@ -2,7 +2,7 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
-require "admin/libModOne.php";
+require_once "admin\libModOne.php";
 require_once "lib.php"
 ?>
 
@@ -91,18 +91,21 @@ require_once "lib.php"
                                 </ul>
                             </li>';
                         }
-                        $checkMod  = checkMod($_SESSION["id"]);
-                        if ((isset($_SESSION['id'])) && $checkMod[0]) {  //MODERATEUR <=1
-                            echo '<li class="dropdown">
-                                <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                     <li>
-                                        <a href="moderation.php">Gérer les utilisateurs</a>
-                                    </li>
-                                </ul>
-                            </li>';
+
+                        if ((!empty($_SESSION['id']))) {  //MODERATEUR <=1
+                            $checkMod  = checkMod($_SESSION["id"]);
+                            if ($checkMod[0]) {
+                                echo '<li class="dropdown">
+                                    <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                         <li>
+                                            <a href="moderation.php">Gérer les utilisateurs</a>
+                                        </li>
+                                    </ul>
+                                </li>';
+                            }
                         }
-                        //var_dump($checkMod);
+                        // var_dump($_SESSION["id"]);
                     ?>
                 </ul>
             </div>
