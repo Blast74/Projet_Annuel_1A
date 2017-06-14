@@ -61,7 +61,7 @@ function createElementWithName(idContainer, typeOfElem, value){
   if ("undefined" === typeof value) {
     var container = document.getElementById(idContainer);
     var elem = document.createElement(typeOfElem);
-    elem.name = typeOfElem + idContainer.charAt(0).toUpperCase();
+    elem.name = typeOfElem + idContainer.charAt(0).toUpperCase() + idContainer.substring(1);
     container.appendChild(elem);
     console.log("pas bien");
     return elem.name;
@@ -69,8 +69,8 @@ function createElementWithName(idContainer, typeOfElem, value){
   }else {
     var container = document.getElementById(idContainer);
     var elem = document.createElement(typeOfElem);
-    elem.id = value;
-    elem.name = typeOfElem + idContainer.charAt(0).toUpperCase();
+    elem.id = idcontainer + value;
+    elem.name = typeOfElem + idContainer.charAt(0).toUpperCase()
     elem.innerHTML = value;
     container.appendChild(elem);
     console.log("bien");
@@ -86,32 +86,51 @@ function indexThTable (idTheadtr){
 
 }
 
-function createTableUsers(idDivTable){
+function createTable(){}
 
-  var container = document.getElementById(idDivTable);
+function createTableUsers(idDivTable, table){
+
+  var container = document.getElementById(idDivTable, jsonTable);
   if(container.innerHTML != ""){
-
-    container.innerHTML = "";
-
+      container.innerHTML = "";
   }
-  var idTable = createElementWithId(idDivTable, "table");
-  console.log(idTable);
-  var tableInfo = [];
-  var optionDis = document.getElementById("orderDisplay").options;
-  for(var i = 0; i<optionDis.length;i++){
-    tableInfo.push(optionDis[i].value);
-  }
-  var idThead = createElementWithId(idTable, 'thead');
-  console.log(idThead);
-  var idTheadTr = createElementWithId(idThead, 'tr');
-  console.log(tableInfo);
-  tableInfo.forEach(function(infos) {
-  console.log(idTheadTr);
-  var content = infos;
-  var infoDeg = createElementWithName(idTheadTr, 'th', content);
-  console.log(infoDeg);
-  var idTableTbody = createElementWithId(idTable, 'tbody');
-  console.log(idTableTbody);
+  var table = document.createElement('table');
+  table.id = "table" + idDivTable;
+  container.appendChild(table);
+  container = table;
+  var thead = document.createElement('thead');
+  container.appendChild(thead);
+  container = thead;
+  table.map();
+
+
+
+
+  //  var optionDis = ["pseudo", "firstname", "lastname", "email", "birthday", "gender","country","active_account"];
+
+
+
+  // var idTable = createElementWithId(idDivTable, "table");
+  // console.log(idTable);
+  // var tableInfo = [];
+  // var optionDis = ["pseudo", "firstname", "lastname", "email", "birthday", "gender","country","active_account"];
+  //
+  // for(var i = 0; i<optionDis.length;i++){
+  //   tableInfo.push(optionDis[i]);
+  // }
+  //
+  // var idThead = createElementWithId(idTable, 'thead');
+  // console.log(idThead);
+  // var idTheadTr = createElementWithId(idThead, 'tr');
+  // console.log(tableInfo);
+  //
+  // tableInfo.forEach(function(infos) {
+  //   console.log(idTheadTr);
+  //   var content = infos;
+  //   var infoDeg = createElementWithName(idTheadTr, 'th', content);
+  //   console.log(infoDeg);
+  //   var idTableTbody = createElementWithId(idTable, 'tbody');
+  //   console.log(idTableTbody);
 
 
   })
@@ -126,28 +145,33 @@ function usersPHPModeration(params){
   var header = "application/x-www-form-urlencoded";
   var contenttype = "Content-Type";
   var ajaxRequest = new XMLHttpRequest;
-  var result = ajaxRequest.onreadystatechange = function(){
+  ajaxRequest.onreadystatechange = function(){
     if (ajaxRequest.readyState == 4){
       if (ajaxRequest.status == 200) {
           var str = ajaxRequest.responseText;
           var result = JSON.parse(str);
-          return result
+          return result;
+          createTableUsers("listUsers", result);
           console.log(result);
-          createTableUsers(listUsers, result);
+          console.log(ajaxRequest.reponseText);
+          // createTableUsers(listUsers, result);
+          console.log("salut");
 
       }
       if (ajaxRequest.status == 400) {
           console.log(ajaxRequest.responseText);
+          console.log("salut2");
       }
       if (ajaxRequest.status == 403) {
           console.log(ajaxRequest.responseText);
+          console.log("salut3");
       }
     }
   };
-  ajaxRequest.open("POST",`admin/testOrder.php`,true);
+  ajaxRequest.open("POST",`admin/testPost.php`,true);
   ajaxRequest.setRequestHeader(contenttype,header);
-  ajaxRequest.send(params.join("&")); //.join("&")
-  console.log(this);
+  ajaxRequest.send(
+  console.log(params.join("&")); //.join("&")
 
 }
 
@@ -164,6 +188,7 @@ function displayPHPMod(idSession){
 
   var params = [`byPage=${byPage}`, `orderBy=${orderBy}`, `order=${order}`, `access_token=${idSession}`];
   console.log(params);
+
   usersPHPModeration(params);
 
 }

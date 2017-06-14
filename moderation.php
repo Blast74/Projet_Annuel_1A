@@ -2,10 +2,12 @@
     session_start();
     include "navbar.php";
 
-    // $connection = dbConnect ();
-    // $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
-    // $query -> execute();
-    // $users = $query -> fetchAll ();
+    $access = checkMod($_SESSION["id"]);
+    if($access[0] != 1){
+
+        header("Location: index.php");
+        die();
+    }
 ?>
         <div class="container">
             </div>
@@ -31,10 +33,10 @@
                 <option value="ASC">Croissant</option>
                 <option value="DESC">Décroissant</option>
             </select>
-            <input id="refreshButton" type="button" onclick='displayPHPMod("<?php getJSAccessToken(); ?>")' value ="Actualiser"></input>
+            <input id="refreshButton" type="button" onclick='listUsers("<?php getJSAccessToken(); ?>","listUsers")' value ="Actualiser"></input>
             <br>
             <p>Nombre d'utilisateurs souhaités :</p>
-            <select id="selectUsersByPages">
+            <select id="nbByPages">
                 <option value="5" selected="selected">5</option>
                 <option value="10" >10</option>
                 <option value="20" >20</option>
@@ -128,7 +130,7 @@
 
 
         <hr>
-<script src="admin\libJSMod.js"></script>
+<script src="admin\libJS.js"></script>
 <!--
     getJSAccessToken();
  ?> -->
