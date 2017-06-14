@@ -11,31 +11,26 @@ $listOfGenre=[
 				"met" => "Metal",
 				"rap" => "Rap",
 				"blu" => "Blues",
-				"chafr" => "Chanson Française",
-				"cho" => "Chorale",
-				"cou" => "Country",
+				"var" => "Variété",
 				"dis" => "Disco",
 				"ele" => "Electro",
-				"cla" => "Musique classique",
 				"tec" => "Techno",
 				"hip" => "Hip Hop",
-				"reg" => "Reggae"
-				];
+				"reg" => "Reggae",
+				"oth" => "autre"
+ 				];
 
 $subtypeList=[
 				"roc" => ["Rock", "Pop-Rock", "Folkrock"],
 				"met" => ["Deathmetal", "Metal-Metal", "Trashmetal"],
-				"rap" => ["Rap", "Rap Americain", "Gangsta Rap"],
+				"rap" => ["Rap", "Rap Americain", "Gangsta Rap", "Slam"],
 				"blu" => ["Blues", "Deepblues"],
-				"chafr" => ["Chanson Française", "Variété", "Hard-Chanson Française"],
-				"cho" => ["Chorale", "Acid Chorale", "Choralcore", "Drum and Chorale"],
-				"cou" => ["Country", "Hardcountry", "Trance Country Psychédélique"],
-				"dis" => ["Disco"],
-				"ele" => ["Electro", "GOA", "House", "EDM", ],
-				"cla" => ["Violon", "Haubois", "Flute à bec"],
-				"tec" => ["Techno"],
+				"var" => ["Chanson francaise"],
+				"dis" => ["Disco", "Funk"],
+				"ele" => ["Electro", "GOA", "House", "EDM", "Techno"],
 				"hip" => ["Hip Hop"],
-				"reg" => ["Reggae"]
+				"reg" => ["Reggae"],
+				"oth" => ["Country", "Chorale", "Classique"]
 				];
 
 
