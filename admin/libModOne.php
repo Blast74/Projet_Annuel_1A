@@ -28,7 +28,7 @@ function checkMod($idSession){
       }
 
   }else {
-    return CHECKERROR;
+    return [CHECKERROR, "salut"];
   }
 }
 //attribut les droit en fonction de l'access_token
