@@ -3,9 +3,6 @@ session_start();
 require "conf.inc.php";
 require "lib.php";
 
-
-
-
 $verifyUser = getUser ($_SESSION["id"]);
 
 if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisateur en BDD
@@ -20,7 +17,6 @@ $imageFilesAuthorized = ["png", "jpg", "jpeg"];
 
 $error = false;
 $listOfErrors = [];
-
 
 
 
@@ -82,7 +78,7 @@ if( isset($_POST["titre"]) &&
             $listOfErrors[] = 17;
           }
           //Format du fichier
-          if ($musicFile ["type"] != "audio/mp3" ) {
+          if ( ($musicFile ["type"] != "audio/mp3")  && ($musicFile ["type"] != "audio/mpeg")  ) {
             $error = true;
             $listOfErrors[] = 16;
           }
