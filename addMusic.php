@@ -32,6 +32,7 @@
                 echo "</div>";
                 ?>
                 <form method="POST" action="saveMusic.php"  enctype="multipart/form-data">
+                  <!-- ONSUBMIT = RETURN VERIF () -->
                 <!--enctype = nécessaire pour uploader sinon $_FILES est null -->
                     <div class="control-group form-group">
                         <div class="controls">
@@ -67,9 +68,9 @@
                     </div>
 
 
-                    <div class="control-group form-group">
+                    <div class="control-group form-group" onchange="MusicSubtypeList()">
                         <label>Genre :</label><br>
-                        <select name="genre">
+                        <select name="genre" id="selectSyle">
                             <?php
                             foreach ($listOfGenre as $key => $value) {
                                  $selected =(isset($_SESSION["form_post"]["genre"]) && $_SESSION["form_post"]["genre"] == $key)?"selected='selected'":"";
@@ -79,41 +80,14 @@
                             ?>
                       </select>
 
-
-                    </div>
-                    <div class="control-group form-group">
-                        <label>Sous-genre :</label><br>
-                        <select name="subtype">
-                            <?php
-                            foreach ($subtypeList as  $key) {
-                                 $selected =(isset($_SESSION["form_post"]["Sous-genre"]) && $_SESSION["form_post"]["Sous-genre"] == $key)?"selected='selected'":"";
-
-                                echo "<option value='".$key."' ".$selected.">" .$value."</option>";
-                            }
-
-
-                            ?>
-
-                      </select>
-
-
-                    </div>
-                    <div class="control-group form-group">
-                        <label>Sous-genre :</label><br>
-                        <select name="subtype">
-                            <?php
-                            foreach ($subtypeList as  $key) {
-                                 $selected =(isset($_SESSION["form_post"]["Sous-genre"]) && $_SESSION["form_post"]["Sous-genre"] == $key)?"selected='selected'":"";
-
-                                echo "<option value='".$key."' ".$selected.">" .$value."</option>";
-                            }
-
-
-                            ?>
-
-                      </select>
                     </div>
 
+
+                    <div id='SubtypeDiv'class="control-group form-group">
+
+                    </div>
+
+                    <label>Sélectionner le fichier à ajouter:</label><br>
                     <input type="file" name="music" accept=".mp3"/>
 
 
@@ -124,8 +98,16 @@
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
             </div>
-
+      <button type="button"  onclick="test ()"name="button">TEST</button>
         </div>
+
+
+
+        <script src="addMusic.js"></script>
+        <script>
+            var ListOfSubtype = <?php echo json_encode($subtypeList); ?>; //A CHANGER PAR DU AJAX
+        </script>
+
 
         <?php
             include 'footer.php';

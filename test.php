@@ -7,46 +7,32 @@ include 'navbar.php';
 
 
 $BDDresults = ([
-
 	"Electro" => [
 		"Energy 52 - Cafe Del Mar",
 		"Kölsch - LORELEY",
 		"The Avener - Fade Out Lines",
 		"Raffaele Attanasio - Roads",
 		"Energy 52 - Cafe Del Mar",
-		
+
 		"Kölsch - LORELEY",
 		"The Avener - Fade Out Lines",
 		"Raffaele Attanasio - Roads",
 		"Energy 52 - Cafe Del Mar",
 		"Kölsch - LORELEY",
-		
+
 		"The Avener - Fade Out Lines",
 		"Raffaele Attanasio - Roads",
 		"Energy 52 - Cafe Del Mar",
 		"Kölsch - LORELEY",
 		"The Avener - Fade Out Lines",
-		
+
 		"Raffaele Attanasio - Roads"],
 	"Rock" => [
 		"Arcade Fire - No Cars Go",
-		
+
 		"The Black Keys- Howlin' For You"
-		
 		]
 ]);
-
-	$number = 0;
-	//Nombre de musiques
-	foreach ($BDDresults as $key) {
-		foreach ($key as $value) {
-			$number +=1;
-		}
-	}
-
-$format = ".mp3";
-$playSong = "./music/Electro/".$BDDresults["Electro"][0].$format; 
-echo "<br>";
 
 ?>
 <!DOCTYPE html>
@@ -97,18 +83,14 @@ echo "<br>";
 	</ul>
 
 </div>
-
+<button type="button" onclick="test ()" name="button">TEST</button>
 
 
 <script src="test.js"></script>
 <script>
-   var musicList = <?php echo json_encode($BDDresults); ?>; //A CHANGER PAR DU AJAX
+   var musicList = <?php echo json_encode($BDDresults); ?>;
 </script>
 
 
 </body>
-
-		
-
-
 </html>

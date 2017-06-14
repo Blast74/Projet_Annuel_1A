@@ -22,8 +22,12 @@ $error = false;
 $listOfErrors = [];
 
 
+
+
+
 if( isset($_POST["titre"]) &&
     isset($_POST["genre"]) &&
+    isset ($_POST ["subtype"]) &&
     isset($_FILES ["music"]) &&
     count($_POST) == 6 ){
         $_POST["titre"] = trim($_POST["titre"]);
@@ -63,7 +67,7 @@ if( isset($_POST["titre"]) &&
             $error = true;
             $listOfErrors[] = 6;
         }
-        //VERIFICATION SOUS TYPE à FAIRE
+        //VERIF array_key_exists  (!!!) tableau à 2 dimensensions subtype [$_POST[genre]] [];
         if( in_array($_POST["subtype"], $subtypeList) ){
             $error = true;
             $listOfErrors[] = 21;
