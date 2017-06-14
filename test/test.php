@@ -14,25 +14,25 @@ $BDDresults = ([
 		"The Avener - Fade Out Lines",
 		"Raffaele Attanasio - Roads",
 		"Energy 52 - Cafe Del Mar",
-		
+
 		"Kölsch - LORELEY",
 		"The Avener - Fade Out Lines",
 		"Raffaele Attanasio - Roads",
 		"Energy 52 - Cafe Del Mar",
 		"Kölsch - LORELEY",
-		
+
 		"The Avener - Fade Out Lines",
 		"Raffaele Attanasio - Roads",
 		"Energy 52 - Cafe Del Mar",
 		"Kölsch - LORELEY",
 		"The Avener - Fade Out Lines",
-		
+
 		"Raffaele Attanasio - Roads"],
 	"Rock" => [
 		"Arcade Fire - No Cars Go",
-		
+
 		"The Black Keys- Howlin' For You"
-		
+
 		]
 ]);
 
@@ -44,8 +44,11 @@ $BDDresults = ([
 		}
 	}
 
+
+
+
 $format = ".mp3";
-$playSong = "./music/Electro/".$BDDresults["Electro"][0].$format; 
+$playSong = "./music/Electro/".$BDDresults["Electro"][0].$format;
 echo "<br>";
 
 ?>
@@ -108,7 +111,7 @@ echo "<br>";
 
 </body>
 
-		
+
 
 
 </html>

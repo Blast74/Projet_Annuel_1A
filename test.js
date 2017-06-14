@@ -5,6 +5,10 @@ var LastPage =0; //n° de la dernières page
 var SelectedStyle; //Style de musique choisis par l'utilisateur
 
 
+function test () {
+	console.log(musicList);
+}
+
 function CountPages () {
 	if (numberOfSelectedMusics <5) {
 		LastPage =1;
@@ -27,13 +31,13 @@ function refreshPages () { // il faut ajuster la taille en fonction des suppress
 	}
 	//reset les boutons sur la page:
 	var button, container;
-	//supprime le bouton précédent 
+	//supprime le bouton précédent
 	button = document.getElementById('previousButton');
 	if (button != null) {
 		container = document.getElementById ('previousContainer');
 		button = document.getElementById ('previousButton');
 		container.removeChild(button);
-	}	
+	}
 	//recréer bouton suivant s'il n'est pas la
 	button = document.getElementById('nextButton');
 	if (button == null) {
@@ -41,8 +45,8 @@ function refreshPages () { // il faut ajuster la taille en fonction des suppress
 		button = document.createElement ('a');
 		button.setAttribute ("onclick", "next()");
 		button.setAttribute ("href", "#");
-		button.setAttribute ("id", "nextButton"); 
-		button.innerHTML = "Suivant"; 
+		button.setAttribute ("id", "nextButton");
+		button.innerHTML = "Suivant";
 		container.appendChild(button);
 	}
 	//Supprime le bouton suivant si il y a moins de 5 musiques à afficher
@@ -52,12 +56,12 @@ function refreshPages () { // il faut ajuster la taille en fonction des suppress
 			container = document.getElementById ('nextContainer');
 			button = document.getElementById ('nextButton');
 			container.removeChild(button);
-		}	
+		}
 	}
 	playersDisplay('recreate');
 }
 
-function previous () {//Page précédente //VERIFIER SI IL EXISTE OU PAS 
+function previous () {//Page précédente //VERIFIER SI IL EXISTE OU PAS
 	CountPages();
 	var container, currentPageNumber;
 	if (currentPage == LastPage){ //Créer le bouton suivant si on est plus sur la dernières page
@@ -65,8 +69,8 @@ function previous () {//Page précédente //VERIFIER SI IL EXISTE OU PAS
 		var newButton = document.createElement ('a');
 		newButton.setAttribute ("onclick", "next()");
 		newButton.setAttribute ("href", "#");
-		newButton.setAttribute ("id", "nextButton"); 
-		newButton.innerHTML = "Suivant"; 
+		newButton.setAttribute ("id", "nextButton");
+		newButton.innerHTML = "Suivant";
 		container.appendChild(newButton);
 	}
 	//Supprime le bouton précécent si on arrive sur la page 1
@@ -85,7 +89,7 @@ function previous () {//Page précédente //VERIFIER SI IL EXISTE OU PAS
 
 
 function next () {//Page suivante
-	CountPages(); 
+	CountPages();
 	var container, currentPageNumber;
 	if (currentPage == 1){//Créer le bouton précédent si on clique sur suivant (page 1)
 		container = document.getElementById('previousContainer');
@@ -97,7 +101,7 @@ function next () {//Page suivante
 		container.appendChild(newButton) ;
 	}
 	//Supprime le bouton suivant sur la dernière page
-	if (currentPage == (LastPage-1)) { //VERIFIER SI IL EXISTE OU PAS 
+	if (currentPage == (LastPage-1)) { //VERIFIER SI IL EXISTE OU PAS
 		var removeButton;
 		container = document.getElementById('nextContainer');
 		removeButton = document.getElementById('nextButton');
@@ -112,10 +116,10 @@ function next () {//Page suivante
 
 
 
-function selection () { 
+function selection () {
 	var selection = document.getElementById ('selection');
 	numberOfSelectedMusics = musicList[selection.value].length; //A REMPLACER PAR LE CONTENU DE LA BDD
-	currentPage=1;	
+	currentPage=1;
 	CountPages();
 	refreshPages ();//Refresh le nombre de page en fonction du nombre de musique à afficher
 	SelectedStyle = selection.value;
@@ -126,17 +130,17 @@ function selection () {
 function playersDisplay (action) {
 	var audioTag, audiocontainer, titleTag;
 	if (action == 'reduce') {
-		
+
 		//etoiles (note)
 		//A VIRER
-		console.log ('Elements à afficher: '+lastPageMusicNumber);	
+		console.log ('Elements à afficher: '+lastPageMusicNumber);
 		//supprime les balises audio en fonction du nombe de musique à aficher sur la page
 		for (var i = 5; i > lastPageMusicNumber; i --){
 			audiocontainer = document.getElementById ('audiocontainer'+(i-1));
 			audioTag = document.getElementById('player'+(i-1));
 			titleTag = document.getElementById('musicTitle'+(i-1));
 			audiocontainer.removeChild(audioTag);
-			audiocontainer.removeChild(titleTag);		
+			audiocontainer.removeChild(titleTag);
 		}
 	}
 	else if (action == 'recreate') {
@@ -168,44 +172,44 @@ function playerContent (musicStyle, currentPage) {//changements de page à faire
 	//CREATION DES BALISES SI ELLE ONT ETE SUPPRIMEES !!!
 	if (LastPage == 1) { //S'il n'y a qu'une page à afficher
 		playersDisplay('reduce');
-		for (var i = 0; i < lastPageMusicNumber; i++) { 
+		for (var i = 0; i < lastPageMusicNumber; i++) {
 			//La boucle s'incrémante à chaque passage pour pouvoir changer le contenu des lecteurs
 			var musicTitle = document.getElementById('musicTitle'+i);
 			var musicName = musicList[musicStyle][i];
 			var player = document.getElementById('player'+i);
 			musicTitle.innerHTML = musicName;//Titre
-			player.setAttribute ('src', path+musicName+format);//source	
-		}	
+			player.setAttribute ('src', path+musicName+format);//source
+		}
 	}
 	else {//S'il y a plus d'une page
-		
+
 		if (currentPage == LastPage){//Si c'est la dernières page
 			//Suppression des balises audio en trop
 			playersDisplay ('reduce');
-			for (var i = 0; i < lastPageMusicNumber; i++) { 
+			for (var i = 0; i < lastPageMusicNumber; i++) {
 				//La boucle s'incrémante à chaque passage pour pouvoir changer le contenu des lecteurs
 				var musicTitle = document.getElementById('musicTitle'+i);
 				var musicName = musicList[musicStyle][i];
 				var player = document.getElementById('player'+i);
 				musicTitle.innerHTML = musicName;//Titre
-				player.setAttribute ('src', path+musicName+format);//source	
+				player.setAttribute ('src', path+musicName+format);//source
 			}
 		}
 		else {
 			//Création des balises manquantes
 			playersDisplay ('recreate');
-			//Affichage du contenu 
+			//Affichage du contenu
 			var audioTagId=0;
-			for (var i = ((currentPage*5)-5); i<(currentPage*5);i++) { 
+			for (var i = ((currentPage*5)-5); i<(currentPage*5);i++) {
 			//La boucle s'incrémante à chaque passage pour pouvoir changer le contenu des 5 lecteurs
 				var musicTitle = document.getElementById('musicTitle'+audioTagId);
 				var musicName = musicList[musicStyle][i];
 				var player = document.getElementById('player'+audioTagId);
 				musicTitle.innerHTML = musicName;//Titre
 				player.setAttribute ('src', path+musicName+format);//source
-				audioTagId++;	
+				audioTagId++;
 			}
 		}
 	}
-	
+
 }

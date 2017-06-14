@@ -1,86 +1,36 @@
 <?php
 session_start();
-require_once "../conf.inc.php";
-require "../lib.php";
+require_once "conf.inc.php";
+require "lib.php";
+header ('Content-type:application/json'); //Type de contenu que cette page renvoi
 
 
 
 
-$connection = dbConnect (); //FROM MUSIC WHERE subtype_name = :subtype_name AND isDeleted = 0");
-$query = $connection->prepare("SELECT * FROM MUSIC WHERE  isDeleted = 0");
-$query -> execute ([":subtype_name"=> $_POST['param1'] ]);
-$result = $query -> fetchAll();
+if (isset($_GET['subtype']) && (isset($_GET['currentpage']))  ){
+    $connection = dbConnect ();
+    $query = $connection->prepare("SELECT COUNT(*) FROM MUSIC WHERE subtype_name = :subtype_name AND isDeleted = 0");
+    $query -> execute ([":subtype_name"=> $_GET['subtype'] ]);
+    $length = $query -> fetch (); //Nombre de musiques à afficher
 
+    //VERIF OFFSET
+    if ($_GET['currentpage'] == 1) {
+      $offset = 1;
+    }else {
+      $offset = intval ((($_GET['currentpage']-1)*5)+1);
+    }
 
+    $query = $connection->prepare("SELECT music_id, music_name, subtype_type, subtype_name, author_comment, lyrics,
+      music_image, note_music, dateupload, upload_music, email FROM MUSIC WHERE subtype_name = :subtype_name AND isDeleted = 0 LIMIT 5 OFFSET ".$offset);
+    $query -> execute ([":subtype_name"=> $_GET['subtype']
 
-        //FAIRE TABLEAU  $DATA
-        foreach ($result as $key => $value) {
+      ]);
+    $result = $query -> fetchAll (PDO::FETCH_ASSOC); // constante retourne un tableau indéxé cf doc
 
-        echo "<br>";
+    $result+= ["maxresults" => $length[0]]; //Ajout du nombre de musique total a afficher
 
-        $data = ([
-          $key => [
-            "music_id" => $result [$key][1];
-          ]
-
-        ]);
-
-
-
-        }
-
-//var_dump ($data);
-
-
-$data = [
-"music_id"=>$result["music_id"],
-  "music_name"=>$result["music_name"],
-  "subtype_type"=>$result["subtype_type"],
-  "subtype_name"=>$result["subtype_name"],
-  "author_comment"=>$result["author_comment"],
-  "lyrics"=>$result["lyrics"],
-  "music_image"=>$result["music_image"],
-  //"pwd"=>$result["pwd"],
-  "note_music"=>$result["note_music"],
-  "email"=>$result["email"],
-  "dateupload"=>$result["dateupload"]
-];
-
-//var_dump ($result);
-
-
-
-
-
-
-if (isset($_POST['param1']) ){
-
-  $connection = dbConnect (); //FROM MUSIC WHERE subtype_name = :subtype_name AND isDeleted = 0");
-  $query = $connection->prepare("SELECT * FROM MUSIC WHERE  isDeleted = 0");
-  $query -> execute ([":subtype_name"=> $_POST['param1'] ]);
-  $result = $query -> fetch();
-
-  $data = [
-  "music_id"=>$result["music_id"],
-    "music_name"=>$result["music_name"],
-    "subtype_type"=>$result["subtype_type"],
-    "subtype_name"=>$result["subtype_name"],
-    "author_comment"=>$result["author_comment"],
-    "lyrics"=>$result["lyrics"],
-    "music_image"=>$result["music_image"],
-    //"pwd"=>$result["pwd"],
-    "note_music"=>$result["note_music"],
-    "email"=>$result["email"],
-    "dateupload"=>$result["dateupload"]
-  ];
-}
-else {
-  http_response_code(400);
-}
-
-
-echo json_encode($data);
-
-
-
- ?>
+    echo json_encode ($result);
+  }
+  else {
+    http_response_code(400);
+  }
