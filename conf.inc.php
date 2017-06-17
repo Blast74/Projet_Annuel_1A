@@ -14,7 +14,6 @@ $listOfGenre=[
 				"var" => "Variété",
 				"dis" => "Disco",
 				"ele" => "Electro",
-				"tec" => "Techno",
 				"hip" => "Hip Hop",
 				"reg" => "Reggae",
 				"oth" => "autre"
@@ -81,5 +80,5 @@ $errors = [
 ];
 
 $messages = [
-	1 => "Votre musique à bien été ajouté !"
+	1 => "Votre musique à bien été ajoutée !"
 ];

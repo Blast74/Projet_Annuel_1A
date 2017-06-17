@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once "conf.inc.php";
-require "lib.php";
+require_once "../conf.inc.php";
+require "../lib.php";
 header ('Content-type:application/json'); //Type de contenu que cette page renvoi
 
 
@@ -15,9 +15,9 @@ if (isset($_GET['subtype']) && (isset($_GET['currentpage']))  ){
 
     //VERIF OFFSET
     if ($_GET['currentpage'] == 1) {
-      $offset = 1;
+      $offset = 0;
     }else {
-      $offset = intval ((($_GET['currentpage']-1)*5)+1);
+      $offset = intval ((($_GET['currentpage']-1)*5));
     }
 
     $query = $connection->prepare("SELECT music_id, music_name, subtype_type, subtype_name, author_comment, lyrics,
