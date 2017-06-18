@@ -11,13 +11,10 @@ if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisa
 }
 
 $imageFilesAuthorized = ["png", "jpg", "jpeg"];
-//$authorizedFormat = mp3;
-
 
 
 $error = false;
 $listOfErrors = [];
-
 
 if( isset($_POST["titre"]) &&
     isset($_POST["genre"]) &&
@@ -106,7 +103,6 @@ if( isset($_POST["titre"]) &&
             $listOfErrors[] = 20;
           }
 
-
           if ($error == false) { //Enregistrement de l'image sur le serveur
             //Vérification pour le dossier
             if (!file_exists ("../music_images")){
@@ -114,8 +110,12 @@ if( isset($_POST["titre"]) &&
             }
           //+AJOUTER FONCTION MATTHIAS POUR LA TAILLE DE L'IMAGE
           $userMusicImageFolder = "./music_images";
-          $musicImageDirPath = $userMusicImageFolder.uniqid().'.'.$imageExtension["extension"];
-          move_uploaded_file($_FILES ["img"]["tmp_name"], $musicImageDirPath);
+          $musicImageDirPath = $userMusicImageFolder."/".uniqid().'.'.$imageExtension["extension"];
+
+            if (move_uploaded_file($_FILES ["img"]["tmp_name"], '.'.$musicImageDirPath) == false) {
+              $error = true;
+              $listOfErrors [] = 22;
+            }
           }
         }
         //Connexion à la BDD s'il n'y pas d'erreurs et dernière vérification
@@ -141,10 +141,10 @@ if( isset($_POST["titre"]) &&
         }
         else {
           //On met la musique dans le dossier de l'utilisateur
-            if (!file_exists ("../musics/".$verifyUser["pseudo"]) ) {
-              mkdir ("../musics/".$verifyUser["pseudo"]);
+            if (!file_exists ("../musics/".$verifyUser["id"]) ) {
+              mkdir ("../musics/".$verifyUser["id"]);
             }
-          $userMusicFolder = "musics/".$verifyUser["pseudo"];
+          $userMusicFolder = "musics/".$verifyUser["id"];
           $musicDirPath = "./".$userMusicFolder."/".$_POST["titre"].".mp3";
           if (move_uploaded_file($musicFile["tmp_name"], ".".$musicDirPath) == false) {
             $error = true;
@@ -152,7 +152,7 @@ if( isset($_POST["titre"]) &&
           }else {
               //Ajout des infos en BDD
               $connection = dbConnect();
-              $querry = $connection -> prepare("INSERT INTO MUSIC (music_name, subtype_type, subtype_name, author_comment, lyrics, music_image, dateupload, upload_music, email) VALUES (:music_name, :subtype_type, :subtype_name, :author_comment, :lyrics, :music_image, STR_TO_DATE (:dateupload, '%Y-%m-%d') , :upload_music, :email)");
+              $querry = $connection -> prepare("INSERT INTO MUSIC (music_name, subtype_type, subtype_name, author_pseudo, author_comment, lyrics, music_image, dateupload, upload_music, email) VALUES (:music_name, :subtype_type, :subtype_name, :author_pseudo, :author_comment, :lyrics, :music_image, STR_TO_DATE (:dateupload, '%Y-%m-%d') , :upload_music, :email)");
               //Chemin de la musique
 
               $uploadDate = date ('Y-m-d');
@@ -160,6 +160,7 @@ if( isset($_POST["titre"]) &&
                   "music_name" => $_POST["titre"],
                   "subtype_type" => $_POST ["genre"],
                   "subtype_name" => $_POST ["subtype"],
+                  "author_pseudo" => $verifyUser['pseudo'],
                   "author_comment" => $_POST["comment"],
                   "lyrics" => $_POST["lyrics"],
                   "music_image" => $musicImageDirPath,

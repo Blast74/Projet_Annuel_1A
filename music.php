@@ -6,17 +6,22 @@
     //Il faut alléger la fonction de vérification ??
     if (!empty ($_SESSION["id"])) {
       $verifyUser = getUser ($_SESSION["id"]);
+
       if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisateur en BDD
         header("Location: disconnect.php");
         die ();
       }
     }
-
     include 'navbar.php';
 ?>
+
+
+<button type="button" name="button" onclick="test(this)">TEST</button>
+
+
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Service Tabs</h2>
+                <h2 class="page-header"><?php echo  (isset ($verifyUser))? "Bonjour ".$verifyUser["pseudo"]." !": 'Bonjour !';?> </h2>
             </div>
             <div class="col-lg-12">
                 <ul id="myTab" class="nav nav-tabs nav-justified">
@@ -42,27 +47,33 @@
                           </select>
                         </div>
                         <div id='topSubtypeDiv'class="control-group form-group"></div>
+
                         <section id='topaudiocontainer0'>
                           <p id=topmusicTitle0></p>
                           <audio id="topplayer0" src='' controls =''></audio>
                         </section>
+
+
                         <section id='topaudiocontainer1'>
                           <p id=topmusicTitle1></p>
                           <audio id="topplayer1" src='' controls =''></audio>
                         </section>
+
                         <section id='topaudiocontainer2'>
                           <p id=topmusicTitle2></p>
                           <audio id="topplayer2" src='' controls =''></audio>
                         </section>
+
                         <section id='topaudiocontainer3'>
                           <p id=topmusicTitle3></p>
-                          <audio id="topplayer3" src='' controls =
-                          ''></audio>
+                          <audio id="topplayer3" src='' controls =''></audio>
                         </section>
+
                         <section id='topaudiocontainer4'>
                           <p id=topmusicTitle4></p>
                           <audio id="topplayer4" src='' controls =''></audio>
                         </section>
+                        
                         <div> <!--Menu de navigation Précédent/suivant -->
                           <ul id="topnavigation" class="pager">
                             <li id="toppreviousContainer">
@@ -120,7 +131,7 @@
                             </li>
                           </ul>
                       </div>
-                    </div>  
+                    </div>
 
 
 
@@ -174,19 +185,12 @@
                           </ul>
                       </div>
                     </div>
-
-
-
-
                     <!-- -->
                     </div>
                     </div>
                 </div>
             </div>
       </div>
-
-<button onclick="test2()" type="button" name="button">BOUTON</button>
-
 
 <script src="music_conf/getMusics.js"></script>
 <script>

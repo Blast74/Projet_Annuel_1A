@@ -36,14 +36,66 @@ function dbMusicRequest (musicSubtype, currentpage) {
 function musicDisplay (array, numberOfmusics){
     var audioTagId=0;
     for (var i = 0; i<(numberOfmusics);i++) {
-      var musicTitle = document.getElementById(selectedTab+'musicTitle'+audioTagId);
-      var musicName = array[i].music_name+'id :'+array[i].music_id; //RETIRER ID !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      var player = document.getElementById(selectedTab+'player'+audioTagId);
-      musicTitle.innerHTML = musicName;//Titre
+      var musicTitle = document.getElementById(selectedTab+'musicTitle'+i);
+      var player = document.getElementById(selectedTab+'player'+i);
+      musicTitle.innerHTML = array[i].music_name+" composée par "+array[i].author_pseudo;
       player.setAttribute ('src', array[i].upload_music);//source
-      audioTagId++;
+
+      //NOTES
+      //var noteTag  = document.getElementById(selectedTab+'note'+i);
+      //noteTag.innerHTML = "Note : "+array[i].note_music+"/5";
+      //audioTagId++;
+
+
+      //COMMENTAIRES
   }
 }
+//CREATE LECTEURS
+//number = nombre de lecteurs à créer
+function createAudioTag (number) {
+  for (var i =0; i < number; i++) {
+    var containerCounter = document.getElementById(selectedTab+'audiocontainer'+i).childNodes;
+    if (containerCounter.length != 5) { //Taille à changer
+      audiocontainer = document.getElementById(selectedTab+'audiocontainer'+i);
+      titleTag = document.createElement('p');
+      titleTag.setAttribute ('id', selectedTab+'musicTitle'+i);
+      audioTag = document.createElement ('audio');
+      audioTag.setAttribute ('id', selectedTab+'player'+i);
+      audioTag.setAttribute ('src', '');
+      audioTag.setAttribute ('controls', '');
+      audiocontainer.appendChild(titleTag);
+      audiocontainer.appendChild(audioTag);
+      //note AJOUTER LES TRUCS DANS LE MM CONTENAIRE + CSS
+      //noteTag = document.createElement ('p');
+      //noteTag.id = selectedTab+'note'+i;
+    //  audiocontainer.appendChild(noteTag);
+
+      //voter
+      //fonction getVote
+      //If getVote = null (on affiche le bonton de vote)
+    //    voteButton = document.createElement ('a');
+      //  voteButton.innerHTML='Voter';
+      //  audiocontainer.appendChild(voteButton);
+
+    }
+  }
+}
+
+//DELETE LECTEURS
+//number = nombre de lecteurs à conserver, suppression des lecteurs en trop
+function deleteAudioTag (number) {
+    for (var i = number; i <  5; i ++){
+      containerCounter = document.getElementById(selectedTab+'audiocontainer'+i).childNodes;
+      if (containerCounter.length == 5) {
+        audiocontainer = document.getElementById (selectedTab+'audiocontainer'+(i));
+        audioTag = document.getElementById(selectedTab+'player'+(i));
+        titleTag = document.getElementById(selectedTab+'musicTitle'+(i));
+        audiocontainer.removeChild(audioTag);
+        audiocontainer.removeChild(titleTag);
+      }
+  }
+}
+
 
 //currentTab top / news /suggestion
 function MusicSelection () {
@@ -126,43 +178,10 @@ function CountMaxPageNumber (fetchedMusicNumber) {
   return lastPageNumber;
 }
 
-//number = nombre de lecteurs à créer
-function createAudioTag (number) {
-  for (var i =0; i < number; i++) {
-    containerCounter = document.getElementById(selectedTab+'audiocontainer'+i).childNodes;
-    if (containerCounter.length != 5) {
-
-      audiocontainer = document.getElementById(selectedTab+'audiocontainer'+i);
-      titleTag = document.createElement('p');
-      titleTag.setAttribute ('id', selectedTab+'musicTitle'+i);
-      audioTag = document.createElement ('audio');
-      audioTag.setAttribute ('id', selectedTab+'player'+i);
-      audioTag.setAttribute ('src', '');
-      audioTag.setAttribute ('controls', '');
-      audiocontainer.appendChild(titleTag);
-      audiocontainer.appendChild(audioTag);
-    }
-  }
-}
-//number = nombre de lecteurs à conserver, suppression des lecteurs en trop
-function deleteAudioTag (number) {
-
-    for (var i = number; i <  5; i ++){
-      containerCounter = document.getElementById(selectedTab+'audiocontainer'+i).childNodes;
-      if (containerCounter.length == 5) {
-        audiocontainer = document.getElementById (selectedTab+'audiocontainer'+(i));
-        audioTag = document.getElementById(selectedTab+'player'+(i));
-        titleTag = document.getElementById(selectedTab+'musicTitle'+(i));
-        audiocontainer.removeChild(audioTag);
-        audiocontainer.removeChild(titleTag);
-      }
-  }
-}
 
 
 //Adapte le nombre de lecteur et les boutons en fonction de ce qu'il faut afficher
 function playersDisplay (maxpage, playernumber, currentpage) {
-
   if (maxpage == 1) {
     for (var i=0;i<playernumber;i++) {
         var containerCounter = document.getElementById(selectedTab+'audiocontainer'+i).childNodes;

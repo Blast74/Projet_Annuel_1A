@@ -1,8 +1,8 @@
 		<footer>
 		    <div class="row">
 		        <div class="col-lg-12">
-			        <p>Copyright &copy; MUSIQUE REVIEW 2014</p>
-			        <a href="contact.php">Nous contacter</a>
+			        <p>MUSIQUE REVIEW 2017</p>
+
 		        </div>
 		    </div>
 	</footer>

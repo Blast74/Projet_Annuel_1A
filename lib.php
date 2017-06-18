@@ -65,14 +65,14 @@ function getUser ($sessionToken) {
 		$query -> execute ([":sessionToken"=>$sessionToken ]);
 		$result = $query -> fetch();
 		$data = [
-		"email"=>$result["email"],
+			"id"=>$result["id"],
+			"email"=>$result["email"],
 			"pseudo"=>$result["pseudo"],
 			"gender"=>$result["gender"],
 			"firstname"=>$result["firstname"],
 			"lastname"=>$result["lastname"],
 			"birthday"=>$result["birthday"],
 			"country"=>$result["country"],
-			//"pwd"=>$result["pwd"],
 			"update_date"=>$result["gender"],
 			"active_account"=>$result["active_account"]
 		];
@@ -86,8 +86,9 @@ function getUser ($sessionToken) {
 //Param 1: nom du dossier parent, param 2: nom du dossier à créer
 function createDirectory ($dirType, $dirName) {
 
-	if ($dirType == "musics" || $dirType == "music_images" ||
-	$dirType == "images") {
+	if ($dirType == "musics" ||
+		$dirType == "music_images" ||
+		$dirType == "images") {
 			$parentDirectory = "./".$dirType."/";
 	}
 	else {
@@ -97,7 +98,6 @@ function createDirectory ($dirType, $dirName) {
 	if (!file_exists($parentDirectory)){
 	  mkdir($parentDirectory);
 	}
-
 	switch ($dirType) {
 		case 'musics':
 			$directory = $parentDirectory.$dirName."/";
@@ -105,13 +105,10 @@ function createDirectory ($dirType, $dirName) {
 
 		default:
  			$directory = $parentDirectory;
-
 			break;
 	}
-
 	if (!file_exists($directory)){
 	  mkdir($directory);
 	}
 	return $directory;
-
 }

@@ -4,15 +4,11 @@
     require_once "conf.inc.php";
 ?>
 
-
     <div class="container">
-
-
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Inscrivez vous !</h1>
-
-     </div>
+            </div>
         </div>
         <!-- FORMULAIRE -->
         <div class="row">

@@ -46,7 +46,7 @@
                 }
                 echo "</div>";
                 ?>
-                <form method="POST" action="music_conf/saveMusic.php"  enctype="multipart/form-data">
+                <form method="POST" action="music_conf/saveMusic.php"  enctype="multipart/form-data" onsubmit="return verifForm(this);">
                   <!-- ONSUBMIT = RETURN VERIF () -->
                 <!--enctype = nécessaire pour uploader sinon $_FILES est null -->
                     <div class="control-group form-group">
@@ -89,11 +89,13 @@
                             <?php
                             foreach ($listOfGenre as $key => $value) {
                                  $selected =(isset($_SESSION["form_post"]["genre"]) && $_SESSION["form_post"]["genre"] == $key)?"selected='selected'":"";
-
                                 echo "<option value='".$key."' ".$selected.">" .$value."</option>";
                             }
+
                             ?>
                       </select>
+
+
                     </div>
 
                     <div id='SubtypeDiv'class="control-group form-group"></div>
@@ -110,9 +112,6 @@
                 </form>
             </div>
         </div>
-
-
-
         <script src="music_conf/addMusic.js"></script>
         <script>
             var ListOfSubtype = <?php echo json_encode($subtypeList); ?>;

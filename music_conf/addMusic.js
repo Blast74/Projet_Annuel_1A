@@ -1,4 +1,3 @@
-var selected = null;//a remplacer par ce que l'utilisateur avait choisit
 
 //Affiche les sous types en fonction de la catégorie choisie
 function MusicSubtypeList (){
@@ -22,9 +21,7 @@ function MusicSubtypeList (){
   container.appendChild(label);
   select.setAttribute ('id', 'selectContainer');
   select.setAttribute ('name', 'subtype');
-  select.setAttribute ('onchange', 'saveSelection()');
   container.appendChild(select);
-
   fillSubtypeContainer (style);
 }
 
@@ -35,9 +32,17 @@ function fillSubtypeContainer (style) {
     var option = document.createElement('option');
     option.setAttribute ('value', ListOfSubtype[style.value][i]);
     option.innerHTML = ListOfSubtype[style.value][i];
-    if (selected == ListOfSubtype[style.value][i]) {
-      option.setAttribute ('selected', 'selected');
-    }
     selectContainer.appendChild(option);
   }
+}
+
+function verifForm (form) {
+  var valid = false;
+  var subtype = document.getElementById('selectContainer');
+  if (subtype == null){
+    MusicSubtypeList ();
+  }else {
+    valid = true;
+  }
+    return valid;
 }
