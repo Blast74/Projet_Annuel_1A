@@ -1,12 +1,13 @@
 <?php
     session_start();
-    require "conf.inc.php";
     include "navbar.php";
 
-    // $connection = dbConnect ();
-    // $query = $connection -> prepare ("SELECT * FROM USERS WHERE active_account !=0");
-    // $query -> execute();
-    // $users = $query -> fetchAll ();
+    $access = checkMod($_SESSION["id"]);
+    if($access[0] != 1){
+
+        header("Location: index.php");
+        die();
+    }
 ?>
         <div class="container">
             </div>
@@ -18,12 +19,11 @@
             </div>
             <div id="ListParamUsers">
                 <p>Trier Par:</p>
-            <select id="sortBySelectUsers">
-                <option value="user_id" selected="selected">id</option>
+            <select id="orderDisplay">
                 <option value="pseudo" >Pseudo</option>
-                <option value="prenom" >Prénom</option>
-                <option value="nom" >Nom</option>
-                <option value="email" >Mail</option>
+                <option value="firstname" >Prénom</option>
+                <option value="lastname" >Nom</option>
+                <option value="email" selected="selected">Mail</option>
                 <option value="birthday" >Date de naissance</option>
                 <option value="gender" >Genre</option>
                 <option value="country" >Pays</option>
@@ -33,20 +33,23 @@
                 <option value="ASC">Croissant</option>
                 <option value="DESC">Décroissant</option>
             </select>
-            <input id=tagButtonView type="button" onclick='recupParam("Users")' value ="Actualiser"></input>
+            <input id="refreshButton" type="button" onclick='listUsers("<?php getJSAccessToken(); ?>","listUsers")' value ="Actualiser"></input>
             <br>
             <p>Nombre d'utilisateurs souhaités :</p>
-            <select id="nbusersSelectUsers">
+            <select id="nbByPages">
                 <option value="5" selected="selected">5</option>
                 <option value="10" >10</option>
                 <option value="20" >20</option>
                 <option value="30" >30</option>
             <select>
             </div>
-            <div id="userslistAjax">
+            <div id="resultRightOperation">
+
+            </div>
+             <div id="listUsers">
 
         </div>
-            <div class="row">
+        <!--    <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">MODERATEURS :</h1>
                 </div>
@@ -96,7 +99,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-<!-- PHP
+ PHP
         foreach ($users as $user) {
           if (($user ["moderator"] ==1) OR ($user ["moderator"] ==2)){
             echo "<tr>";
@@ -119,19 +122,23 @@
               echo "</tr>";
             }
           }
-        } -->
+        }
 
            </table>
 
-        </div>
+        </div> -->
 
 
         <hr>
-//
-
-<script src="admin\libMod.js"></script>
+<script src="admin\libJS.js"></script>
+<!--
+    getJSAccessToken();
+ ?> -->
 <!-- <script src="admin\libSupMod.js"></script> -->
 
+
 <?php
+    var_dump(checkMod($_SESSION["id"]));
+    var_dump(get_defined_vars());
     include "footer.php";
 ?>

@@ -25,18 +25,5 @@ if (isset($_SESSION["id"])) {
 }
 
 
-// $connection = dbConnect();
-//         // ":pseudo" (variable sql)   modif!!!!!
-//     $querry = $connection -> prepare("INSERT INTO trophy (trophy_name, trophy_image, trophy_description, trophy_points, user_id) VALUES (:name, :image,:descr,:points,:user)");
-//
-//     $querry -> execute([     // la ou il y a   :pseudo;, on met la valeur de $_POST["pseudo"]
-//       "name" => $test["name"],
-//       "image" => $test["image"],
-//       "descr" => $test["desc"],
-//       "points" => $test["point"],
-//       "user" => $result["user_id"]
-//         ]);
-//
-
 
  ?>
