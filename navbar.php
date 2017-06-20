@@ -2,8 +2,9 @@
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
-require_once "admin\libModOne.php";
-require_once "lib.php"
+require_once "admin/libSQL.php";
+require_once "admin/libModOne.php";
+require_once "lib.php";
 ?>
 
 
@@ -27,26 +28,10 @@ require_once "lib.php"
                     <li>
                         <a href="news.php">NEWS</a>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown"> MUSIQUES <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="review.php"> Musiques récentes </a> <!-- Se déconnecté si déjà connecté -->
-                            </li>
-                            <li>
-                                <a href="review.php"> Rock </a>
-                            </li>
-                            <li>
-                                <a href="review.php"> Rap </a>
-                            </li>
-                            <li>
-                                <a href="review.php"> Electro </a>
-                            </li>
-                            <li>
-                                <a href="review.php"> Musiques...</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="music.php">MUSIQUES</a>
                     </li>
+
                     <?php
                          // A CHANGER PLUS TARD + PRESENTATION CSS
                         if ( !isset($_SESSION['id'])){

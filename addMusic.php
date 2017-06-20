@@ -1,8 +1,23 @@
 <?php
     session_start();
-    include 'navbar.php';
+
     require_once "lib.php";
     require_once "conf.inc.php";
+
+    //Il faut alléger la fonction de vérification ??
+    if (!empty ($_SESSION["id"])) {
+      $verifyUser = getUser ($_SESSION["id"]);
+      if ($verifyUser == false){ //Si le token ne correspond pas à celui de l'utilisateur en BDD
+        header("Location: disconnect.php");
+        die ();
+      }
+    }else {
+      header("Location: index.php");
+      die ();
+    }
+
+    include 'navbar.php';
+
 ?>
     <div class="container">
     <div class="row">
@@ -31,7 +46,7 @@
                 }
                 echo "</div>";
                 ?>
-                <form method="POST" action="saveMusic.php"  enctype="multipart/form-data">
+                <form method="POST" action="music_conf/saveMusic.php"  enctype="multipart/form-data" onsubmit="return verifForm(this);">
                   <!-- ONSUBMIT = RETURN VERIF () -->
                 <!--enctype = nécessaire pour uploader sinon $_FILES est null -->
                     <div class="control-group form-group">
@@ -69,43 +84,37 @@
 
 
                     <div class="control-group form-group" onchange="MusicSubtypeList()">
-                        <label>Genre :</label><br>
+                        <label>Genre :</label>
                         <select name="genre" id="selectSyle">
                             <?php
                             foreach ($listOfGenre as $key => $value) {
                                  $selected =(isset($_SESSION["form_post"]["genre"]) && $_SESSION["form_post"]["genre"] == $key)?"selected='selected'":"";
-
                                 echo "<option value='".$key."' ".$selected.">" .$value."</option>";
                             }
+
                             ?>
                       </select>
 
-                    </div>
-
-
-                    <div id='SubtypeDiv'class="control-group form-group">
 
                     </div>
 
-                    <label>Sélectionner le fichier à ajouter:</label><br>
+                    <div id='SubtypeDiv'class="control-group form-group"></div>
+
+                    <label>Sélectionner le fichier à ajouter:</label>
                     <input type="file" name="music" accept=".mp3"/>
 
 
-                    <label>Ajoutez une image pour votre musique (Optionnel) :</label><br>
+                    <label>Ajoutez une image pour votre musique (Optionnel) :</label>
                     <input type="file" name="img" accept=".png,.jpg,.jpeg" />
 
                     <div id="success"></div>
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
             </div>
-      <button type="button"  onclick="test ()"name="button">TEST</button>
         </div>
-
-
-
-        <script src="addMusic.js"></script>
+        <script src="music_conf/addMusic.js"></script>
         <script>
-            var ListOfSubtype = <?php echo json_encode($subtypeList); ?>; //A CHANGER PAR DU AJAX
+            var ListOfSubtype = <?php echo json_encode($subtypeList); ?>;
         </script>
 
 
