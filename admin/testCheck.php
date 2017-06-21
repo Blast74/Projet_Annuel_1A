@@ -1,26 +1,28 @@
 <?php
 
 session_start();
-require "..\lib.php";
-require "libSQL.php";
-require "conf.mod.php";
-require 'libModOne.php';
+require '../lib.php';
 
 
- $test = checkMod($_SESSION["id"]);
- var_dump($_SESSION["id"]);
- var_dump($test);
+ // $pseudo = "test";
+ // $pwdTemp = "test";
+ // $accessToken = "test";
+ // var_dump(`{$pseudo}`);
 
- $test2 = 0;
+    // $content = registerMailContent($pseudo, $accessToken, $pwdTemp);
+    // echo ($content);
 
- echo ($_SESSION["id"] == 0);
+    $email = "zebrolfr@gmail.com";
+    $pwd = uniqid();
+    $accessToken = md5(uniqid().$email.time());
+    $contentMail = registerMailContent("test", $accessToken, $pwd);
+    echo $contentMail;
+    var_dump($contentMail);
 
- $test3= NULL;
- $test4 = 0;
+    $headers = "From: \"Musique Review Inscription\"<zebrolfr@gmail.com>\n";
+    $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"";
 
- echo ($test3 === NULL);
- echo ($test4 === NULL);
+    $statusMail = mail($email, "Activation de compte", $contentMail, $headers);
 
-
-
+    var_dump($statusMail);
  ?>

@@ -11,25 +11,15 @@ $listOfGenre=[
 				"met" => "Metal",
 				"rap" => "Rap",
 				"blu" => "Blues",
-				"var" => "Variété",
+				"chafr" => "Chanson Française",
+				"cho" => "Chorale",
+				"cou" => "Country",
 				"dis" => "Disco",
 				"ele" => "Electro",
+				"cla" => "Musique classique",
+				"tec" => "Techno",
 				"hip" => "Hip Hop",
-				"reg" => "Reggae",
-				"oth" => "autre"
- 				];
-
-$subtypeList=[
-				"roc" => ["Rock", "Pop-Rock", "Folkrock"],
-				"met" => ["Deathmetal", "Metal-Metal", "Trashmetal"],
-				"rap" => ["Rap", "Rap Americain", "Gangsta Rap", "Slam"],
-				"blu" => ["Blues", "Deepblues"],
-				"var" => ["Chanson francaise"],
-				"dis" => ["Disco", "Funk"],
-				"ele" => ["Electro", "GOA", "House", "EDM", "Techno"],
-				"hip" => ["Hip Hop"],
-				"reg" => ["Reggae"],
-				"oth" => ["Country", "Chorale", "Classique"]
+				"reg" => "Reggae"
 				];
 
 
@@ -72,13 +62,12 @@ $errors = [
 	15 => "Veuillez choisir un fichier à uploader",
 	16 => "Veuillez sélectionner le bon format (.mp3)",
 	17 => "Le fichier est trop gros",
-	18 => "Problème d'upload de la musique",
+	18 => "Problème d'upload du fichier",
 	19 => "La taille de l'image est trop grande",
 	20 => "Sélectionner un format .jpeg, .jpg ou .png pour votre image",
-	21 => "Veuillez sélectionner un sous-genre dans la liste",
-	22 => "Problème d'upload de l'image"
+	21 => "Le mot de passe est incorrect"
 ];
 
 $messages = [
-	1 => "Votre musique à bien été ajoutée !"
+	1 => "Votre musique à bien été ajouté !"
 ];
