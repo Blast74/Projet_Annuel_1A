@@ -2,13 +2,18 @@
     session_start ();
     include 'navbar.php';
     require_once "conf.inc.php";
+    require_once "lib.php";
 ?>
 
+
     <div class="container">
+
+
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Inscrivez vous !</h1>
-            </div>
+
+     </div>
         </div>
         <!-- FORMULAIRE -->
         <div class="row">
@@ -23,9 +28,16 @@
                     }
                 }
                 echo "</div>";
+
+                if (isset($_GET["access_token"])) {
+                  $userInfo = "?&user_informations=update";
+                }else{
+                  $userInfo = "?&user_informations=create";
+                }
+
                 ?>
-                <form method="POST" action="saveUser.php" >
-                    <input type="hidden" name="user_informations" value="create">
+
+                <form method="POST" action=<?php echo "saveUser.php".$userInfo ?> >
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Prénom:</label>
@@ -53,7 +65,7 @@
                             <input type="email" name="email" placeholder="Votre email" class="form-control" id="phone" required="required" value="<?php echo (isset($_SESSION["form_post"]["email"]))?$_SESSION["form_post"]["email"]:""; ?>">
                         </div>
                     </div>
-                    <div class="control-group form-group">
+                    <!-- <div class="control-group form-group">
                         <div class="controls">
                             <label>Mot de passe:</label>
                             <input type="password" name="pwd" placeholder="Votre mot de passe" required="required" class="form-control">
@@ -66,7 +78,7 @@
                             <input type="password" name="pwd2" placeholder="Confirmez mot de passe" required="required" class="form-control">
                             <p class="help-block"></p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Date de naissance:</label><br>

@@ -1,8 +1,10 @@
 <?php
 
-  $tab = get_defined_vars();
+echo $_POST["test"];
 
-  echo (json_encode($tab));
+$_POST["test"] = "testChange";
+
+echo $_POST["test"];
 
 //,$_POST,json_last_error()
 //(json_encode(get_defined_vars()));
