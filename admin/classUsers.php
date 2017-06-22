@@ -10,15 +10,16 @@ class User
   public $firstname = "";
   public $lastname = "";
   public $birthday = "";
+  public $gender = "";
   public $register_date = "";
   public $country = "";
   public $image = "";
   public $update_date = "";
   public $trophy_points = "";
-  private $pwd = "";
-  private $moderator = "";
-  private $access_token = "";
-  private $active_account = "";
+  public $pwd = "";
+  public $moderator = "";
+  public $access_token = "";
+  public $active_account = "";
 
 
   public function getPropertiesNames(){

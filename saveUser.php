@@ -9,7 +9,7 @@ $listOfErrors = [];
 
 
 switch ($_GET["user_informations"]) {
-    case 'update': //MODIFICATION D'UTILISATEUR PAR UN MODERATEUR
+    case 'update': 
         echo 'cas update :';
         echo 'mod     ';
         var_dump($_POST);
@@ -25,13 +25,14 @@ switch ($_GET["user_informations"]) {
     case 'create'://CREATION D'UN UTILISATEUR
 
         if(!empty($_POST["firstname"]) &&
-        !empty($_POST["lastname"]) &&
-        !empty($_POST["pseudo"]) &&
-        !empty($_POST["email"]) &&
-        !empty($_POST["birthday"]) &&
-        !empty($_POST["gender"]) &&
-        !empty($_POST["country"]) &&
-        count($_POST) == 7) {
+            !empty($_POST["lastname"]) &&
+            !empty($_POST["pseudo"]) &&
+            !empty($_POST["email"]) &&
+            !empty($_POST["birthday"]) &&
+            !empty($_POST["gender"]) &&
+            !empty($_POST["country"]) &&
+            count($_POST) == 7) {
+
             $_POST["firstname"] = trim($_POST["firstname"]);
             $_POST["lastname"] = trim($_POST["lastname"]);
             $_POST["pseudo"] = trim($_POST["pseudo"]);
@@ -115,8 +116,6 @@ switch ($_GET["user_informations"]) {
 
                 if($statusMail)  {
 
-
-
                 $connection = dbConnect();
                 $querry = $connection -> prepare("INSERT INTO USERS (email, pseudo, gender, firstname, lastname, birthday, register_date, country, pwd, access_token, active_account) VALUES (:email, :pseudo, :gender, :firstname, :lastname, :birthday, :register_date, :country, :pwd, :access_token, :active_account)");
 
@@ -138,13 +137,16 @@ switch ($_GET["user_informations"]) {
                     "active_account" => $active_account
                     ]);
                 //IL FAUT SE CONNECTER AUTOMATIQUEMENT APRES L'INSCRIPTION //REDIRECTION SUR CONNECT.PHP
-                header("Location: index.php");
+                header('Location: index.php');
                 die();
 
                 }else {
                     $error = true;
                     $listOfErrors[] =2;
-                    errors ($_POST, $listOfErrors);
+                    $_SESSION["form_post"] = $_POST;
+                    $_SESSION["form_errors"] = $listOfErrors;
+                    header('location: inscription.php');
+                    die();
                 }
             }
         }
@@ -156,42 +158,56 @@ switch ($_GET["user_informations"]) {
 
     case 'activate':
 
-    if (password_verify ($_POST["old_pwd"], $user->pwd)) {
-        $error = true;
-        $listOfErrors[] =21;
-    }
+        $user = new User;
+        $creation = $user->createWithToken($_GET["access_token"]);
 
-    $nbCharPwd = strlen($_POST["pwd"]);
-    if($nbCharPwd < 8 || $nbCharPwd > 16 ){
-        $error = true;
-        $listOfErrors[] =3;
-    }
-    //Confirmation du mot de passe
-    if($_POST["pwd"] != $_POST["pwd2"]){
-        $error = true;
-        $listOfErrors[] =4;
-    }
-    if (!$error){
-      $user = new User;
-      $user->createWithToken($_GET["access_token"]);
-      $pwd = password_hash ($_POST["pwd"], PASSWORD_DEFAULT);
-      $user->updateUser(["pwd" => $pwd]);
-      $user->changeStatut(1);
-      $content = mailPwdChanged($user->pseudo, $_POST["pwd"]);
-      mail($user->email, "Identifiant changés", $content);
-      header("Location: index.php");
-      die();
-    }else{
-      $_SESSION["save_form"] = $_POST;
-      $_SESSION["form_errors"] = $listOfErrors;
-      header('"location: "http://localhost/Projet_Annuel_1A/changePwd.php?&user_informations=activate&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"].'"');
+        if (!$creation) {
 
-  }
+            header('Location: index.php');
+            die();
+        }else{
+            echo 'test';
+        }
 
-    break;
+        if (!(password_verify ($_POST["old_pwd"], $user->pwd))) {
+            $error = true;
+            $listOfErrors[] =21;
+        }
+
+        $nbCharPwd = strlen($_POST["pwd"]);
+        if($nbCharPwd < 8 || $nbCharPwd > 16 ){
+            $error = true;
+            $listOfErrors[] =3;
+        }
+        //Confirmation du mot de passe
+        if($_POST["pwd"] != $_POST["pwd2"]){
+            $error = true;
+            $listOfErrors[] =4;
+        }
+        if (!$error){
+
+            $pwd = password_hash ($_POST["pwd"], PASSWORD_DEFAULT);
+            $user->updateUser(["pwd" => $pwd]);
+            $user->changeStatut(1);
+            $content = mailPwdChanged($user->pseudo, $_POST["pwd"]);
+            $headers = mailHeaderHtml();
+            mail($user->email, "Identifiant changés", $content, $headers);
+            echo 'test';
+
+            header('Location: index.php');
+            die();
+
+        }else{
+            $_SESSION["form_post"] = $_POST;
+            $_SESSION["form_errors"] = $listOfErrors;
+            header('location: changePwd.php?&user_informations=activate&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"]);
+            die();
+        }
+
+        break;
 
     default:
-    var_dump($_GET["user_informations"]);
-    echo 'pb $_POST';
+        var_dump($_GET["user_informations"]);
+        echo 'pb $_POST';
     break;
 }
