@@ -28,7 +28,7 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
              <meta charset="utf-8">
              <title>Validation de compte</title>
            </head>
-           <body>'
+           <body>';
    echo      '<div class="control-group form-group">';
    if (isset ($_SESSION["form_errors"])){
 
@@ -36,16 +36,40 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
         {
           echo "<li>".$errors[$error];
         }
- }
- echo "</div>";
+  }
+  echo "</div>";
   echo        '<form action="http://localhost/Projet_Annuel_1A/saveUser.php?&user_informations='.$userInfo.'&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"].'" method="post">
                <p>Veuillez changer votre mot de passe :</p>
                <p>Votre ancien mot de passe :</p>
-               <input type="text" name="old_pwd" value="'.(isset($_SESSION["save_form"]["old_pwd"]))?$_SESSION["save_form"]["old_pwd"]:"").'">
+               <input type="text" name="old_pwd" value="';
+
+  if (isset($_SESSION["form_post"]["old_pwd"])) {
+    echo $_SESSION["form_post"]["old_pwd"];
+  }else{
+    echo"";
+  }
+
+  echo       '">
                <p>Votre nouveau mot de passe :</p>
-               <input type="text" name="pwd" value="'.(isset($_SESSION["save_form"]["pwd"]))?$_SESSION["save_form"]["pwd"]:"").'">
+               <input type="text" name="pwd" value="';
+
+  if (isset($_SESSION["form_post"]["pwd"])) {
+    echo $_SESSION["form_post"]["pwd"];
+  }else{
+    echo"";
+  }
+
+  echo         '">
                <p>confirmation :</p>
-               <input type="text" name="pwd2" value="'.(isset($_SESSION["save_form"]["pwd2"]))?$_SESSION["save_form"]["pwd2"]:"").'">
+               <input type="text" name="pwd2" value="';
+
+  if (isset($_SESSION["form_post"]["pwd2"])) {
+    echo $_SESSION["form_post"]["pwd2"];
+  }else{
+    echo"";
+  }
+
+  echo         '">
                <p>Validation :</p>
                <input type="submit" name="submit" value="Valider">
                <div id="error-validation">
@@ -63,6 +87,6 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
 }
 
   include 'footer.php';
-  unset($_SESSION["save_form"]);
+  unset($_SESSION["form_post"]);
   unset($_SESSION["form_errors"]);
   ?>
