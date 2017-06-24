@@ -65,7 +65,7 @@ function getUser ($sessionToken) {
 		$query -> execute ([":sessionToken"=>$sessionToken ]);
 		$result = $query -> fetch();
 		$data = [
-		"user_id"=>$result["user_id"],
+			"id"=>$result["id"],
 			"email"=>$result["email"],
 			"pseudo"=>$result["pseudo"],
 			"gender"=>$result["gender"],
@@ -73,7 +73,6 @@ function getUser ($sessionToken) {
 			"lastname"=>$result["lastname"],
 			"birthday"=>$result["birthday"],
 			"country"=>$result["country"],
-			//"pwd"=>$result["pwd"],
 			"update_date"=>$result["gender"],
 			"active_account"=>$result["active_account"]
 		];
@@ -83,6 +82,37 @@ function getUser ($sessionToken) {
 	}
 	return $data;
 }
+
+//Param 1: nom du dossier parent, param 2: nom du dossier à créer
+function createDirectory ($dirType, $dirName) {
+
+	if ($dirType == "musics" ||
+		$dirType == "music_images" ||
+		$dirType == "images") {
+			$parentDirectory = "./".$dirType."/";
+	}
+	else {
+		return false;
+	}
+	//Dossier parent
+	if (!file_exists($parentDirectory)){
+	  mkdir($parentDirectory);
+	}
+	switch ($dirType) {
+		case 'musics':
+			$directory = $parentDirectory.$dirName."/";
+			break;
+
+		default:
+ 			$directory = $parentDirectory;
+			break;
+	}
+	if (!file_exists($directory)){
+	  mkdir($directory);
+	}
+	return $directory;
+}
+
 
 function registerMailContent($pseudo, $accessToken, $pwdTemp){
 
@@ -126,3 +156,4 @@ function mailHeaderHtml(){
     return $headers;
 
 }
+
