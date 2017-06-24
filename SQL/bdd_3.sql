@@ -117,8 +117,8 @@ ALTER TABLE FOLLOW ADD CONSTRAINT FK_FOLLOW_email FOREIGN KEY (email) REFERENCES
 ALTER TABLE FOLLOW ADD CONSTRAINT FK_FOLLOW_email_follower FOREIGN KEY (email_follower) REFERENCES USERS(email);
 ALTER TABLE OPINION ADD CONSTRAINT FK_OPINION_email FOREIGN KEY (email) REFERENCES USERS(email);
 ALTER TABLE OPINION ADD CONSTRAINT FK_OPINION_music_id FOREIGN KEY (music_id) REFERENCES MUSIC(music_id);
-ALTER TABLE LINKED ADD CONSTRAINT FK_LINKED_email FOREIGN KEY (email) REFERENCES USERS(email);
-ALTER TABLE LINKED ADD CONSTRAINT FK_LINKED_music_id FOREIGN KEY (music_id) REFERENCES MUSIC(music_id);
+ALTER TABLE LIKED ADD CONSTRAINT FK_LIKED_email FOREIGN KEY (email) REFERENCES USERS(email);
+ALTER TABLE LIKED ADD CONSTRAINT FK_LIKED_music_id FOREIGN KEY (music_id) REFERENCES MUSIC(music_id);
 
 
 INSERT INTO `users`     ( `email`, `pseudo`, `image`, `gender`, `firstname`, `lastname`, `birthday`, `register_date`, `country`, `pwd`, `moderator`, `access_token`, `update_date`, `active_account`) VALUES
@@ -132,19 +132,19 @@ INSERT INTO `users`     ( `email`, `pseudo`, `image`, `gender`, `firstname`, `la
                         ('moqejfepojkfpq@efqlefjpod.com', 'ioqejfqopjoejjf', NULL, 'm', 'zefiozhofir', 'pcdkspkvzef', '1996-08-15', '1996-08-15', 'fr', '$2y$10$GJZqZDGiOxFHwPDB3YrWg.xK59BNFp8jo.FtiKPc3W82Vs5a89K82', 1, NULL, NULL, 1),
                         ('dhdjfckzjuk@djzuejsiz.fr', 'usqhlfezuehp', NULL, 'm', 'iqfheuhqzhf', 'cieofnomzeif', '1988-03-08', '1988-03-08', 'fr', '$2y$10$2J2DgxvqSz0fsyipiFdTMuwqSfAN2m34uJRyStxjFCuqAq7uo4YNi', 1, NULL, NULL, 1);
 
-INSERT INTO `MUSIC`     (`music_id`, `music_name`, `subtype_type`, `subtype_name`, `author_comment`, `lyrics`, `music_image`, `note_music`, `isDeleted`, `dateupload`, `upload_music`,  `upload_date`, `email`) VALUES
-                        (9, 'SALUT', NULL, NULL, '', 'C\'est des--fez^p oferopf,erpozak,s km,am , )))', '1', NULL, 0, '2017-06-04', './musics/antoine@a.a/SALUT.mp3', NULL, 'antoine@a.a'),
-                        (10, 'Antreoj', NULL, NULL, '', '', './music_images/5934114a83e40.jpg', NULL, 0, '2017-06-04', './musics/antoine@a.a/Antreoj.mp3', NULL, 'antoine@a.a'),
-                        (11, 'Derniertest', 'roc', 'Array', 'commentaire', 'lyrics', './music_images/59341a0a90ad2.jpg', NULL, 0, '2017-06-04', './musics/antoine@a.a/Derniertest.mp3', NULL, 'antoine@a.a'),
-                        (12, 'eazeaz', 'roc', 'Array', '', '', NULL, NULL, 0, '2017-06-04', './musics/antoine@a.a/eazeaz.mp3', NULL, 'antoine@a.a'),
-                        (13, 'rezrez', 'roc', 'Array', '', '', NULL, NULL, 0, '2017-06-04', './musics/Confirmation@a.a/rezrez.mp3', NULL, 'Confirmation@a.a'),
-                        (14, 'rezrezrez', 'roc', 'Array', '', '', NULL, NULL, 0, '2017-06-04', './musics/Confirmation@a.a/rezrezrez.mp3', NULL, 'Confirmation@a.a'),
-                        (15, 'ezaezaeaz', 'chafr', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/ezaezaeaz.mp3', NULL, 'Confirmation@a.a'),
-                        (16, 'AntoineSamedi', 'blu', 'rock4', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/AntoineSamedi.mp3', NULL, 'Confirmation@a.a'),
-                        (17, 'dzadzadzadzadzad', 'rap', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzadzadzadzadzad.mp3', NULL, 'Confirmation@a.a'),
-                        (18, 'efùlùflezfez', 'dis', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/efùlùflezfez.mp3', NULL, 'Confirmation@a.a'),
-                        (19, 'dzdzadzadzadzadzadzadzad', 'blu', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzdzadzadzadzadzadzadzad.mp3', NULL, 'Confirmation@a.a'),
-                        (20, 'dzladkzjandpk', 'blu', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzladkzjandpk.mp3', NULL, 'Confirmation@a.a'),
-                        (21, 'dlazdzadpkzamd', 'blu', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dlazdzadpkzamd.mp3', NULL, 'Confirmation@a.a'),
-                        (22, 'dùzaldùlazùd', 'chafr', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dùzaldùlazùd.mp3', NULL, 'Confirmation@a.a'),
-                        (23, 'dzaldùza', 'rap', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzaldùza.mp3', NULL, 'Confirmation@a.a');
+INSERT INTO `MUSIC`     (`music_id`, `music_name`, `subtype_type`, `subtype_name`, `author_comment`, `lyrics`, `music_image`, `note_music`, `isDeleted`, `dateupload`, `upload_music`, `visibility`, `upload_date`, `email`) VALUES
+                        (9, 'SALUT', NULL, NULL, '', 'C\'est des--fez^p oferopf,erpozak,s km,am , )))', '1', NULL, 0, '2017-06-04', './musics/antoine@a.a/SALUT.mp3', 1, NULL, 'antoine@a.a'),
+                        (10, 'Antreoj', NULL, NULL, '', '', './music_images/5934114a83e40.jpg', NULL, 0, '2017-06-04', './musics/antoine@a.a/Antreoj.mp3', 1, NULL, 'antoine@a.a'),
+                        (11, 'Derniertest', 'roc', 'Array', 'commentaire', 'lyrics', './music_images/59341a0a90ad2.jpg', NULL, 0, '2017-06-04', './musics/antoine@a.a/Derniertest.mp3', 1, NULL, 'antoine@a.a'),
+                        (12, 'eazeaz', 'roc', 'Array', '', '', NULL, NULL, 0, '2017-06-04', './musics/antoine@a.a/eazeaz.mp3', 1, NULL, 'antoine@a.a'),
+                        (13, 'rezrez', 'roc', 'Array', '', '', NULL, NULL, 0, '2017-06-04', './musics/Confirmation@a.a/rezrez.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (14, 'rezrezrez', 'roc', 'Array', '', '', NULL, NULL, 0, '2017-06-04', './musics/Confirmation@a.a/rezrezrez.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (15, 'ezaezaeaz', 'chafr', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/ezaezaeaz.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (16, 'AntoineSamedi', 'blu', 'rock4', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/AntoineSamedi.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (17, 'dzadzadzadzadzad', 'rap', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzadzadzadzadzad.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (18, 'efùlùflezfez', 'dis', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/efùlùflezfez.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (19, 'dzdzadzadzadzadzadzadzad', 'blu', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzdzadzadzadzadzadzadzad.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (20, 'dzladkzjandpk', 'blu', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzladkzjandpk.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (21, 'dlazdzadpkzamd', 'blu', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dlazdzadpkzamd.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (22, 'dùzaldùlazùd', 'chafr', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dùzaldùlazùd.mp3', 1, NULL, 'Confirmation@a.a'),
+                        (23, 'dzaldùza', 'rap', 'rock2', '', '', NULL, NULL, 0, '2017-06-10', './musics/Confirmation@a.a/dzaldùza.mp3', 1, NULL, 'Confirmation@a.a');
