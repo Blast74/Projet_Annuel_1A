@@ -30,6 +30,7 @@ CREATE TABLE MUSIC(
         lyrics         Text ,
         music_image    Text ,
         note_music     Int ,
+        number_of_votes Int DEFAULT 0,    
         isDeleted      TinyINT(1) NOT NULL DEFAULT 0,
         dateupload     Date ,
         upload_music   Text ,
@@ -45,9 +46,9 @@ CREATE TABLE MUSIC(
 
 CREATE TABLE USERS(
         id             BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        email          Varchar (60) NOT NULL UNIQUE KEY,        
+        email          Varchar (60) NOT NULL UNIQUE KEY,
         pseudo         Varchar (30) NOT NULL ,
-        image          Text ,
+        image          Text DEFAULT 'images/default_image.png',
         gender         Char (1) NOT NULL ,
         firstname      Varchar (30) NOT NULL ,
         lastname       Varchar (30) NOT NULL ,
