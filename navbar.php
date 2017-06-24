@@ -68,7 +68,7 @@ require_once "lib.php";
                                         <a href="addMusic.php">Gérer mes musiques</a>
                                     </li>
                                     <li>
-                                        <a href="account.php">Gérer mes informations personnelles</a>
+                                        <a href="inscription.php">Gérer mes informations personnelles</a>
                                     </li>
                                     <li>
                                         <a href="disconnect.php">Se déconnecter</a>
