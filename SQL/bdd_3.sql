@@ -31,7 +31,7 @@ CREATE TABLE MUSIC(
         lyrics         Text ,
         music_image    Text ,
         note_music     Int ,
-        number_of_votes Int,
+        number_of_votes Int DEFAULT 0,    #default0 important pour incrémenter cette colonne
         isDeleted      TinyINT(1) NOT NULL DEFAULT 0,
         dateupload     Date ,
         report         TinyINT(1) NOT NULL DEFAULT 1,
@@ -46,9 +46,9 @@ CREATE TABLE MUSIC(
 
 CREATE TABLE USERS(
         id             BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        email          Varchar (60) NOT NULL UNIQUE KEY,        
+        email          Varchar (60) NOT NULL UNIQUE KEY,
         pseudo         Varchar (30) NOT NULL ,
-        image          Text ,
+        image          Text DEFAULT 'images/default_image.png',
         gender         Char (1) NOT NULL ,
         firstname      Varchar (30) NOT NULL ,
         lastname       Varchar (30) NOT NULL ,
@@ -91,7 +91,7 @@ CREATE TABLE FOLLOW(
 CREATE TABLE LINKED(
         email          Varchar (60) NOT NULL,
         music_id       Int NOT NULL ,
-        is_LINKED       TinyINT NOT NULL DEFAULT 0,
+        is_LINKED       TinyINT NOT NULL DEFAULT 0, #zero= ? un= ? deux =??
         music_note     TinyINT, #yes or no //A voté ou pas
         PRIMARY KEY (email ,music_id)
 );
