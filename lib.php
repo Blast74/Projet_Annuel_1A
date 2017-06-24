@@ -112,3 +112,48 @@ function createDirectory ($dirType, $dirName) {
 	}
 	return $directory;
 }
+
+
+function registerMailContent($pseudo, $accessToken, $pwdTemp){
+
+	$result = '
+      <div>
+        <h1>Activer votre compte :</h1>
+        <p>Vous venez de créer un compte musique review !</p>
+        <h2>Vos identifiants :</h2>
+        <p>Login : '.$pseudo.' </p>
+        <p>Mot de passe : '.$pwdTemp.'</p>
+        <br>
+
+        <a href="http://localhost/Projet_Annuel_1A/changePwd.php?&user_informations=activate&pseudo='.$pseudo.'&access_token='.$accessToken.'">Activer votre compte</a>
+      </div>';
+
+    return $result;
+
+}
+function mailPwdChanged($pseudo, $pwd){
+
+    $result = '
+      <div>
+        <h1>Nouveau Mot de passe :</h1>
+        <p>Vous venez de modifier le mot de passe de votre compte musique review !</p>
+        <h2>Vos identifiants :</h2>
+        <p>Login : '.$pseudo.' </p>
+        <p>Mot de passe : '.$pwd.'</p>
+        <br>
+
+        <a href="https://www.zebrol.fr/index.php">Rendez-vous chez Musique Review !</a>
+      </div>';
+
+    return $result;
+
+}
+
+function mailHeaderHtml(){
+
+    $headers = "From: \"Musique Review\"<zebrolfr@gmail.com>\n";
+    $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"";
+    return $headers;
+
+}
+
