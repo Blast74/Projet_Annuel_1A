@@ -46,7 +46,7 @@
                 }
                 echo "</div>";
                 ?>
-                <form  class='form-horizontal' method="POST" action="music_conf/saveMusic.php"  enctype="multipart/form-data" onsubmit="return verifForm(this);">
+                <form method="POST" action="music_conf/saveMusic.php"  enctype="multipart/form-data" onsubmit="return verifForm(this);">
                   <!-- ONSUBMIT = RETURN VERIF () -->
                 <!--enctype = nécessaire pour uploader sinon $_FILES est null -->
                     <div class="control-group form-group">
@@ -94,23 +94,23 @@
 
                             ?>
                       </select>
+
+
                     </div>
+
                     <div id='SubtypeDiv'class="control-group form-group"></div>
-                    <div class="form-group">
-                      <label>Sélectionner le fichier à ajouter:</label>
-                      <input type="file" name="music" accept=".mp3"/>
+
+                    <label>Sélectionner le fichier à ajouter:</label>
+                    <input type="file" name="music" accept=".mp3"/>
 
 
-                      <label>Ajoutez une image pour votre musique (Optionnel) :</label>
-                      <input type="file" name="img" accept=".png,.jpg,.jpeg" />
-
-                    </div>
-
+                    <label>Ajoutez une image pour votre musique (Optionnel) :</label>
+                    <input type="file" name="img" accept=".png,.jpg,.jpeg" />
 
                     <div id="success"></div>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
-              </div>
+            </div>
         </div>
         <script src="music_conf/addMusic.js"></script>
         <script>
