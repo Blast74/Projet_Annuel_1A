@@ -1,10 +1,10 @@
 <?php
 
-require_once "/lib.php";
 require_once "libModOne.php";
 
 class User
 {
+  public $id = "";
   public $email = "";
   public $pseudo = "";
   public $firstname = "";
@@ -79,27 +79,29 @@ class User
     $result = $query -> execute([$access_token]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
-    if ($result) {
+    if ($user) {
       foreach ($user as $key => $value) {
         $this->{$key} = $value;
       }
-      return 1;
     }else{
-      return 0;
+      return $user;
     }
-
   }
-  public function createWithEmail($email)
-  {
+
+  public function createWithEmail($email){
     $connection = dbConnect ();
     $col = $this->getPropertiesNames();
     $params = implode(',', $col );
     $query = $connection -> prepare ('SELECT '.$params.' FROM USERS WHERE email=?');
-    $query -> execute([$email]);
+    $result = $query -> execute([$email]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
-    foreach ($user as $key => $value) {
-      $this->{$key} = $value;
+    if ($user) {
+      foreach ($user as $key => $value) {
+        $this->{$key} = $value;
+      }
+    }else{
+      return $user;
     }
   }
 

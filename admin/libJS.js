@@ -8,12 +8,13 @@ function getSelectOpt(idSelect) {
 
 function makePagesLim(table, nbLines, page){
   var result = [];
-  var firstElement = (0 + (nbLines * (page-1)))
+  var firstElement = parseInt(0 + (nbLines * (page-1)))
   if (table.length <= firstElement + nbLines ){
-    result = [firstElement, (table.length-1)];
+    result = [firstElement, (table.length)];
   }else {
-    result = [firstElement, (firstElement + nbLines)];
+    result = [firstElement, parseInt(firstElement + nbLines)];
   }
+  console.log(parseInt(firstElement + nbLines));
   return result;
 }
 
@@ -95,12 +96,33 @@ function sortBy(tableJSON, idCol, dir){
 
   tableJSON.sort(function(colA,colB){
     if (dir == "ASC") {
+        console.log(colA[idCol]);
         return colA[idCol] > colB[idCol];
     }else {
         return colB[idCol] > colA[idCol];
     }
   });
     return tableJSON;
+  }
+
+  function sortAsc(a, b, nameCol, direc){
+    if (direc == ASC){
+      if (a[nameCol] < b[nameCol]){
+        return (-1);
+      }else if (a[nameCol] > b[nameCol]) {
+        return 1;
+      }else{
+        return 0;
+      }
+    }else {
+      if (a[nameCol] > b[nameCol]){
+        return (-1);
+      }else if (a[nameCol] < b[nameCol]) {
+        return 1;
+      }else{
+        return 0;
+      }
+    }
   }
 
   function getNbPages(table, nbLines){
@@ -166,27 +188,48 @@ function tagButtonPage(nbPages, idCont){
   return div;
 }
 
+function getCookies(){
+  var cookies = document.cookie.split(";");
+  var result = [];
+  cookies.forEach(function(cookie){
+    result.push(cookie.split("="));
+  });
+  return result;
+}
 
-function listUsers(idSession, idContainer) {
+function getCookie(name){
+  var cookies = getCookies();
+  var result;
+  cookies.forEach(function(cookie){
+    if (cookie[0] == name){
+      result = cookie;
+    }
+    }
+  );
+  if (result != null) {
+    return result;
+  }else {
+    return null;
+  }
+}
+
+
+function listUsers(idContainer) {
   var orderBy = getSelectOpt('orderDisplay');
   var order = getSelectOpt('sortByOptionSelectUsers');
   var nbByPage = getSelectOpt('nbByPages');
+  var idSession = getCookie('access')[1];
   var ajaxRequest = new XMLHttpRequest();
-  ajaxRequest.onreadystatechange = function() {
-    if (ajaxRequest.readyState == 4) {
-      if (ajaxRequest.status == 200) {
+  ajaxRequest.onreadystatechange = function(){
+    if (ajaxRequest.readyState == 4){
+      if (ajaxRequest.status == 200){
         var container = document.getElementById(idContainer);
         var tableUsers = JSON.parse(ajaxRequest.responseText);
         tableUsers = sortBy(tableUsers, orderBy, order);
         var currentPage = buttonPage(tableUsers, nbByPage, idContainer);
-        console.log(currentPage);
         currentPage = getSelectOpt(currentPage);
-        console.log(tableUsers);
-        console.log(Object.keys(tableUsers));
         var table2 = Object.keys(tableUsers[0]);
-        console.log(nbByPage);
-        createTabHTML(idContainer, nbByPage, currentPage, tableUsers);
-
+        createTabHTML(idContainer, parseInt(nbByPage), parseInt(currentPage), tableUsers);
       }
     }
   };
