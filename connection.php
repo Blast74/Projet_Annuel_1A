@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	setcookie("access", $_SESSION["id"]);
 	require "conf.inc.php";
 	require "lib.php";
 	include "admin/libSQL.php";
@@ -32,7 +31,6 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 				    	echo "identifiants incorrect";
 				    	//header("Location: connection.php");
 				}
-
 }
 else {
     	echo "Veuillez saisir des identifiants";

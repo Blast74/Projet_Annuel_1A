@@ -96,7 +96,7 @@
             </div>
             <div class="col-md-4 col-sm-6">
                 <a href="portfolio-item.php">
-                    <img class="img-responsive img-portfolio img-hover" src="images/image1.jpg"; alt="">
+                    <img class="img-responsive img-portfolio img-hover" src="images/image1.jpg"; " alt="">
                 </a>
             </div>
             <div class="col-md-4 col-sm-6">
@@ -156,5 +156,4 @@
 
 <?php
     include 'footer.php';
-    var_dump(get_defined_functions());
 ?>
