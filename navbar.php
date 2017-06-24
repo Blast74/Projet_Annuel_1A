@@ -25,13 +25,10 @@ require_once "lib.php";
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="news.php">NEWS</a>
-                    </li>
+
                     <li>
                         <a href="music.php">MUSIQUES</a>
                     </li>
-
                     <?php
                          // A CHANGER PLUS TARD + PRESENTATION CSS
                         if ( !isset($_SESSION['id'])){

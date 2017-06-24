@@ -28,9 +28,11 @@ if (isset ($_GET['title']) &&
     $connection = dbConnect ();
     $query = $connection->prepare("SELECT *  FROM LINKED WHERE email= :email AND music_id = :music_id");
     $query -> execute ([":email"=> $userInfo['email'],
-                        ":music_id"=>   $music_id
+                        ":music_id"=> $music_id
                       ]);
     $result = $query -> fetch (PDO::FETCH_ASSOC ); //Nombre de musiques à afficher
+
+
 
     if ($result == false){
       echo json_encode (false);
@@ -38,10 +40,13 @@ if (isset ($_GET['title']) &&
     echo json_encode (true);
     }
 
+
   }
   else {
     http_response_code(400);
   }
+
+
 
 
 

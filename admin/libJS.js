@@ -188,6 +188,8 @@ function tagButtonPage(nbPages, idCont){
   return div;
 }
 
+
+//Taableau de tous les cookies (O => nom, 1 => valeurs)
 function getCookies(){
   var cookies = document.cookie.split(";");
   var result = [];
@@ -197,6 +199,7 @@ function getCookies(){
   return result;
 }
 
+//trouve le cookie qui correspond au nom
 function getCookie(name){
   var cookies = getCookies();
   var result;
