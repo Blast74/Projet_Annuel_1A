@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	setcookie("access", $_SESSION["id"]);
+
 	require "conf.inc.php";
 	require "lib.php";
 	include "admin/libSQL.php";
@@ -25,7 +25,7 @@ if (!empty($_POST["email"]) && !empty($_POST["pwd"])){
 
 		//SESSION:
 		$_SESSION ['id'] = $accessToken;
-
+							setcookie("access", $_SESSION["id"]);
             	header("Location:index.php");
             	//header("Location: connection.php");
         }else {

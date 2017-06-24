@@ -6,7 +6,7 @@ require_once "conf.inc.php";
 //Connexion à la base de données
 function dbConnect (){
 	    try {
-            $connection = new PDO ( "mysql:host=".HOST.";dbname=".DBNAME , DBUSER , DBPWD );
+            $connection = new PDO ("mysql:host=".HOST.";dbname=".DBNAME , DBUSER , DBPWD);
         } catch (Exception $e){ //on passe dans le catch dès qu'on rencontre une erreur
             die("Erreur SQL".$e -> getMessage() ); //$e -> getMessage() //obtenir le message d'erreur
         }
@@ -125,7 +125,7 @@ function registerMailContent($pseudo, $accessToken, $pwdTemp){
         <p>Mot de passe : '.$pwdTemp.'</p>
         <br>
 
-        <a href="http://localhost/Projet_Annuel_1A/changePwd.php?&user_informations=activate&pseudo='.$pseudo.'&access_token='.$accessToken.'">Activer votre compte</a>
+        <a href="http://localhost/Projet_Annuel_1A/changePwd.php?user_informations=activate&pseudo='.$pseudo.'&access_token='.$accessToken.'">Activer votre compte</a>
       </div>';
 
     return $result;
@@ -156,4 +156,3 @@ function mailHeaderHtml(){
     return $headers;
 
 }
-

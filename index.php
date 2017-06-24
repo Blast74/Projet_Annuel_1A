@@ -1,6 +1,18 @@
 <?php
     session_start();
     require "navbar.php";
+    if (isset($_SESSION["inscription"])) {
+      if ($_SESSION["inscription"] == "Email") {
+        echo ('<div class="alert alert-warning">
+        <strong>Attention !</strong> Un mail de confirmation vous a été envoyé pour activer votre compte.
+        </div>');
+      }
+      if ($_SESSION["inscription"] == "OK") {
+        echo '<div class="alert alert-success">
+              <strong>Félicitation !</strong> Votre compte est activé.
+              </div>';
+      }
+    }
  ?>
 
     <!-- Header Carousel -->
@@ -155,6 +167,7 @@
         <hr>
 
 <?php
+    unset($_SESSION["inscription"]);
     include 'footer.php';
-    var_dump(get_defined_functions());
+
 ?>

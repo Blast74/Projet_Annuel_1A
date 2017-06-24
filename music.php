@@ -1,5 +1,6 @@
 <?php
     session_start();
+    setcookie ("access", $_SESSION['id']);
     require_once "lib.php";
     require_once "conf.inc.php";
 
@@ -46,28 +47,28 @@
                         <div id='topSubtypeDiv'class="control-group form-group"></div>
 
                         <section class="well" id='top-audiocontainer-0'>
-                          <a id=top-musicTitle-0 class='center-block'></a>
+                          <p id=top-musicTitle-0 class='center-block'></p>
                           <audio id="top-player-0" src='' controls =''></audio>
                         </section>
 
 
                         <section class="well1" id='top-audiocontainer-1'>
-                          <a id=top-musicTitle-1></a>
+                          <p id=top-musicTitle-1></p>
                           <audio id="top-player-1" src='' controls =''></audio>
                         </section>
 
                         <section class="well" id='top-audiocontainer-2'>
-                          <a id=top-musicTitle-2></a>
+                          <p id=top-musicTitle-2></p>
                           <audio id="top-player-2" src='' controls =''></audio>
                         </section>
 
                         <section class="well1" id='top-audiocontainer-3'>
-                          <a id=top-musicTitle-3></a>
+                          <p id=top-musicTitle-3></p>
                           <audio id="top-player-3" src='' controls =''></audio>
                         </section>
 
                         <section class="well" id='top-audiocontainer-4'>
-                          <a id=top-musicTitle-4></a>
+                          <p id=top-musicTitle-4></p>
                           <audio id="top-player-4" src='' controls =''></audio>
                         </section>
 
@@ -98,24 +99,24 @@
                         </div>
                         <div id='newsSubtypeDiv'class="control-group form-group"></div>
                         <section class="well1" id='news-audiocontainer-0'>
-                          <a id=news-musicTitle-0></a>
+                          <p id=news-musicTitle-0></p>
                           <audio id="news-player-0" src='' controls =''></audio>
                         </section>
                         <section class="well" id='news-audiocontainer-1'>
-                          <a id=news-musicTitle-1></a>
+                          <p id=news-musicTitle-1></p>
                           <audio id="news-player-1" src='' controls =''></audio>
                         </section>
                         <section class="well1"  id='news-audiocontainer-2'>
-                          <a id=news-musicTitle-2></a>
+                          <p id=news-musicTitle-2></p>
                           <audio id="news-player-2" src='' controls =''></audio>
                         </section>
                         <section class="well" id='news-audiocontainer-3'>
-                          <a id=news-musicTitle-3></a>
+                          <p id=news-musicTitle-3></p>
                           <audio id="news-player-3" src='' controls =
                           ''></audio>
                         </section>
                         <section class="well1" id='news-audiocontainer-4'>
-                          <a id=news-musicTitle-4></a>
+                          <p id=news-musicTitle-4></p>
                           <audio id="news-player-4" src='' controls =''></audio>
                         </section>
 
@@ -154,24 +155,24 @@
                         <div id='suggestionSubtypeDiv'class="control-group form-group"></div>
 
                         <section  class="well" id='suggestion-audiocontainer-0'>
-                          <a id=suggestion-musicTitle-0></a>
+                          <p id=suggestion-musicTitle-0></p>
                           <audio id="suggestion-player-0" src='' controls =''></audio>
                         </section>
                         <section class="well1" id='suggestion-audiocontainer-1'>
-                          <a id=suggestion-musicTitle-1></a>
+                          <p id=suggestion-musicTitle-1></p>
                           <audio id="suggestion-player-1" src='' controls =''></audio>
                         </section>
                         <section  class="well" id='suggestion-audiocontainer-2'>
-                          <a id=suggestion-musicTitle-2></a>
+                          <p id=suggestion-musicTitle-2></p>
                           <audio id="suggestion-player-2" src='' controls =''></audio>
                         </section>
                         <section class="well1" id='suggestion-audiocontainer-3'>
-                          <a id=suggestion-musicTitle-3></a>
+                          <p id=suggestion-musicTitle-3></p>
                           <audio id="suggestion-player-3" src='' controls =
                           ''></audio>
                         </section>
                         <section  class="well" id='suggestion-audiocontainer-4'>
-                          <a id=suggestion-musicTitle-4></a>
+                          <p id=suggestion-musicTitle-4></p>
                           <audio id="suggestion-player-4" src='' controls =''></audio>
                         </section>
 
