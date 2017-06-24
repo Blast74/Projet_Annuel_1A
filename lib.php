@@ -65,7 +65,7 @@ function getUser ($sessionToken) {
 		$query -> execute ([":sessionToken"=>$sessionToken ]);
 		$result = $query -> fetch();
 		$data = [
-		"user_id"=>$result["user_id"],
+			"id"=>$result["id"],
 			"email"=>$result["email"],
 			"pseudo"=>$result["pseudo"],
 			"gender"=>$result["gender"],
@@ -73,7 +73,6 @@ function getUser ($sessionToken) {
 			"lastname"=>$result["lastname"],
 			"birthday"=>$result["birthday"],
 			"country"=>$result["country"],
-			//"pwd"=>$result["pwd"],
 			"update_date"=>$result["gender"],
 			"active_account"=>$result["active_account"]
 		];
@@ -84,45 +83,32 @@ function getUser ($sessionToken) {
 	return $data;
 }
 
-function registerMailContent($pseudo, $accessToken, $pwdTemp){
+//Param 1: nom du dossier parent, param 2: nom du dossier à créer
+function createDirectory ($dirType, $dirName) {
 
-	$result = '
-      <div>
-        <h1>Activer votre compte :</h1>
-        <p>Vous venez de créer un compte musique review !</p>
-        <h2>Vos identifiants :</h2>
-        <p>Login : '.$pseudo.' </p>
-        <p>Mot de passe : '.$pwdTemp.'</p>
-        <br>
+	if ($dirType == "musics" ||
+		$dirType == "music_images" ||
+		$dirType == "images") {
+			$parentDirectory = "./".$dirType."/";
+	}
+	else {
+		return false;
+	}
+	//Dossier parent
+	if (!file_exists($parentDirectory)){
+	  mkdir($parentDirectory);
+	}
+	switch ($dirType) {
+		case 'musics':
+			$directory = $parentDirectory.$dirName."/";
+			break;
 
-        <a href="http://localhost/Projet_Annuel_1A/changePwd.php?&user_informations=activate&pseudo='.$pseudo.'&access_token='.$accessToken.'">Activer votre compte</a>
-      </div>';
-
-    return $result;
-
-}
-function mailPwdChanged($pseudo, $pwd){
-
-    $result = '
-      <div>
-        <h1>Nouveau Mot de passe :</h1>
-        <p>Vous venez de modifier le mot de passe de votre compte musique review !</p>
-        <h2>Vos identifiants :</h2>
-        <p>Login : '.$pseudo.' </p>
-        <p>Mot de passe : '.$pwd.'</p>
-        <br>
-
-        <a href="https://www.zebrol.fr/index.php">Rendez-vous chez Musique Review !</a>
-      </div>';
-
-    return $result;
-
-}
-
-function mailHeaderHtml(){
-
-    $headers = "From: \"Musique Review\"<zebrolfr@gmail.com>\n";
-    $headers .= "Content-Type: text/html; charset=\"iso-8859-1\"";
-    return $headers;
-
+		default:
+ 			$directory = $parentDirectory;
+			break;
+	}
+	if (!file_exists($directory)){
+	  mkdir($directory);
+	}
+	return $directory;
 }
