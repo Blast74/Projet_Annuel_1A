@@ -16,12 +16,9 @@
 ?>
 
 
-<button type="button" name="button" onclick="test(this)">TEST</button>
-
-
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header"><?php echo  (isset ($verifyUser))? "Bonjour ".$verifyUser["pseudo"]." !": 'Bonjour !';?> </h2>
+                <h3 class="page-header  "><?php echo  (isset ($verifyUser))? "Bonjour ".$verifyUser["pseudo"]." !": 'Bonjour !';?> </h3>
             </div>
             <div class="col-lg-12">
                 <ul id="myTab" class="nav nav-tabs nav-justified">
@@ -37,7 +34,7 @@
                         <h4>Les musiques du moment !</h4>
                         <div class="control-group form-group" onchange="MusicSubtypeList()">
                             <label>Genre :</label>
-                            <select name="genre" id="topselectSyle">
+                            <select class="selectpicker" name="genre" id="topselectSyle">
                                 <?php
                                 foreach ($listOfGenre as $key => $value) {
                                      $selected =(isset($_SESSION["form_post"]["genre"]) && $_SESSION["form_post"]["genre"] == $key)?"selected='selected'":"";
@@ -48,32 +45,32 @@
                         </div>
                         <div id='topSubtypeDiv'class="control-group form-group"></div>
 
-                        <section id='topaudiocontainer0'>
-                          <p id=topmusicTitle0></p>
-                          <audio id="topplayer0" src='' controls =''></audio>
+                        <section class="well" id='top-audiocontainer-0'>
+                          <a id=top-musicTitle-0 class='center-block'></a>
+                          <audio id="top-player-0" src='' controls =''></audio>
                         </section>
 
 
-                        <section id='topaudiocontainer1'>
-                          <p id=topmusicTitle1></p>
-                          <audio id="topplayer1" src='' controls =''></audio>
+                        <section class="well1" id='top-audiocontainer-1'>
+                          <a id=top-musicTitle-1></a>
+                          <audio id="top-player-1" src='' controls =''></audio>
                         </section>
 
-                        <section id='topaudiocontainer2'>
-                          <p id=topmusicTitle2></p>
-                          <audio id="topplayer2" src='' controls =''></audio>
+                        <section class="well" id='top-audiocontainer-2'>
+                          <a id=top-musicTitle-2></a>
+                          <audio id="top-player-2" src='' controls =''></audio>
                         </section>
 
-                        <section id='topaudiocontainer3'>
-                          <p id=topmusicTitle3></p>
-                          <audio id="topplayer3" src='' controls =''></audio>
+                        <section class="well1" id='top-audiocontainer-3'>
+                          <a id=top-musicTitle-3></a>
+                          <audio id="top-player-3" src='' controls =''></audio>
                         </section>
 
-                        <section id='topaudiocontainer4'>
-                          <p id=topmusicTitle4></p>
-                          <audio id="topplayer4" src='' controls =''></audio>
+                        <section class="well" id='top-audiocontainer-4'>
+                          <a id=top-musicTitle-4></a>
+                          <audio id="top-player-4" src='' controls =''></audio>
                         </section>
-                        
+
                         <div> <!--Menu de navigation Précédent/suivant -->
                           <ul id="topnavigation" class="pager">
                             <li id="toppreviousContainer">
@@ -100,27 +97,28 @@
                           </select>
                         </div>
                         <div id='newsSubtypeDiv'class="control-group form-group"></div>
-                        <section id='newsaudiocontainer0'>
-                          <p id=newsmusicTitle0></p>
-                          <audio id="newsplayer0" src='' controls =''></audio>
+                        <section class="well1" id='news-audiocontainer-0'>
+                          <a id=news-musicTitle-0></a>
+                          <audio id="news-player-0" src='' controls =''></audio>
                         </section>
-                        <section id='newsaudiocontainer1'>
-                          <p id=newsmusicTitle1></p>
-                          <audio id="newsplayer1" src='' controls =''></audio>
+                        <section class="well" id='news-audiocontainer-1'>
+                          <a id=news-musicTitle-1></a>
+                          <audio id="news-player-1" src='' controls =''></audio>
                         </section>
-                        <section id='newsaudiocontainer2'>
-                          <p id=newsmusicTitle2></p>
-                          <audio id="newsplayer2" src='' controls =''></audio>
+                        <section class="well1"  id='news-audiocontainer-2'>
+                          <a id=news-musicTitle-2></a>
+                          <audio id="news-player-2" src='' controls =''></audio>
                         </section>
-                        <section id='newsaudiocontainer3'>
-                          <p id=newsmusicTitle3></p>
-                          <audio id="newsplayer3" src='' controls =
+                        <section class="well" id='news-audiocontainer-3'>
+                          <a id=news-musicTitle-3></a>
+                          <audio id="news-player-3" src='' controls =
                           ''></audio>
                         </section>
-                        <section id='newsaudiocontainer4'>
-                          <p id=newsmusicTitle4></p>
-                          <audio id="newsplayer4" src='' controls =''></audio>
+                        <section class="well1" id='news-audiocontainer-4'>
+                          <a id=news-musicTitle-4></a>
+                          <audio id="news-player-4" src='' controls =''></audio>
                         </section>
+
                         <div> <!--Menu de navigation Précédent/suivant -->
                           <ul id="newsnavigation" class="pager">
                             <li id="newspreviousContainer">
@@ -151,29 +149,33 @@
                           </select>
                         </div>
 
+
+
                         <div id='suggestionSubtypeDiv'class="control-group form-group"></div>
 
-                        <section id='suggestionaudiocontainer0'>
-                          <p id=suggestionmusicTitle0></p>
-                          <audio id="suggestionplayer0" src='' controls =''></audio>
+                        <section  class="well" id='suggestion-audiocontainer-0'>
+                          <a id=suggestion-musicTitle-0></a>
+                          <audio id="suggestion-player-0" src='' controls =''></audio>
                         </section>
-                        <section id='suggestionaudiocontainer1'>
-                          <p id=suggestionmusicTitle1></p>
-                          <audio id="suggestionplayer1" src='' controls =''></audio>
+                        <section class="well1" id='suggestion-audiocontainer-1'>
+                          <a id=suggestion-musicTitle-1></a>
+                          <audio id="suggestion-player-1" src='' controls =''></audio>
                         </section>
-                        <section id='suggestionaudiocontainer2'>
-                          <p id=suggestionmusicTitle2></p>
-                          <audio id="suggestionplayer2" src='' controls =''></audio>
+                        <section  class="well" id='suggestion-audiocontainer-2'>
+                          <a id=suggestion-musicTitle-2></a>
+                          <audio id="suggestion-player-2" src='' controls =''></audio>
                         </section>
-                        <section id='suggestionaudiocontainer3'>
-                          <p id=suggestionmusicTitle3></p>
-                          <audio id="suggestionplayer3" src='' controls =
+                        <section class="well1" id='suggestion-audiocontainer-3'>
+                          <a id=suggestion-musicTitle-3></a>
+                          <audio id="suggestion-player-3" src='' controls =
                           ''></audio>
                         </section>
-                        <section id='suggestionaudiocontainer4'>
-                          <p id=suggestionmusicTitle4></p>
-                          <audio id="suggestionplayer4" src='' controls =''></audio>
+                        <section  class="well" id='suggestion-audiocontainer-4'>
+                          <a id=suggestion-musicTitle-4></a>
+                          <audio id="suggestion-player-4" src='' controls =''></audio>
                         </section>
+
+
                         <div> <!--Menu de navigation Précédent/suivant -->
                           <ul id="suggestionnavigation" class="pager">
                             <li id="suggestionpreviousContainer">
@@ -185,6 +187,7 @@
                           </ul>
                       </div>
                     </div>
+
                     <!-- -->
                     </div>
                     </div>
@@ -192,6 +195,7 @@
             </div>
       </div>
 
+<button type="button" name="button" onclick='test()'>TST</button>
 <script src="music_conf/getMusics.js"></script>
 <script>
   var ListOfSubtype = <?php echo json_encode($subtypeList); ?>;
