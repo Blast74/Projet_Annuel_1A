@@ -138,9 +138,9 @@
                             <label>Date de naissance:</label><br>
                             <?php
                               if(isset($_SESSION["id"])){
-                                echo   '<input type="text" name="birthday" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->birthday.'">';
+                                echo   '<input type="date" name="birthday" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->birthday.'">';
                               }else{
-                                echo '<input type="text" name="birthday" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["birthday"]))?$_SESSION["form_post"]["birthday"]:"").'">';
+                                echo '<input type="date" name="birthday" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["birthday"]))?$_SESSION["form_post"]["birthday"]:"").'">';
                               }
                             ?>
                         </div>

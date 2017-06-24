@@ -1,8 +1,6 @@
 <?php
     session_start();
-    require "/navbar.php";
-
-    ini_set('display_errors',1);
+    require "navbar.php";
  ?>
 
     <!-- Header Carousel -->
