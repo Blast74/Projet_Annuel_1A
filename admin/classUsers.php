@@ -79,12 +79,12 @@ class User
     $result = $query -> execute([$access_token]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
-    if ($user) {
+    if (!$result) {
+        return $result;
+    }else{
       foreach ($user as $key => $value) {
         $this->{$key} = $value;
       }
-    }else{
-      return $user;
     }
   }
 
@@ -96,12 +96,12 @@ class User
     $result = $query -> execute([$email]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
-    if ($user) {
+    if (!$result) {
+        return $result;
+    }else{
       foreach ($user as $key => $value) {
         $this->{$key} = $value;
       }
-    }else{
-      return $user;
     }
   }
 

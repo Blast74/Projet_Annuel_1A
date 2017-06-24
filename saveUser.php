@@ -9,7 +9,7 @@ $listOfErrors = [];
 
 
 switch ($_GET["user_informations"]) {
-    case 'update': 
+    case 'update':
         echo 'cas update :';
         echo 'mod     ';
         var_dump($_POST);
@@ -109,6 +109,7 @@ switch ($_GET["user_informations"]) {
             }else{  //enregistrement du formulaire dans la BDD
 
                 $pwd = uniqid();
+                var_dump($pwd);
                 $accessToken = md5(uniqid().$_POST["email"].time());
                 $contentMail = registerMailContent($_POST["pseudo"], $accessToken, $pwd);
                 $headers = mailHeaderHtml();
@@ -136,7 +137,9 @@ switch ($_GET["user_informations"]) {
                     "access_token" => $accessToken,
                     "active_account" => $active_account
                     ]);
+                        // var_dump(get_defined_vars());
                 //IL FAUT SE CONNECTER AUTOMATIQUEMENT APRES L'INSCRIPTION //REDIRECTION SUR CONNECT.PHP
+                $_SESSION["inscription"] = "Email";
                 header('Location: index.php');
                 die();
 
@@ -145,6 +148,7 @@ switch ($_GET["user_informations"]) {
                     $listOfErrors[] =2;
                     $_SESSION["form_post"] = $_POST;
                     $_SESSION["form_errors"] = $listOfErrors;
+                    $_SESSION["inscription"] = "notEmail";
                     header('location: inscription.php');
                     die();
                 }
@@ -159,49 +163,51 @@ switch ($_GET["user_informations"]) {
     case 'activate':
 
         $user = new User;
-        $creation = $user->createWithToken($_GET["access_token"]);
+        $user->createWithToken($_GET["access_token"]);
 
-        if (!$creation) {
+        if ($user->id != null) {
 
-            header('Location: index.php');
-            die();
+            if (!(password_verify ($_POST["old_pwd"], $user->pwd))) {
+                $error = true;
+                $listOfErrors[] =21;
+            }
+
+            $nbCharPwd = strlen($_POST["pwd"]);
+            if($nbCharPwd < 8 || $nbCharPwd > 16 ){
+                $error = true;
+                $listOfErrors[] =3;
+            }
+            //Confirmation du mot de passe
+            if($_POST["pwd"] != $_POST["pwd2"]){
+                $error = true;
+                $listOfErrors[] =4;
+            }
+            if (!$error){
+
+                $pwd = password_hash ($_POST["pwd"], PASSWORD_DEFAULT);
+                $user->updateUser(["pwd" => $pwd]);
+                $user->changeStatut(1);
+                $content = mailPwdChanged($user->pseudo, $_POST["pwd"]);
+                $headers = mailHeaderHtml();
+                mail($user->email, "Identifiant changés", $content, $headers);
+                echo 'test';
+                $_SESSION["inscription"] = "OK";
+                header('Location: index.php');
+                die();
+
+            }else{
+                $_SESSION["form_post"] = $_POST;
+                $_SESSION["form_errors"] = $listOfErrors;
+                // var_dump(get_defined_vars());
+                // var_dump(!(password_verify ($_POST["old_pwd"], $user->pwd)));
+                // var_dump($user->pwd);
+                // var_dump($_POST["old_pwd"]);
+
+                 header('location: changePwd.php?user_informations=activate&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"]);
+                 die();
+            }
         }else{
-            echo 'test';
-        }
-
-        if (!(password_verify ($_POST["old_pwd"], $user->pwd))) {
-            $error = true;
-            $listOfErrors[] =21;
-        }
-
-        $nbCharPwd = strlen($_POST["pwd"]);
-        if($nbCharPwd < 8 || $nbCharPwd > 16 ){
-            $error = true;
-            $listOfErrors[] =3;
-        }
-        //Confirmation du mot de passe
-        if($_POST["pwd"] != $_POST["pwd2"]){
-            $error = true;
-            $listOfErrors[] =4;
-        }
-        if (!$error){
-
-            $pwd = password_hash ($_POST["pwd"], PASSWORD_DEFAULT);
-            $user->updateUser(["pwd" => $pwd]);
-            $user->changeStatut(1);
-            $content = mailPwdChanged($user->pseudo, $_POST["pwd"]);
-            $headers = mailHeaderHtml();
-            mail($user->email, "Identifiant changés", $content, $headers);
-            echo 'test';
-
-            header('Location: index.php');
-            die();
-
-        }else{
-            $_SESSION["form_post"] = $_POST;
-            $_SESSION["form_errors"] = $listOfErrors;
-            header('location: changePwd.php?&user_informations=activate&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"]);
-            die();
+            http_response_code(400);
         }
 
         break;

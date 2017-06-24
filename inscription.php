@@ -4,6 +4,13 @@
     require_once "conf.inc.php";
     require_once "lib.php";
     require_once "admin/classUsers.php";
+    if(isset($_SESSION["inscription"])){
+      if ($_SESSION["inscription"] = "notEmail") {
+        echo '<div class="alert alert-warning">
+                <strong>Attention !</strong> Votre email n\'existe pas ou n\'est pas accessible.
+              </div>';
+      }
+    }
 ?>
 
 
@@ -30,7 +37,7 @@
         <div class="row">
             <div class="col-md-8">
                 <?php //Affichage des erreurs s'il y en a
-                    echo '<div class="control-group form-group">';
+                    echo '<div "alert alert-danger">';
                     if (isset ($_SESSION["form_errors"])){
                         foreach ($_SESSION["form_errors"] as $error)
                         {
@@ -53,7 +60,7 @@
 
                             <?php
                               if(isset($_SESSION["id"])){
-                                echo   '<input type="text" name="firstname" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->firstname.'">';
+                                echo   '<input type="text" name="firstname" placeholder="Votre prénom" class="form-control" value="'.$user->firstname.'">';
                               }else{
                                 echo '<input type="text" name="firstname" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["firstname"]))?$_SESSION["form_post"]["firstname"]:"").'">';
                               }
@@ -66,9 +73,9 @@
                             <label>Nom:</label>
                             <?php
                               if(isset($_SESSION["id"])){
-                                echo   '<input type="text" name="lastname" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->lastname.'">';
+                                echo   '<input type="text" name="lastname" placeholder="Votrenom" class="form-control" value="'.$user->lastname.'">';
                               }else{
-                                echo '<input type="text" name="lastname" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["lastname"]))?$_SESSION["form_post"]["lastname"]:"").'">';
+                                echo '<input type="text" name="lastname" placeholder="Votre nom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["lastname"]))?$_SESSION["form_post"]["lastname"]:"").'">';
                               }
                             ?>
                             <p class="help-block"></p>
@@ -79,9 +86,9 @@
                             <label>Pseudo<br>Entre 3 et 30 caractères</nav>:</label>
                             <?php
                               if(isset($_SESSION["id"])){
-                                echo   '<input type="text" name="pseudo" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->pseudo.'">';
+                                echo   '<input type="text" name="pseudo" placeholder="Votre pseudo" class="form-control" value="'.$user->pseudo.'">';
                               }else{
-                                echo '<input type="text" name="pseudo" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["pseudo"]))?$_SESSION["form_post"]["pseudo"]:"").'">';
+                                echo '<input type="text" name="pseudo" placeholder="Votre pseudo" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["pseudo"]))?$_SESSION["form_post"]["pseudo"]:"").'">';
                               }
                             ?>
                             <p class="help-block"></p>
@@ -92,9 +99,9 @@
                             <label>Adresse email:</label>
                             <?php
                               if(isset($_SESSION["id"])){
-                                echo   '<input type="text" name="email" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->email.'">';
+                                echo   '<input type="text" name="email" placeholder="Votre email" class="form-control" value="'.$user->email.'">';
                               }else{
-                                echo '<input type="text" name="email" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["email"]))?$_SESSION["form_post"]["email"]:"").'">';
+                                echo '<input type="text" name="email" placeholder="Votre email" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["email"]))?$_SESSION["form_post"]["email"]:"").'">';
                               }
                             ?>
                         </div>
@@ -106,41 +113,28 @@
                                     <div class="control-group form-group">
                                         <div class="controls">
                                             <label>Nouveau mot de passe:</label>
-                                            <input type="password" name="pwd" placeholder="Votre mot de passe" required="required" class="form-control">
+                                            <input type="password" name="pwd" placeholder="Votre mot de passe" class="form-control">
                                             <p class="help-block"></p>
                                         </div>
                                     </div>
                                     <div class="control-group form-group">
                                         <div class="controls">
                                             <label>Confirmation du mot de passe:</label>
-                                            <input type="password" name="pwd2" placeholder="Confirmez mot de passe" required="required" class="form-control">
+                                            <input type="password" name="pwd2" placeholder="Confirmez mot de passe" class="form-control">
                                             <p class="help-block"></p>
                                         </div>
                                     </div>';
                         }
                      ?>
-                    <!-- <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Mot de passe:</label>
-                            <input type="password" name="pwd" placeholder="Votre mot de passe" required="required" class="form-control">
-                            <p class="help-block"></p>
-                        </div>
-                    </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label>Confirmation du mot de passe:</label>
-                            <input type="password" name="pwd2" placeholder="Confirmez mot de passe" required="required" class="form-control">
-                            <p class="help-block"></p>
-                        </div>
-                    </div> -->
+
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Date de naissance:</label><br>
                             <?php
                               if(isset($_SESSION["id"])){
-                                echo   '<input type="date" name="birthday" placeholder="Votre prénom" class="form-control" required="required" value="'.$user->birthday.'">';
+                                echo   '<input type="date" name="birthday" placeholder="Votre date de naissance" class="form-control" value="'.$user->birthday.'">';
                               }else{
-                                echo '<input type="date" name="birthday" placeholder="Votre prénom" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["birthday"]))?$_SESSION["form_post"]["birthday"]:"").'">';
+                                echo '<input type="date" name="birthday" placeholder="Votre date de naissance" class="form-control" required="required" value="'.((isset($_SESSION["form_post"]["birthday"]))?$_SESSION["form_post"]["birthday"]:"").'">';
                               }
                             ?>
                         </div>
@@ -151,7 +145,7 @@
                             foreach ($listOfGender as $key => $gender) {
                                 echo "<label>";
                                 echo $gender;
-                                $defaultGender = ($user->gender)?$user->gender : $defaultGender;
+                                $defaultGender = (isset($user->gender))?$user->gender : 'm';
 
                                 if ($key == $defaultGender){
                                     echo "<input type='radio' name='gender' value='".$key."' checked='checked'>";
@@ -193,5 +187,6 @@
             include 'footer.php';
             unset($_SESSION["form_post"] );
             unset($_SESSION["form_errors"] );
-            var_dump(get_defined_vars());
+            unset($_SESSION["inscription"]);
+
         ?>
