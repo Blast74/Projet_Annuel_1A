@@ -16,6 +16,7 @@
                     <?php
                         if (!(isset($_SESSION["id"]))) {
                             echo 'Inscrivez vous !';
+
                         }else{
                             echo "Modifier votre profil :";
                             $user = new User;
@@ -148,10 +149,11 @@
                     <div class="control-group form-group">
                         <label>Genre:</label><br>
                         <?php
+
                             foreach ($listOfGender as $key => $gender) {
                                 echo "<label>";
                                 echo $gender;
-                                $defaultGender = ($user->gender)?$user->gender : $defaultGender;
+                                $defaultGender = (isset($user->gender))?$user->gender : 'm';
 
                                 if ($key == $defaultGender){
                                     echo "<input type='radio' name='gender' value='".$key."' checked='checked'>";
@@ -193,5 +195,4 @@
             include 'footer.php';
             unset($_SESSION["form_post"] );
             unset($_SESSION["form_errors"] );
-            var_dump(get_defined_vars());
         ?>
