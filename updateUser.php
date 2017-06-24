@@ -19,7 +19,7 @@
     if (!empty($_SESSION["id"])){
     $connection = dbConnect ();
     $query = $connection -> prepare ("SELECT * FROM USERS WHERE access_token=?");
-    $query -> execute ([$_SESSION["id"]);//$_GET contient un id d'utilisateur
+    $query -> execute ([$_SESSION["id"]]);//$_GET contient un id d'utilisateur
     //Alimenter le tableau data avec le contenu de la BDD
     $result = $query -> fetch();
     $data = [ //Les données de data permettent de mettre les valeurs de la BDD dans les champs du formulaire
@@ -69,7 +69,7 @@
                     <div class="control-group form-group">
                         <div class="controls">
                             <label><?php echo "Prénom : ".$data["firstname"]; ?></label>
-                            <input type="text" name="firstname" placeholder="Votre prénom" class="form-control" value="<?php echo (isset($_SESSION["form_post"]["firstname"]))?$_SESSION["form_post"]["firstname"]:""; ?>">
+                            <input id="first" type="text" name="firstname" placeholder="Votre prénom" class="form-control" value='<?php echo $data["firstname"];?>'>
                             <p class="help-block"></p>
                         </div>
                     </div>
@@ -85,12 +85,6 @@
                             <label><?php echo "Pseudo : ".$data["pseudo"]; ?></label>
                             <input type="text" name="pseudo" placeholder="Votre pseudo" class="form-control"  value="<?php echo (isset($_SESSION["form_post"]["pseudo"]))?$_SESSION["form_post"]["pseudo"]:""; ?>">
                             <p class="help-block"></p>
-                        </div>
-                    </div>
-                    <div class="control-group form-group">
-                        <div class="controls">
-                            <label><?php echo "Adresse email : ".$data["email"]; ?></label>
-                            <input type="email" name="email" placeholder="Votre email" class="form-control" id="phone" value="<?php echo (isset($_SESSION["form_post"]["email"]))?$_SESSION["form_post"]["email"]:""; ?>">
                         </div>
                     </div>
                     <div class="control-group form-group">
