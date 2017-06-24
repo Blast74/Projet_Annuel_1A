@@ -33,7 +33,7 @@
                 <option value="ASC">Croissant</option>
                 <option value="DESC">Décroissant</option>
             </select>
-            <input id="refreshButton" type="button" onclick='listUsers("<?php getJSAccessToken(); ?>","listUsers")' value ="Actualiser"></input>
+            <input id="refreshButton" type="button" onclick='listUsers("listUsers")' value ="Actualiser"></input>
             <br>
             <p>Nombre d'utilisateurs souhaités :</p>
             <select id="nbByPages">
@@ -47,6 +47,7 @@
 
             </div>
              <div id="listUsers">
+                 <input type="button"  value="cookies" onclick="console.log(getCookie('access'))">
 
         </div>
         <!--    <div class="row">
