@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	setcookie("access", $_SESSION["id"]);
 	require "conf.inc.php";
 	require "lib.php";
 	include "admin/libSQL.php";
