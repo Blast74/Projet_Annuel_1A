@@ -18,7 +18,7 @@ if (isset ($_POST['title']) &&
     ($_POST['note'] <= 5 )
   ) {
 
-    //ID de la musique
+        //ID de la musique
         $connection = dbConnect ();
         $query = $connection->prepare("SELECT music_id FROM MUSIC WHERE music_name = :title AND author_pseudo =:author");
 
@@ -45,14 +45,14 @@ if (isset ($_POST['title']) &&
 
 
           //On met la moyenne dans la table MusicSubtypeList
-          $query = $connection->prepare("UPDATE MUSIC SET  music_note =?, number_of_votes = ( number_of_votes +1) WHERE music_id = ?");
+          $query = $connection->prepare("UPDATE MUSIC SET  note_music =?, number_of_votes = ( number_of_votes +1) WHERE music_id = ?");
           $query ->  execute([
                      $result ["average"],
                       $music_id
                     ]);
           }
 
-echo json_encode ('ok');
+echo json_encode ($result["average"]);
 
 } else {
   http_response_code(400);

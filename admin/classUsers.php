@@ -21,7 +21,7 @@ class User
   public $access_token = "";
   public $active_account = "";
 
-
+  //Renvoie les propriétés et leurs valeurs de l'oblet
   public function getPropertiesNames(){
     $result = [];
     foreach ($this as $key => $value) {
@@ -29,7 +29,7 @@ class User
     }
     return $result;
    }
-
+   //Renvoie les clefs (nom de propriété)
    public function getProperties(){
 
      $result = [];
@@ -38,7 +38,7 @@ class User
      }
      return $result;
    }
-
+   //Renvoie les valeurs
   public function getPropertiesValues(){
 
     $result = [];
@@ -79,9 +79,13 @@ class User
     $result = $query -> execute([$access_token]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
+<<<<<<< HEAD
     if (!$result) {
         return $result;
     }else{
+=======
+    if ($result) {
+>>>>>>> origin/Dev
       foreach ($user as $key => $value) {
         $this->{$key} = $value;
       }
@@ -96,9 +100,30 @@ class User
     $result = $query -> execute([$email]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
+<<<<<<< HEAD
     if (!$result) {
         return $result;
     }else{
+=======
+    if ($result) {
+      foreach ($user as $key => $value) {
+        $this->{$key} = $value;
+      }
+    }else{
+      return $user;
+    }
+  }
+
+  public function createWithPseudo ($pseudo){
+    $connection = dbConnect ();
+    $col = $this->getPropertiesNames();
+    $params = implode(',', $col );
+    $query = $connection -> prepare ('SELECT '.$params.' FROM USERS WHERE pseudo=?');
+    $result = $query -> execute([$pseudo]);
+    $user = $query -> fetch (PDO::FETCH_ASSOC);
+
+    if ($result) {
+>>>>>>> origin/Dev
       foreach ($user as $key => $value) {
         $this->{$key} = $value;
       }
@@ -152,6 +177,7 @@ class User
     }
   }
 
+
   public function sendMail($subject, $content){
 //
 // $mail = ('    <!DOCTYPE html>
@@ -176,7 +202,5 @@ class User
 //     </html>');
 
     return mail($this->mail,$subject, $mail);
-
-
   }
 }

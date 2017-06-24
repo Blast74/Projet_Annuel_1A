@@ -113,6 +113,7 @@ switch ($_GET["user_informations"]) {
                 $accessToken = md5(uniqid().$_POST["email"].time());
                 $contentMail = registerMailContent($_POST["pseudo"], $accessToken, $pwd);
                 $headers = mailHeaderHtml();
+                //Envoie d'un mail pour activer le compte
                 $statusMail = mail($_POST['email'], "Activation de compte", $contentMail, $headers);
 
                 if($statusMail)  {
