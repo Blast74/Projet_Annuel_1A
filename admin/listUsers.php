@@ -1,15 +1,14 @@
 <?php
   session_start();
-  require "..\lib.php";
+  require "../lib.php";
   require "libSQL.php";
-  require "conf.mod.php";
-  require 'libModOne.php';
+  require "classUsers.php";
 
   // header('Content-type: application/JSON');
 
-    $idSession = $_GET["access_token"];
-    $checkMod = checkMod($idSession);
-    if ($checkMod[1] != "Error") {
+  $moderator = new User;
+  $moderator->createWithToken($_GET["access_token"]);
+    if ($moderator->isMod()[1] != "Error") {
 
 
         $connection = dbConnect ();
@@ -55,6 +54,6 @@
 
     } else {
       http_response_code(403);
-      echo json_encode($checkMod );
-      echo json_encode($_POST["access_token"]);
+      // echo json_encode($moderator->isMod());
+      // echo json_encode($_POST["access_token"]);
     }

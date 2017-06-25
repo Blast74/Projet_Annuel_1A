@@ -1,10 +1,10 @@
 <?php
 session_start();
 require 'navbar.php';
-require 'admin/classUsers.php';
+require_once 'admin/classUsers.php';
 
 if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_informations"])) {
-  echo 'Test 1';
+
   $user = new User;
   $user->createWithToken($_GET["access_token"]);
 
@@ -15,12 +15,12 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
   }else {
 
     if($_GET["user_informations"] == 'activate'){
-      echo 'Test 3';
+
 
       $userInfo = "activate";
 
     }elseif($_GET["user_informations" == 'update']){
-      echo 'Test 4';
+
 
       $userInfo = "update";
 

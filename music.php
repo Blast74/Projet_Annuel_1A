@@ -1,6 +1,8 @@
 <?php
     session_start();
-    setcookie ("access", $_SESSION['id']);
+    if(isset($_SESSION["id"])){
+      setcookie ("access", $_SESSION['id']);
+    }
     require_once "lib.php";
     require_once "conf.inc.php";
 

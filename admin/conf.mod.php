@@ -1,10 +1,10 @@
 <?php
 // fichier de conf pour partie admin
 
-const CHECKMODERATOR = [1, "Moderator"];
-const CHECKSUPERMODERATOR = [1, "Supermoderator"];
-const CHECKUSER = [0, "User"];
-const CHECKERROR = [0, "Error"];
+// const CHECKMODERATOR = [1, "Moderator",0];
+// const CHECKSUPERMODERATOR = [1, "Supermoderator", 1];
+// const CHECKUSER = [0, "User", 2];
+// const CHECKERROR = [0, "Error",3];
 
 
 

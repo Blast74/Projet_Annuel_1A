@@ -57,10 +57,10 @@ function transformToHtml(user, tr) {
       var suppr = document.createElement('input');
       modif.type = "button";
       modif.value = "Modifier";
-      modif.setAttribute("onclick", `modifUserInfo(${user["email"]})`);
+      modif.setAttribute("onclick", `modifUserInfo(this.parentNode.parentNode, "${user["email"]}")`);
       suppr.type = "button";
       suppr.value = "Supprimer";
-      suppr.setAttribute("onclick", `supprUserInfo(${user["email"]})`);
+      suppr.setAttribute("onclick", `supprUserInfo(this.parentNode.parentNode, "${user["email"]}")`);
       td.appendChild(modif);
       td2.appendChild(suppr);
       tr.appendChild(td);
@@ -71,12 +71,6 @@ function transformToHtml(user, tr) {
       td.headers = property;
       tr.appendChild(td);
     }
-
-
-
-
-
-
   })
 }
 

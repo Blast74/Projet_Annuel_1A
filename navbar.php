@@ -3,8 +3,12 @@
 //avant tous les affichages et les traitement (echo)
 include "header.php";
 require_once "admin/libSQL.php";
-require_once "admin/libModOne.php";
+require_once "admin/classUsers.php";
 require_once "lib.php";
+if(isset($_SESSION["id"])){
+    $user = new User;
+    $user->createWithToken($_SESSION["id"]);
+}
 ?>
 
 
@@ -58,9 +62,6 @@ require_once "lib.php";
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                <li>
-                                   <a href="libTrophy.php">Mes Trophés</a>
-                               </li>
                                      <li>
                                         <a href="addMusic.php">Gérer mes musiques</a>
                                     </li>
@@ -74,8 +75,8 @@ require_once "lib.php";
                             </li>';
                         }
 
-                        if ((!empty($_SESSION['id']))) {  //MODERATEUR <=1
-                            $checkMod  = checkMod($_SESSION["id"]);
+                        if ((!empty($user))) {  //MODERATEUR <=1
+                            $checkMod  = $user->isMod();
                             if ($checkMod[0]) {
                                 echo '<li class="dropdown">
                                     <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION<b class="caret"></b></a>

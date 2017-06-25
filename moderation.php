@@ -1,9 +1,10 @@
 <?php
     session_start();
     include "navbar.php";
-
-    $access = checkMod($_SESSION["id"]);
-    if($access[0] != 1){
+    $moderator = New User;
+    $moderator->createWithToken($_SESSION["id"]);
+    // $access = checkMod($_SESSION["id"]);
+    if($moderator->isMod()[0] != 1){
 
         header("Location: index.php");
         die();
@@ -23,7 +24,7 @@
                 <option value="pseudo" >Pseudo</option>
                 <option value="firstname" >Prénom</option>
                 <option value="lastname" >Nom</option>
-                <option value="email" selected="selected">Mail</option>
+                <option value="email" selected="selected">Email</option>
                 <option value="birthday" >Date de naissance</option>
                 <option value="gender" >Genre</option>
                 <option value="country" >Pays</option>
@@ -55,14 +56,10 @@
     <script type="text/javascript">
         listHtmlUsers("listUsers");
     </script>
-<!--
-    getJSAccessToken();
- ?> -->
-<!-- <script src="admin\libSupMod.js"></script> -->
+
 
 
 <?php
-    var_dump(checkMod($_SESSION["id"]));
-    var_dump(get_defined_vars());
+var_dump(get_defined_vars());
     include "footer.php";
 ?>

@@ -31,5 +31,14 @@ function changeInnerHTML(newValues, idTag){
     tag.childNodes[i].innerHTML = newValues[i];
     console.log(tag.childNodes[i]);
   }
-
+}
+function modifUserInfo(tr, email){
+  console.log(tr.childNodes);
+  console.log(email);
+  changeToForm(tr);
+}
+function changeToForm(tr){
+  tr.childNodes.forEach(function(td){
+    console.log(td.headers);
+  });
 }
