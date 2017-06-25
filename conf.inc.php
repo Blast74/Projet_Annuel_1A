@@ -3,7 +3,7 @@
 define ("HOST", "localhost");
 define ("DBNAME", "zebrolfrertest");
 define ("DBUSER", "root");
-define ("DBPWD", ""); //Windows:    define ("DBPWD", "");
+define ("DBPWD", "root"); //Windows:    define ("DBPWD", "");
 
 
 $listOfGenre=[

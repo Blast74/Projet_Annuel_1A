@@ -8,24 +8,163 @@ suggestion: {style: null, page:1}//Suggestions
 
 //Cherche si l'utilisateur à déja voté ou non renvoi false ou
 function test () {
-
+  getFollow ('Antoine');
 }
 
+
+function like (tag) {
+  var id = tag.id.split ('-');
+  var index = id[2];
+  id.splice  (1, 1 ,'musicTitle');
+  id = id.join ('-');
+  var infos  = document.getElementById(id);
+  var infos = infos.innerHTML.split (' composée par ');
+
+  title = infos[0];
+  author = infos[1];
+
+  var request = new XMLHttpRequest ();
+  request.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      if (request.status == 200) {
+      }
+    }
+  }
+  request.open('POST', 'music_conf/like.php');
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.send("title="+title+'&author='+author);
+  //modification du bouton like
+  tag.setAttribute ('class','btn btn-warning btn-xs');
+  tag.setAttribute ('onclick','unlike (this)');
+  tag.innerHTML ='Ne plus aimer';
+}
+
+
+function unlike (tag) {
+  var id = tag.id.split ('-');
+  var index = id[2];
+  id.splice  (1, 1 ,'musicTitle');
+  id = id.join ('-');
+  var infos  = document.getElementById(id);
+  var infos = infos.innerHTML.split (' composée par ');
+
+  title = infos[0];
+  author = infos[1];
+
+  var request = new XMLHttpRequest ();
+  request.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      if (request.status == 200) {
+      }
+    }
+  }
+  request.open('POST', 'music_conf/unlike.php');
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.send("title="+title+'&author='+author);
+    //modification du bouton
+  tag.setAttribute ('class','btn btn-primary btn-xs');
+  tag.setAttribute ('onclick','like (this)');
+  tag.innerHTML ='J\'aime';
+}
+
+
+
+
+function getFollow (author) {
+  var request = new XMLHttpRequest ();
+  request.onreadystatechange =  function () {
+  if (request.readyState == 4) {
+    if (request.status == 200) {
+       result = JSON.parse (request.responseText);
+    }
+
+  }
+}
+request.open('GET', 'music_conf/getFollow.php?author='+author, 0);
+request.send();
+return request.responseText;
+}
+
+
+function getLike (music_id) {
+
+  var request = new XMLHttpRequest ();
+  request.onreadystatechange =  function () {
+  if (request.readyState == 4) {
+    if (request.status == 200) {
+       result = JSON.parse (request.responseText);
+    }
+
+  }
+}
+  request.open('GET', 'music_conf/getLike.php?music_id='+music_id, 0);
+  request.send();
+  return request.responseText;
+}
+
+
+
+
+//Suivre un utilisateur
 function follow (tag) {
   var author = tag.value;
   var request = new XMLHttpRequest ();
   request.onreadystatechange = function () {
     if (request.readyState == 4) {
       if (request.status == 200) {
-        console.log(request.responseText);
       }
     }
   }
   request.open('POST', 'music_conf/follow.php');
   request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   request.send("author="+author);
+
+  var author = tag.value;
+  var button = document.getElementsByTagName ("button");
+  for (var i = 0; i < button.length; i++) {
+    if (button[i].value == author) {
+      button[i].innerHTML = "Ne plus suivre";
+      button[i].setAttribute ('class', 'btn btn-danger btn-xs');
+      button[i].setAttribute  ('onclick', 'unfollow (this)');
+    }
+  }
+
 }
 
+
+
+
+//Ajoute des informations dans l'Objet musique (follow et like)
+function getSocialFeatures (objMusic, index){
+  //creation du tableau contenant différents pseudo de la page affichée
+  var followtab = [];
+  for (var i = 0; i < index; i++) {
+    if (followtab.indexOf (objMusic[i].author_pseudo) == -1   ){
+      followtab.push( objMusic[i]["author_pseudo"]);
+    }
+  }
+
+  //Appel de la fonction getFollow en fonction des pseudo du tableau followtab
+  for (var i = 0; i < followtab.length; i++) {
+    var infos = getFollow (followtab[i]);
+     if (infos == 'true') {
+       for (var j = 0; j < index; j++) {
+         if ((objMusic [j]["author_pseudo"]).includes (followtab[i])  ) {
+           objMusic [j] ['follow'] = 'yes';
+         }
+       }
+     }
+  }
+  //Appel de la fonction GetLike pour récupérer les like d'une musique
+  for (var i = 0; i < index; i++) {
+      infos = getLike (objMusic[i]['music_id']);
+      if (infos == 'true') {
+        objMusic [i] ['like'] = 'yes';
+      }
+  }
+
+  return objMusic;
+}
 
 //Définie l'onglet en cours d'utilisation
 function tabNavigation (tabName) {
@@ -42,9 +181,12 @@ function dbMusicRequest (musicSubtype, currentpage, selectedTab) {
          result = JSON.parse (request.responseText);
       }
       if (request.readyState  == 4 && request.status == 200 ) {
+        console.log(result);
         var number = CountPages (result);
         var maxpage = CountMaxPageNumber (result ["maxresults"]);
-        playersDisplay (maxpage, number, currentpage)
+        //FOLLOW + LIKE
+        result = getSocialFeatures (result, number);
+        playersDisplay (maxpage, number, currentpage );
         musicDisplay (result, number);
         deleteVoteButton ('vote', number);
       }
@@ -56,6 +198,7 @@ function dbMusicRequest (musicSubtype, currentpage, selectedTab) {
 
 //Insère les titre et les chemins des musiques dans les lecteurs audio
 function musicDisplay (array, numberOfmusics){
+
     for (var i = 0; i<(numberOfmusics);i++) {
       var musicTitle = document.getElementById(selectedTab+'-musicTitle-'+i);
       var player = document.getElementById(selectedTab+'-player-'+i);
@@ -82,9 +225,31 @@ function musicDisplay (array, numberOfmusics){
         }
       }
 
-      //FOLLOW
-      var button = document.getElementById (selectedTab+'-follow-'+i);
-      button.value = array [i]["author_pseudo"];
+    //FOLLOW
+    var button = document.getElementById (selectedTab+'-follow-'+i);
+    button.value = array [i]["author_pseudo"];
+    if (array[i]["follow"] =='yes') {
+      button.innerHTML = "Ne plus suivre";
+      button.setAttribute ('class', 'btn btn-danger btn-xs');
+      button.setAttribute  ('onclick', 'unfollow (this)');
+    }
+    else {
+      button.innerHTML = "Suivre";
+      button.setAttribute ('class', 'btn btn-success btn-xs');
+      button.setAttribute  ('onclick', 'follow (this)');
+    }
+
+    //LIKE
+    var button = document.getElementById (selectedTab+'-like-'+i);
+    if ((array [i]["like"]) == 'yes') {
+      button.setAttribute ('class','btn btn-warning btn-xs');
+      button.setAttribute ('onclick','unlike (this)');
+      button.innerHTML ='Ne plus aimer';
+    } else {
+      button.setAttribute ('class','btn btn-primary btn-xs');
+      button.setAttribute ('onclick','like (this)');
+      button.innerHTML ='J\'aime';
+    }
   }
 }
 
@@ -159,7 +324,6 @@ function createAudioTag (number) {
         }
 
         if (checkNodes ( '-comment-', i)) {
-          console.log(audiocontainer);
           div = document.createElement ('div');
           div.id = selectedTab+'-comment-'+i;
           div.innerHTML = '<i>commentaire de l\'artiste</i>';
@@ -169,10 +333,14 @@ function createAudioTag (number) {
         if (checkNodes ( '-follow-', i)) {
           var button = document.createElement ('button');
           button.id = selectedTab+'-follow-'+i;
-          button.innerHTML = "Suivre";
-          button.class = 'btn';
-          button.setAttribute  ('onclick', 'follow (this)');
+
           audiocontainer.appendChild(button);
+        }
+        if (checkNodes ( '-like-', i)) {
+          var button = document.createElement ('button');
+          button.id = selectedTab+'-like-'+i;
+          audiocontainer.appendChild(button);
+
         }
     }
   }
@@ -189,9 +357,9 @@ function voteForMusic (music_infos, note) {
   request.onreadystatechange = function () {
     if (request.readyState == 4) {
       if (request.status == 200) {
+        console.log(request.responseText);
       }
-      else {
-      }
+
     }
   }
   request.open('POST', 'music_conf/voteForMusic.php');
@@ -215,6 +383,31 @@ function childnodeCounter (container) {
 }
 
 
+function unfollow (tag) {
+  var author = tag.value;
+  var request = new XMLHttpRequest ();
+  request.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      if (request.status == 200) {
+      }
+    }
+  }
+  request.open('POST', 'music_conf/unfollow.php');
+  request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  request.send("author="+author);
+
+
+  var author = tag.value;
+  var button = document.getElementsByTagName ("button");
+  for (var i = 0; i < button.length; i++) {
+    if (button[i].value == author) {
+      button[i].innerHTML = "Suivre";
+      button[i].setAttribute ('class', 'btn btn-success btn-xs');
+      button[i].setAttribute  ('onclick', 'follow (this)');
+    }
+  }
+}
+
 
 
 function deleteVoteButton (typeOfButton, numberOfTag) {
@@ -225,7 +418,7 @@ function deleteVoteButton (typeOfButton, numberOfTag) {
       title = info[0];
       author = info [1];
       voted = searchforvote (title, author, i);
-      if (voted != 'false' ) {
+      if (voted != 'true' ) {
         var containerToRemove = document.getElementById (selectedTab+'-audiocontainer-'+(i));
         var tagRemove  = document.getElementById (selectedTab+'-vote-'+(i));
         if (tagRemove != undefined ) {
@@ -259,7 +452,6 @@ function searchforvote (title, author, i) {
 
 //Vote pour une musique et supprime le select
 function note (tag) {
-
   var id = tag.id.split ('-');
   var index = id[2];
   id.splice  (1, 1 ,'musicTitle');
@@ -313,9 +505,11 @@ function deleteAudioTag (number) {
         audiocontainer.removeChild(removeTag);
       }
       if (!checkNodes ( '-follow-', i)) {
-
-
         removeTag  = document.getElementById(selectedTab+'-follow-'+i);
+        audiocontainer.removeChild(removeTag);
+      }
+      if (!checkNodes ( '-like-', i)) {
+        removeTag  = document.getElementById(selectedTab+'-like-'+i);
         audiocontainer.removeChild(removeTag);
       }
     }
