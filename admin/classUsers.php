@@ -1,6 +1,6 @@
 <?php
 
-require_once "libModOne.php";
+// require ("/lib.php");
 
 class User
 {
@@ -20,6 +20,11 @@ class User
   public $moderator = "";
   public $access_token = "";
   public $active_account = "";
+
+  const CHECKMODERATOR = [1, "Moderator",2];
+  const CHECKSUPERMODERATOR = [1, "Supermoderator", 3];
+  const CHECKUSER = [0, "User", 1];
+  const CHECKERROR = [0, "Error", 0];
 
   //Renvoie les propriétés et leurs valeurs de l'oblet
   public function getPropertiesNames(){
@@ -54,9 +59,14 @@ class User
 
   }
 
-  public function verifPwd($pwd2){
+  public function changePwd($newPwd){
 
-
+    $nbCharPwd = strlen($_POST["pwd"]);
+    if($nbCharPwd < 8 || $nbCharPwd > 16 ){
+        $error = true;
+        $listOfErrors[] =3;
+        $result = [$err];
+    }
 
   }
 
@@ -82,11 +92,12 @@ class User
     if (!$result) {
         return $result;
     }else{
+      
+      if ($result) {
 
-    if ($result) {
+        foreach ($user as $key => $value) {
+          $this->{$key} = $value;
 
-      foreach ($user as $key => $value) {
-        $this->{$key} = $value;
       }
     }
   }
@@ -105,12 +116,10 @@ class User
         return $result;
     }else{
 
-    if ($result) {
-      foreach ($user as $key => $value) {
-        $this->{$key} = $value;
+      if ($result) {
+        foreach ($user as $key => $value) {
+          $this->{$key} = $value;
       }
-    }else{
-      return $user;
     }
   }
 }
@@ -133,9 +142,33 @@ class User
 
   public function isMod(){
 
-    return checkMod($this->access_token);
+      if (!empty($this->access_token)) {
 
-  }
+        $connection = dbConnect();
+        $query = $connection->prepare("SELECT * FROM USERS where access_token=:access_token");
+        $query -> execute (["access_token" => $this->access_token]);
+        $result = $query->fetch();
+
+          switch ($result["moderator"]) {
+
+            case 1:
+              return self::CHECKUSER;
+              break;
+            case 2:
+              return self::CHECKMODERATOR;
+              break;
+            case 3:
+              return self::CHECKSUPERMODERATOR;
+              break;
+             default:
+               return self::CHECKERROR;
+               break;
+          }
+
+      }else {
+        return self::CHECKERROR;
+      }
+    }
 
   public function changeToken(){
 
@@ -177,31 +210,7 @@ class User
       return False;
     }
   }
-
-
   public function sendMail($subject, $content){
-//
-// $mail = ('    <!DOCTYPE html>
-//     <html>
-//       <head>
-//         <meta charset="utf-8">
-//         <title></title>
-//       </head>
-//       <body>
-//         <div>
-//           <h1>Activer votre compte :</h1>
-//           <p>Vous venez de créer un compte musique review !</p>
-//           <h2>Vos identifiants :</h2>
-//           <h3>Login : </h3>
-//           <h3>Mot de passe : </h3>
-//           <br>
-//
-//           <input type="button" onclick="parent.location="'.`http://localhost/Projet_Annuel_1A/accountValidation.php?`.'"'.' value="Activer votre Compte">
-//
-//         </div>
-//       </body>
-//     </html>');
-
     return mail($this->mail,$subject, $mail);
   }
 }

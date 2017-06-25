@@ -1,6 +1,7 @@
 <?php
     session_start();
-    if (!empty ($_SESSION)) {
+
+    if(isset($_SESSION["id"])){
       setcookie ("access", $_SESSION['id']);
     }
 

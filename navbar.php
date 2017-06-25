@@ -1,10 +1,16 @@
 <?php
-  //a mettre dans tous les fichiers manuellement ou lib.php
-  //avant tous les affichages et les traitement (echo)
-  include "header.php";
-  require_once "admin/libSQL.php";
-  require_once "admin/libModOne.php";
-  require_once "lib.php";
+
+//a mettre dans tous les fichiers manuellement ou lib.php
+//avant tous les affichages et les traitement (echo)
+include "header.php";
+require_once "admin/libSQL.php";
+require_once "admin/classUsers.php";
+require_once "lib.php";
+if(isset($_SESSION["id"])){
+    $user = new User;
+    $user->createWithToken($_SESSION["id"]);
+}
+
 ?>
 
 
@@ -32,8 +38,8 @@
                     <?php
                          // A CHANGER PLUS TARD + PRESENTATION CSS
                         if ( !isset($_SESSION['id'])){
-                            echo
-                            '<li class="dropdown">
+                            echo '
+                              <li class="dropdown">
                                 <a  class="dropdown-toggle" data-toggle="dropdown">Se connecter <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                      <li>
@@ -58,7 +64,7 @@
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                            
+
                                      <li>
                                         <a href="addMusic.php">Gérer mes musiques</a>
                                     </li>
@@ -72,8 +78,8 @@
                             </li>';
                         }
 
-                        if ((!empty($_SESSION['id']))) {  //MODERATEUR <=1
-                            $checkMod  = checkMod($_SESSION["id"]);
+                        if ((!empty($user))) {  //MODERATEUR <=1
+                            $checkMod  = $user->isMod();
                             if ($checkMod[0]) {
                                 echo '<li class="dropdown">
                                     <a href="" class="dropdown-toggle" data-toggle="dropdown">ESPACE MODERATION<b class="caret"></b></a>
@@ -85,6 +91,9 @@
                                 </li>';
                             }
                         }
+                        echo ' <li class="dropdown">
+                                    <a href="http://www.esgi.fr/ecole-informatique.html">Notre école</a>
+                                </li>';
                         // var_dump($_SESSION["id"]);
                     ?>
                 </ul>

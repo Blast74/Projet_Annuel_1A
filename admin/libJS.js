@@ -50,12 +50,27 @@ function transformToHtml(user, tr) {
   elemPro.forEach(function(property) {
 
     var td = document.createElement('td');
+    console.log(property);
+    if(property == "moderator"){
+      var td2 = document.createElement('td');
+      var modif = document.createElement('input');
+      var suppr = document.createElement('input');
+      modif.type = "button";
+      modif.value = "Modifier";
+      modif.setAttribute("onclick", `modifUserInfo(this.parentNode.parentNode, "${user["email"]}")`);
+      suppr.type = "button";
+      suppr.value = "Supprimer";
+      suppr.setAttribute("onclick", `supprUserInfo(this.parentNode.parentNode, "${user["email"]}")`);
+      td.appendChild(modif);
+      td2.appendChild(suppr);
+      tr.appendChild(td);
+      tr.appendChild(td2);
 
-    td.innerHTML = user[property];
-    td.headers = property;
-
-    tr.appendChild(td);
-
+    }else{
+      td.innerHTML = user[property];
+      td.headers = property;
+      tr.appendChild(td);
+    }
   })
 }
 
@@ -64,27 +79,24 @@ function createTabHTML(idDIV, nbLines, indexPage, tableUsers) {
   var table = document.createElement('table');
 
   table.id = "table-" + idDIV;
-  table.style = "width: 100%";
+  table.className = "table table-bordered table-responsive";
   if (document.getElementById(`${table.id}`) != null ) {
     var reset = document.getElementById(`${table.id}`);
     console.log(container);
     container.removeChild(reset);
   }
-
-
   var thead = document.createElement('thead');
   thead.id = "thead-" + idDIV;
-  var trThead = document.createElement('tr');
-  trThead.id = "trTh-" + idDIV;
   var valThead = Object.keys(tableUsers[0]);
 
   for (var i = 0; i < valThead.length; i++) {
     var th = document.createElement('th');
+    if(valThead[i] == "moderator"){
+      th.colSpan = "2";
+    }
     th.innerHTML = valThead[i];
     thead.appendChild(th);
   }
-
-  thead.appendChild(trThead);
   table.appendChild(thead);
   container.appendChild(table);
   createTabBodyHTML(tableUsers, table.id, nbLines, indexPage);
@@ -97,33 +109,14 @@ function sortBy(tableJSON, idCol, dir){
   tableJSON.sort(function(colA,colB){
     if (dir == "ASC") {
         console.log(colA[idCol]);
-        return colA[idCol] > colB[idCol];
+        return colA[idCol].toLowerCase() > colB[idCol].toLowerCase();
     }else {
-        return colB[idCol] > colA[idCol];
+        return colB[idCol].toLowerCase() > colA[idCol].toLowerCase();
     }
   });
     return tableJSON;
   }
 
-  function sortAsc(a, b, nameCol, direc){
-    if (direc == ASC){
-      if (a[nameCol] < b[nameCol]){
-        return (-1);
-      }else if (a[nameCol] > b[nameCol]) {
-        return 1;
-      }else{
-        return 0;
-      }
-    }else {
-      if (a[nameCol] > b[nameCol]){
-        return (-1);
-      }else if (a[nameCol] < b[nameCol]) {
-        return 1;
-      }else{
-        return 0;
-      }
-    }
-  }
 
   function getNbPages(table, nbLines){
     var nbPages = Math.trunc(table.length / nbLines);
@@ -157,7 +150,6 @@ function buttonPage(table, nbLines, idContainer){
       console.log(checkTagExist("divPage-" + idContainer));
       if ((checkTagExist("divPage-" + idContainer))){
         var div = document.getElementById("divPage-" + idContainer);
-
         div.parentNode.removeChild(div);
       }
       var div = tagButtonPage(nbPages, idContainer);
@@ -172,52 +164,26 @@ function buttonPage(table, nbLines, idContainer){
 function tagButtonPage(nbPages, idCont){
   var div = document.createElement('div');
   div.id = "divPage-"+ idCont;
-  var p = document.createElement('p');
-  p.innerHTML = "Page :";
+  div.className = "form-group";
+  var h4 = document.createElement('h4');
+  h4.className = "row";
+  h4.innerHTML = "Page :";
   var select = document.createElement('select');
+  select.className = "container";
   select.id = "select-" + div.id;
+  select.setAttribute('onchange',`listHtmlUsers("${idCont}");`);
   for (var i = 1; i <= nbPages; i++) {
       var optionSelect = document.createElement('option');
-      // option.onclick = "";
       optionSelect.value = `${i}`;
       optionSelect.innerHTML = `${i}`;
       select.appendChild(optionSelect);
   }
-  div.appendChild(p);
+  div.appendChild(h4);
   div.appendChild(select);
   return div;
 }
 
-
-//Taableau de tous les cookies (O => nom, 1 => valeurs)
-function getCookies(){
-  var cookies = document.cookie.split(";");
-  var result = [];
-  cookies.forEach(function(cookie){
-    result.push(cookie.split("="));
-  });
-  return result;
-}
-
-//trouve le cookie qui correspond au nom
-function getCookie(name){
-  var cookies = getCookies();
-  var result;
-  cookies.forEach(function(cookie){
-    if (cookie[0] == name){
-      result = cookie;
-    }
-    }
-  );
-  if (result != null) {
-    return result;
-  }else {
-    return null;
-  }
-}
-
-
-function listUsers(idContainer) {
+function listHtmlUsers(idContainer) {
   var orderBy = getSelectOpt('orderDisplay');
   var order = getSelectOpt('sortByOptionSelectUsers');
   var nbByPage = getSelectOpt('nbByPages');
@@ -236,6 +202,8 @@ function listUsers(idContainer) {
       }
     }
   };
-  ajaxRequest.open("GET", `admin/testOrder.php?access_token=${idSession}`, true);
+  ajaxRequest.open("GET", `admin/listUsers.php?access_token=${idSession}`, 0);
   ajaxRequest.send();
+  var params = ["Pseudo", "Prénom", "Nom", "Email", "Date de naissance", "Sexe", "Pays", "Etat du compte", "Actions"];
+  changeInnerHTML(params, `thead-${idContainer}`);
 }
