@@ -1,8 +1,10 @@
 <?php
     session_start();
+
     if(isset($_SESSION["id"])){
       setcookie ("access", $_SESSION['id']);
     }
+
     require_once "lib.php";
     require_once "conf.inc.php";
 
@@ -29,8 +31,19 @@
                     </li>
                     <li class="" onclick="tabNavigation(this)"  id='news'><a href="#service-two" data-toggle="tab"><i class="fa fa-exclamation" ></i> Les nouveautés</a>
                     </li>
-                    <li class="" onclick="tabNavigation(this)" id='suggestion'><a href="#service-three" data-toggle="tab"><i class="fa fa-sliders"></i> Suggestions</a>
-                    </li>
+
+                  <?php
+                  if (!empty ($verifyUser)) {
+                    echo   '<li class="" onclick="tabNavigation(this)" id="suggestion"><a href="#service-three" data-toggle="tab"><i class="fa fa-sliders"></i> Suggestions</a>';
+                    echo "</li>";
+                  }
+
+
+                   ?>
+
+
+
+
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade active in" id="service-one">

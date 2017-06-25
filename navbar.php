@@ -1,4 +1,5 @@
 <?php
+
 //a mettre dans tous les fichiers manuellement ou lib.php
 //avant tous les affichages et les traitement (echo)
 include "header.php";
@@ -9,6 +10,7 @@ if(isset($_SESSION["id"])){
     $user = new User;
     $user->createWithToken($_SESSION["id"]);
 }
+
 ?>
 
 
@@ -62,6 +64,7 @@ if(isset($_SESSION["id"])){
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
+
                                      <li>
                                         <a href="addMusic.php">Gérer mes musiques</a>
                                     </li>

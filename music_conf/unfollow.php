@@ -16,23 +16,12 @@ if (!empty ($_SESSION)) {
 
 if (isset ($_POST["author"]) &&  !empty ($userInfo) && !empty ($author -> email) ) {
 
-
-
   $connection = dbConnect ();
-  $query = $connection->prepare ("UPDATE FOLLOW SET follow = 1 WHERE email =? AND email_follower = ? ");
+  $query = $connection->prepare ("UPDATE FOLLOW SET follow = 0 WHERE email =? AND email_follower = ? ");
   $query ->  execute([
              $author -> email,
               $userInfo ["email"]
             ]);
-
-  if (!$query) {
-    $connection = dbConnect ();
-    $query = $connection->prepare ("INSERT INTO FOLLOW (follow, email, email_follower) VALUES (1, ? ,?)");
-    $query ->  execute([
-                $author -> email,
-                $userInfo['email']
-              ]);
-  }
 
 }
 else {

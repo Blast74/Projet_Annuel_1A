@@ -156,3 +156,13 @@ function mailHeaderHtml(){
     return $headers;
 
 }
+
+function getIndexMusics () {
+
+	$connection = dbConnect ();
+	$query = $connection->prepare("SELECT music_name, upload_music
+	FROM MUSIC WHERE   note_music > 4 AND isDeleted = 0 ORDER BY number_of_votes   DESC LIMIT 3 ");
+	$query -> execute ();
+	$result = $query -> fetchAll (PDO::FETCH_ASSOC);
+	return $result;
+}

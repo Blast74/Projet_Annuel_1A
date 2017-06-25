@@ -80,8 +80,7 @@ class User
 
   }
 
-  public function createWithToken($access_token)
-  {
+  public function createWithToken($access_token){
     $connection = dbConnect ();
     $col = $this->getPropertiesNames();
     $params = implode(',', $col );
@@ -93,15 +92,16 @@ class User
     if (!$result) {
         return $result;
     }else{
-
+      
       if ($result) {
 
         foreach ($user as $key => $value) {
           $this->{$key} = $value;
-        }
+
       }
     }
   }
+}
 
   public function createWithEmail($email){
     $connection = dbConnect ();
@@ -111,6 +111,7 @@ class User
     $result = $query -> execute([$email]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
+
     if (!$result) {
         return $result;
     }else{
@@ -118,10 +119,10 @@ class User
       if ($result) {
         foreach ($user as $key => $value) {
           $this->{$key} = $value;
-        }
       }
     }
   }
+}
 
   public function createWithPseudo ($pseudo){
     $connection = dbConnect ();
