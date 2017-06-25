@@ -189,9 +189,6 @@
             include 'footer.php';
             unset($_SESSION["form_post"] );
             unset($_SESSION["form_errors"] );
-<<<<<<< HEAD
             unset($_SESSION["inscription"]);
 
-=======
->>>>>>> origin/Dev
         ?>

@@ -74,13 +74,6 @@ switch ($_GET["user_informations"]) {
                 $error = true;
                 $listOfErrors[] =7;
             }
-            /*
-            //CAPTACHA A FAIRE
-            if($_POST["captcha"] != $_SESSION ["captcha"]){
-                $error = true; //SESSION:
-                $listOfErrors[] =8;
-            }
-            */
 
             //Connexion à la BDD s'il n'y pas d'erreurs et dernières vérifications
             if (!$error) {

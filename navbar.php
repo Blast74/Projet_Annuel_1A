@@ -32,8 +32,8 @@ require_once "lib.php";
                     <?php
                          // A CHANGER PLUS TARD + PRESENTATION CSS
                         if ( !isset($_SESSION['id'])){
-                            echo
-                            '<li class="dropdown">
+                            echo '
+                              <li class="dropdown">
                                 <a  class="dropdown-toggle" data-toggle="dropdown">Se connecter <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                      <li>
@@ -87,6 +87,9 @@ require_once "lib.php";
                                 </li>';
                             }
                         }
+                        echo ' <li class="dropdown">
+                                    <a href="http://www.esgi.fr/ecole-informatique.html">Notre école</a>
+                                </li>';
                         // var_dump($_SESSION["id"]);
                     ?>
                 </ul>

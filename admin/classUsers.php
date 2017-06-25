@@ -54,9 +54,14 @@ class User
 
   }
 
-  public function verifPwd($pwd2){
+  public function changePwd($newPwd){
 
-
+    $nbCharPwd = strlen($_POST["pwd"]);
+    if($nbCharPwd < 8 || $nbCharPwd > 16 ){
+        $error = true;
+        $listOfErrors[] =3;
+        $result = [$err];
+    }
 
   }
 
@@ -79,15 +84,16 @@ class User
     $result = $query -> execute([$access_token]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
-<<<<<<< HEAD
+
     if (!$result) {
         return $result;
     }else{
-=======
-    if ($result) {
->>>>>>> origin/Dev
-      foreach ($user as $key => $value) {
-        $this->{$key} = $value;
+
+      if ($result) {
+
+        foreach ($user as $key => $value) {
+          $this->{$key} = $value;
+        }
       }
     }
   }
@@ -100,17 +106,15 @@ class User
     $result = $query -> execute([$email]);
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
-<<<<<<< HEAD
     if (!$result) {
         return $result;
     }else{
-=======
-    if ($result) {
-      foreach ($user as $key => $value) {
-        $this->{$key} = $value;
+
+      if ($result) {
+        foreach ($user as $key => $value) {
+          $this->{$key} = $value;
+        }
       }
-    }else{
-      return $user;
     }
   }
 
@@ -123,7 +127,7 @@ class User
     $user = $query -> fetch (PDO::FETCH_ASSOC);
 
     if ($result) {
->>>>>>> origin/Dev
+
       foreach ($user as $key => $value) {
         $this->{$key} = $value;
       }
