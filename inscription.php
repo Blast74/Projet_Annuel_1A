@@ -47,14 +47,10 @@
                     }
                     echo "</div>";
 
-                    if (isset($_SESSION["id"])) {
-                      $userInfo = "?&user_informations=update";
-                    }else{
-                      $userInfo = "?&user_informations=create";
-                    }
+
                 ?>
 
-                <form method="POST" action=<?php echo "saveUser.php".$userInfo ?> >
+                <form method="POST" action=<?php echo "saveUser.php?&user_informations=create&modif_email=".$user->email."&token=".$user->access_token ?> >
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Prénom:</label>

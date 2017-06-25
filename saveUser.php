@@ -6,23 +6,22 @@ require 'admin/classUsers.php';
 
 $error = false;
 $listOfErrors = [];
-
-if(isset($_POST["modifEmail"]) && isset($_GET["token"])){
+$right;
+if(isset($_GET["modif_email"]) && isset($_GET["token"])){
   $user = New User;
-  $user->createWithEmail($_POST["modifEmail"]);
+  $user->createWithEmail($_GET["modif_email"]);
   $currentUser = New User;
-  $currentUser->createWithEmail($GET["token"]);
-  if ($user->access_token == $user->access_token) {
+  $currentUser->createWithEmail($_GET["token"]);
+  if ($user->access_token == $currentUser->access_token) {
     $right = TRUE;
   }else{
     $right = FALSE;
   }
-  if($user->isMod()[2] < $currentUser->isMod()[2] ){
+  if($user->isMod()[2] <= $currentUser->isMod()[2] ){
     $right = TRUE;
   }else{
     $right = FALSE;
   }
-
 }
 
 
@@ -77,13 +76,27 @@ if ($_GET["user_informations"] == "create"){
         $error = true;
         $listOfErrors[] =7;
     }
+    if ($right && ($user->access_token == $user->access_token)&& !empty($_POST["pwd"])){
+      $nbCharPwd = strlen($_POST["pwd"]);
+      if($nbCharPwd < 8 || $nbCharPwd > 16 ){
+          $error = true;
+          $listOfErrors[] =3;
+      }
+      //Confirmation du mot de passe
+      if($_POST["pwd"] != $_POST["pwd2"]){
+          $error = true;
+          $listOfErrors[] =4;
+      }
+    }
+    var_dump($error);
+    var_dump($listOfErrors);
 
     //Connexion à la BDD s'il n'y pas d'erreurs et dernières vérifications
-    if (!$error) {
+    if ($error && $right) {
         //Vérifie si le mail est déjà dans la BDD
         $connection = dbConnect ();
         $query = $connection->prepare("SELECT email FROM USERS where email=:email");
-        $id = $po; // condition ternaire si l'id est vide ça renvoit -1 sert aussi pour le pseudo !!
+ // condition ternaire si l'id est vide ça renvoit -1 sert aussi pour le pseudo !!
         $query -> execute (["email"=>$_POST["email"]]);
         $result = $query -> fetch(); //fetch retourne le 1er enregistrement
         if (!empty ($result)) {
@@ -101,9 +114,9 @@ if ($_GET["user_informations"] == "create"){
     }
     //redirection sur inscription.php s'il y a des erreurs
     if($error){
-        errors ($_POST, $listOfErrors); //Fonction qui affiche les erreurs s'il y en a !
+        // errors ($_POST, $listOfErrors); //Fonction qui affiche les erreurs s'il y en a !
     }else{  //enregistrement du formulaire dans la BDD
-
+      if ($right){
         $pwd = uniqid();
         var_dump($pwd);
         $accessToken = md5(uniqid().$_POST["email"].time());
@@ -134,7 +147,7 @@ if ($_GET["user_informations"] == "create"){
             "access_token" => $accessToken,
             "active_account" => $active_account
             ]);
-                // var_dump(get_defined_vars());
+
         //IL FAUT SE CONNECTER AUTOMATIQUEMENT APRES L'INSCRIPTION //REDIRECTION SUR CONNECT.PHP
         $_SESSION["inscription"] = "Email";
         header('Location: index.php');
@@ -148,6 +161,46 @@ if ($_GET["user_informations"] == "create"){
             $_SESSION["inscription"] = "notEmail";
             header('location: inscription.php');
             die();
+            }
+
+        }else{
+          if ($right && ($user->access_token == $currentUser->access_token)) {
+            $connection = dbConnect();
+            $querry = $connection -> prepare("UPDATE USERS SET email=:email, pseudo=:pseudo, gender=:gender, firstname=:firstname, lastname=:lastname, birthday=:birthday, country=:country, pwd=:pwd WHERE id = :id");
+            $querry -> execute([
+                "email" => $_POST["email"],
+                "pseudo" => $_POST["pseudo"],
+                "gender" => $_POST["gender"],
+                "firstname" => $_POST["firstname"],
+                "lastname" => $_POST["lastname"],
+                "birthday" => $_POST["birthday"],
+                "country" => $_POST["country"],
+                "pwd" => $pwd,
+                "id" => $user->id
+              ]);
+              var_dump($_POST);
+            $_SESSION["inscription"] = "Email";
+            header('Location: index.php');
+            die();
+                  // la ou il y a   :pseudo;, on met la valeur de $_POST["pseudo"]
+          }else{
+            $connection = dbConnect();
+            $querry = $connection -> prepare("UPDATE USERS SET email=:email, pseudo=:pseudo, gender=:gender, firstname=:firstname, lastname=:lastname, birthday=:birthday, country=:country WHERE id = :id");
+            $querry -> execute([
+                "email" => $_POST["email"],
+                "pseudo" => $_POST["pseudo"],
+                "gender" => $_POST["gender"],
+                "firstname" => $_POST["firstname"],
+                "lastname" => $_POST["lastname"],
+                "birthday" => $_POST["birthday"],
+                "country" => $_POST["country"],
+                "id" => $user->id
+
+              ]);
+              $_SESSION["inscription"] = "Email";
+              header('Location: index.php');
+              die();
+          }
         }
     }
   }else{
