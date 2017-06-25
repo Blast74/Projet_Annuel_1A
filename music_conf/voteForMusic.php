@@ -31,17 +31,30 @@ if (isset ($_POST['title']) &&
 
         //Mise en place du lien entre l'utilisateur et la musique
         if (is_int ($music_id)){
-          $query = $connection->prepare ("INSERT INTO LINKED (email, music_id, is_LINKED, music_note) VALUES (?,?,2,?)");
+          $query = $connection->prepare ("INSERT INTO LINKED (email, music_id, music_note) VALUES (?,?,?)");
           $query ->  execute([
                       $userInfo['email'],
                       $music_id,
                       $_POST ['note']
                     ]);
+          if ($query->rowCount() != 1) {
+
+              //UPDATE Si un lien existe déjà
+              $query = $connection->prepare ("UPDATE LINKED SET music_note = ? WHERE music_id =? AND email = ? ");
+              $query ->  execute([
+                          $_POST ['note'],
+                          $music_id,
+                          $userInfo ["email"]
+                        ]);
+          }
+
 
           //On récupère la moyenne de la musique
           $query = $connection->prepare("SELECT ROUND (AVG (music_note)) AS 'average' FROM LINKED, MUSIC WHERE  LINKED.music_id = MUSIC.music_id AND MUSIC.music_id =?");
           $query ->  execute([$music_id]);
           $result = $query -> fetch (PDO::FETCH_ASSOC );
+
+
 
 
           //On met la moyenne dans la table MusicSubtypeList
@@ -50,6 +63,9 @@ if (isset ($_POST['title']) &&
                      $result ["average"],
                       $music_id
                     ]);
+
+
+
           }
 
 echo json_encode ($result["average"]);

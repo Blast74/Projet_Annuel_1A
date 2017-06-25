@@ -1,10 +1,10 @@
 <?php
-//a mettre dans tous les fichiers manuellement ou lib.php
-//avant tous les affichages et les traitement (echo)
-include "header.php";
-require_once "admin/libSQL.php";
-require_once "admin/libModOne.php";
-require_once "lib.php";
+  //a mettre dans tous les fichiers manuellement ou lib.php
+  //avant tous les affichages et les traitement (echo)
+  include "header.php";
+  require_once "admin/libSQL.php";
+  require_once "admin/libModOne.php";
+  require_once "lib.php";
 ?>
 
 
@@ -58,9 +58,7 @@ require_once "lib.php";
                             echo '<li class="dropdown">
                                 <a href="" class="dropdown-toggle" data-toggle="dropdown">MON PROFIL <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                <li>
-                                   <a href="libTrophy.php">Mes Trophés</a>
-                               </li>
+                            
                                      <li>
                                         <a href="addMusic.php">Gérer mes musiques</a>
                                     </li>

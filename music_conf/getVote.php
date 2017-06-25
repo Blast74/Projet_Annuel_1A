@@ -4,10 +4,13 @@ require_once "../conf.inc.php";
 require "../lib.php";
 header ('Content-type:application/json'); //Type de contenu que cette page renvoi
 
-$userInfo = getUser ($_SESSION['id']);
 
-//music name ++ author name
-// A METTRE DANS LA CONDITION
+
+
+
+if (!empty ($_SESSION)) {
+  $userInfo = getUser ($_SESSION['id']);
+}
 
 
 if (isset ($_GET['title']) &&
@@ -26,7 +29,7 @@ if (isset ($_GET['title']) &&
 
 
     $connection = dbConnect ();
-    $query = $connection->prepare("SELECT *  FROM LINKED WHERE email= :email AND music_id = :music_id");
+    $query = $connection->prepare("SELECT music_note  FROM LINKED WHERE email= :email AND music_id = :music_id");
     $query -> execute ([":email"=> $userInfo['email'],
                         ":music_id"=> $music_id
                       ]);
@@ -34,7 +37,8 @@ if (isset ($_GET['title']) &&
 
 
 
-    if ($result == false){
+
+    if (($result == false) || ($result == null) ){
       echo json_encode (false);
     }elseif  ($result == true){
     echo json_encode (true);
