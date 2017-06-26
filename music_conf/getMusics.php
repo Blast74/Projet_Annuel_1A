@@ -9,15 +9,12 @@ header ('Content-type:application/json'); //Type de contenu que cette page renvo
 
 if (isset($_GET['subtype']) && (isset($_GET['currentpage'])) && (isset ($_GET['tabname']))  ){
 
-
-
     //VERIF OFFSET
     if ($_GET['currentpage'] == 1) {
       $offset = 0;
     }else {
       $offset = intval ((($_GET['currentpage']-1)*5));
     }
-
 
     if ($_GET['tabname'] == 'top') {
       //Nombre de musiques à afficher
@@ -63,61 +60,17 @@ if (isset($_GET['subtype']) && (isset($_GET['currentpage'])) && (isset ($_GET['t
         $userInfo = getUser ($_SESSION['id']);
 
         $connection = dbConnect ();
-        $query = $connection->prepare("SELECT * FROM 	MUSIC, FOLLOW where FOLLOW.email_follower = ? AND MUSIC.email = FOLLOW.email AND isDeleted = 0");
-        $query -> execute ([$userInfo['email']]);
-        $counter1 = $query -> fetchAll (PDO::FETCH_ASSOC);
-
-        $query = $connection->prepare("SELECT * FROM MUSIC, LINKED WHERE LINKED.email = ? AND LINKED.music_id = MUSIC.music_id AND isDeleted = 0");
-        $query -> execute ([$userInfo['email']]);
-        $counter2 = $query -> fetchAll (PDO::FETCH_ASSOC);
-
-        $length =  count ($counter1);// + count ($counter2);
-
-$followlimit = 5;
-$likedlimit = 0;
-
-/*
-if (count ($counter1) > count ($counter2) ) {
-  $maxPage = $length/$count2;
-  if ($offset >= $maxPage) {
-    $followlimit = 0;
-    $likedlimit = 5;
-  }
-}else {
-  $maxPage = $length/$count1;
-  if ($offset >= $maxPage) {
-  $followlimit = 5;
-  $likedlimit = 0;
-  }
-}
-*/
-        $result = [];
-
-        $query = $connection->prepare("SELECT * FROM 	MUSIC, FOLLOW where FOLLOW.email_follower = ? AND MUSIC.email = FOLLOW.email AND isDeleted = 0 LIMIT ".$followlimit." OFFSET ".$offset);
-        $query -> execute ([$userInfo['email']]);
-        $follows = $query -> fetchAll (PDO::FETCH_ASSOC);
-
-        $query = $connection->prepare("SELECT * FROM MUSIC, LINKED WHERE LINKED.email = ? AND LINKED.music_id = MUSIC.music_id AND isDeleted = 0 LIMIT ".$likedlimit." OFFSET ".$offset);
-        $query -> execute ([$userInfo['email']]);
-        $liked = $query -> fetchAll (PDO::FETCH_ASSOC);
+        $query = $connection->prepare("SELECT * FROM 	MUSIC, FOLLOW where FOLLOW.email_follower = ?  AND MUSIC.subtype_name = ? AND MUSIC.email = FOLLOW.email  AND FOLLOW.follow =1 AND isDeleted = 0 ");
+        $query -> execute ([$userInfo['email'],$_GET['subtype'] ]);
+        $length = count ($query -> fetchAll (PDO::FETCH_ASSOC));
 
 
 
-        $i = 0;
-        foreach ($follows as $key => $value) {
-          $result [$i] = $follows[$i];
-          $i++;
-        }
-        $j=0;
+        $query = $connection->prepare("SELECT * FROM 	MUSIC, FOLLOW where FOLLOW.email_follower = ?  AND MUSIC.subtype_name = ? AND MUSIC.email = FOLLOW.email  AND FOLLOW.follow =1 AND isDeleted = 0 LIMIT 5 OFFSET ".$offset);
+        $query -> execute ([$userInfo['email'], $_GET['subtype'] ]);
+        $result = $follows = $query -> fetchAll (PDO::FETCH_ASSOC);
 
-        foreach ($liked as $key => $value) {
-          $result [$i] = $follows[$j];
-            $i++;
-        }
-
-
-         $result+= ["maxresults" => $length];
-
+        $result+= ["maxresults" => $length];
 
         echo json_encode ($result);
       }

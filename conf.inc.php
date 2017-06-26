@@ -3,33 +3,33 @@
 define ("HOST", "localhost");
 define ("DBNAME", "zebrolfrertest");
 define ("DBUSER", "root");
-define ("DBPWD", ""); //Windows:    define ("DBPWD", "");
+define ("DBPWD", "root"); //Windows:    define ("DBPWD", "");
 
 
 $listOfGenre=[
 				"roc" => "Rock",
-				"met" => "Metal",
 				"rap" => "Rap",
+				"rnb" => "RnB",
 				"blu" => "Blues",
 				"var" => "Variété",
 				"dis" => "Disco",
 				"ele" => "Electro",
 				"hip" => "Hip Hop",
 				"reg" => "Reggae",
-				"oth" => "autre"
+				"oth" => "Autre"
  				];
 
 $subtypeList=[
-				"roc" => ["Rock", "Pop-Rock", "Folkrock"],
-				"met" => ["Deathmetal", "Metal-Metal", "Trashmetal"],
-				"rap" => ["Rap", "Rap Americain", "Gangsta Rap", "Slam"],
+				"roc" => ["Pop-Rock", "Punk", "Metal", "Folk-Rock", "Rock industriel", "Rock n Roll"],
+				"rnb" => ["RnB", "Soul"],
+				"rap" => ["Rap", "Rap Americain", "Gangsta Rap", "Slam", "Rap hardcore"],
 				"blu" => ["Blues", "Deepblues"],
 				"var" => ["Chanson francaise"],
 				"dis" => ["Disco", "Funk"],
-				"ele" => ["Electro", "GOA", "House", "EDM", "Techno"],
+				"ele" => ["Electro", "Dubstep", "House", "EDM", "Techno"],
 				"hip" => ["Hip Hop"],
 				"reg" => ["Reggae"],
-				"oth" => ["Country", "Chorale", "Classique"]
+				"oth" => ["Country", "Chorale", "Classique", "Musique d'ambiance"]
 				];
 
 

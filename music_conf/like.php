@@ -45,10 +45,6 @@ if (isset ($_POST['title']) &&
                   ]);
     }
 
-
-
-
-
 }
 else {
   http_response_code(400);

@@ -38,7 +38,7 @@ if (isset ($_GET['title']) &&
 
 
 
-    if (($result == false) || ($result == null) ){
+    if (($result["music_note"] == false) || ($result["music_note"] == null) ){
       echo json_encode (false);
     }elseif  ($result == true){
     echo json_encode (true);
