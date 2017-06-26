@@ -24,15 +24,19 @@ if (isset ($_POST["author"]) &&  !empty ($userInfo) && !empty ($author -> email)
              $author -> email,
               $userInfo ["email"]
             ]);
+    $insert = $query->rowCount();
 
-  if (!$query) {
+  if ($insert == 0) {
     $connection = dbConnect ();
     $query = $connection->prepare ("INSERT INTO FOLLOW (follow, email, email_follower) VALUES (1, ? ,?)");
     $query ->  execute([
                 $author -> email,
                 $userInfo['email']
               ]);
+
   }
+
+echo json_encode ($query->rowCount());
 
 }
 else {

@@ -181,7 +181,6 @@ function dbMusicRequest (musicSubtype, currentpage, selectedTab) {
          result = JSON.parse (request.responseText);
       }
       if (request.readyState  == 4 && request.status == 200 ) {
-        console.log(result);
         var number = CountPages (result);
         var maxpage = CountMaxPageNumber (result ["maxresults"]);
         //FOLLOW + LIKE
@@ -357,7 +356,6 @@ function voteForMusic (music_infos, note) {
   request.onreadystatechange = function () {
     if (request.readyState == 4) {
       if (request.status == 200) {
-        console.log(request.responseText);
       }
 
     }
@@ -418,7 +416,7 @@ function deleteVoteButton (typeOfButton, numberOfTag) {
       title = info[0];
       author = info [1];
       voted = searchforvote (title, author, i);
-      if (voted != 'true' ) {
+      if (voted == 'true' ) {
         var containerToRemove = document.getElementById (selectedTab+'-audiocontainer-'+(i));
         var tagRemove  = document.getElementById (selectedTab+'-vote-'+(i));
         if (tagRemove != undefined ) {
@@ -440,6 +438,7 @@ function searchforvote (title, author, i) {
     if (request.readyState == 4) {
       if (request.status == 200) {
          var result =  (request.responseText);
+         console.log(request.responseText);
       }
     }
   }
