@@ -6,7 +6,6 @@
 
 # Table: MUSIC ---> reference les musiques uploader du site
 
-
 CREATE TABLE MUSIC(
         music_id       int (11) Auto_increment  NOT NULL PRIMARY KEY ,
         music_name     Varchar (100) NOT NULL ,
@@ -22,7 +21,7 @@ CREATE TABLE MUSIC(
         dateupload     Date ,
         report         TinyINT(1) NOT NULL DEFAULT 1,
         valid_report   TinyINT(1) NOT NULL DEFAULT 0,
-        upload_date    Date ,
+        upload_music    text ,
         email          Varchar (60) NOT NULL
 );
 
@@ -95,6 +94,24 @@ CREATE TABLE OPINION(
 );
 
 
+CREATE TABLE `forum_topic` (
+  `id_forum` int(11) NOT NULL PRIMARY KEY,
+  `subject` text NOT NULL,
+  `author` varchar(25) NOT NULL
+);
+
+
+  CREATE TABLE `forum_msg` (
+  `id_msg` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `id_topic` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `author` varchar(50) NOT NULL
+);
+
+
+
+
+
 ALTER TABLE MUSIC ADD CONSTRAINT FK_MUSIC_email FOREIGN KEY (email) REFERENCES USERS(email);
 ALTER TABLE VISIT ADD CONSTRAINT FK_VISIT_music_id FOREIGN KEY (music_id) REFERENCES MUSIC(music_id);
 ALTER TABLE VISIT ADD CONSTRAINT FK_VISIT_email FOREIGN KEY (email) REFERENCES USERS(email);
@@ -116,3 +133,6 @@ INSERT INTO `users`     ( `email`, `pseudo`, `image`, `gender`, `firstname`, `la
                         ('izejfioejff@eufhiqehoe.fr', 'lejfzpoefk', NULL, 'm', 'ukzefuizefize', 'iefjziofjipoe', '1993-06-18', '1993-06-18', 'fr', '$2y$10$GcQp9/WuE7Uvn9cO4TT9pOXkUzwgxPxfHUeqAUYF7n201bVkatnQC', 1, NULL, NULL, 1),
                         ('moqejfepojkfpq@efqlefjpod.com', 'ioqejfqopjoejjf', NULL, 'm', 'zefiozhofir', 'pcdkspkvzef', '1996-08-15', '1996-08-15', 'fr', '$2y$10$GJZqZDGiOxFHwPDB3YrWg.xK59BNFp8jo.FtiKPc3W82Vs5a89K82', 1, NULL, NULL, 1),
                         ('dhdjfckzjuk@djzuejsiz.fr', 'usqhlfezuehp', NULL, 'm', 'iqfheuhqzhf', 'cieofnomzeif', '1988-03-08', '1988-03-08', 'fr', '$2y$10$2J2DgxvqSz0fsyipiFdTMuwqSfAN2m34uJRyStxjFCuqAq7uo4YNi', 1, NULL, NULL, 1);
+
+
+
