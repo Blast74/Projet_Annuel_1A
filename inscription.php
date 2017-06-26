@@ -21,13 +21,15 @@
             <div class="col-lg-12">
                 <h1 class="page-header">
                     <?php
+                        $user = new User;
+
                         if (!(isset($_SESSION["id"]))) {
                             echo 'Inscrivez vous !';
-
+                            $url = "";
                         }else{
                             echo "Modifier votre profil :";
-                            $user = new User;
                             $user->createWithToken($_SESSION["id"]);
+                            $url = "&modif_email=".$user->email."&token=".$user->access_token;
                         }
                      ?>
                 </h1>
@@ -50,7 +52,7 @@
 
                 ?>
 
-                <form method="POST" action=<?php echo "saveUser.php?&user_informations=create&modif_email=".$user->email."&token=".$user->access_token ?> >
+                <form method="POST" action=<?php echo "saveUser.php?&user_informations=create".$url ?> >
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Prénom:</label>
