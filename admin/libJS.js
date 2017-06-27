@@ -36,7 +36,7 @@ function createTabBodyHTML(tableUsers, idTable, nbLines, page) {
     tr.id = trObj.email;
 
     // console.log(trObj);
-    transformToHtml(trObj, tr);
+    transformToHtmlUsers(trObj, tr);
 
     tbody.appendChild(tr);
   }
@@ -44,27 +44,54 @@ function createTabBodyHTML(tableUsers, idTable, nbLines, page) {
 
 }
 
-function transformToHtml(user, tr) {
+function transformToHtmlUsers(user, tr) {
   var elemPro = Object.keys(user);
 
   elemPro.forEach(function(property) {
 
     var td = document.createElement('td');
-    console.log(property);
+    console.log(user);
     if(property == "moderator"){
-      var td2 = document.createElement('td');
+      var state = document.createElement('td');
       var modif = document.createElement('input');
+      var td2 = document.createElement('td');
       var suppr = document.createElement('input');
+      var td3 = document.createElement('td');
+      var ena = document.createElement('input');
+      var td4 = document.createElement('td');
+      var up = document.createElement('input');
+      var td5 = document.createElement('td');
+      var down = document.createElement('input');
+
+      state.innerHTML = user[property];
+      state.headers = property;
       modif.type = "button";
       modif.value = "Modifier";
       modif.setAttribute("onclick", `modifUserInfo(this.parentNode.parentNode, "${user["email"]}")`);
+      ena.type = "button";
+      ena.value = "Change statut";
+      ena.setAttribute("onclick", `disableUser(this.parentNode.parentNode, "${user["email"]}")`);
+      up.type = "button";
+      up.value = "Modération up";
+      up.setAttribute("onclick", `editRight("up", "${user["email"]}")`);
+      down.type = "button";
+      down.value = "Modération down";
+      down.setAttribute("onclick", `editRight("down", "${user["email"]}")`);
       suppr.type = "button";
       suppr.value = "Supprimer";
       suppr.setAttribute("onclick", `supprUserInfo(this.parentNode.parentNode, "${user["email"]}")`);
+
       td.appendChild(modif);
       td2.appendChild(suppr);
+      td3.appendChild(ena);
+      td4.appendChild(up);
+      td5.appendChild(down);
+      tr.appendChild(state);
       tr.appendChild(td);
       tr.appendChild(td2);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
+      tr.appendChild(td5);
 
     }else{
       td.innerHTML = user[property];
@@ -92,7 +119,7 @@ function createTabHTML(idDIV, nbLines, indexPage, tableUsers) {
   for (var i = 0; i < valThead.length; i++) {
     var th = document.createElement('th');
     if(valThead[i] == "moderator"){
-      th.colSpan = "2";
+      th.colSpan = "6";
     }
     th.innerHTML = valThead[i];
     thead.appendChild(th);

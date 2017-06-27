@@ -28,12 +28,12 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
       http_response_code(400);
     }
 
-
+$title = "Validation de compte";
 
     echo  '<html>
              <head>
                <meta charset="utf-8">
-               <title>Validation de compte</title>
+               <title>'.$title.'</title>
              </head>
              <body>';
      echo      '<div "alert alert-danger">';
@@ -45,40 +45,52 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
           }
     }
     echo "</div>";
-    echo        '<form action="http://localhost/Projet_Annuel_1A/saveUser.php?user_informations='.$userInfo.'&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"].'" method="post">
-                 <p>Veuillez changer votre mot de passe :</p>
-                 <p>Votre ancien mot de passe :</p>
-                 <input type="password" name="old_pwd" value="';
+    echo        '<div class="control-group form-group controls">
+                <form class="form-group" action="http://localhost/Projet_Annuel_1A/saveUser.php?user_informations='.$userInfo.'&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"].'" method="post">
+                  <div class= "controls">
+                  <p>Changer votre mot de passe :</p>
+                  <p>Votre ancien mot de passe :</p>
+                  <input type="password" name="old_pwd" value="';
 
-    if (isset($_SESSION["form_post"]["old_pwd"])) {
-      echo $_SESSION["form_post"]["old_pwd"];
-    }else{
-      echo"";
-    }
+     if (isset($_SESSION["form_post"]["old_pwd"])) {
+       echo $_SESSION["form_post"]["old_pwd"];
+     }else{
+       echo"";
+     }
 
-    echo       '">
-                 <p>Votre nouveau mot de passe :</p>
-                 <input type="password" name="pwd" value="';
+     echo       '">
 
-    if (isset($_SESSION["form_post"]["pwd"])) {
-      echo $_SESSION["form_post"]["pwd"];
-    }else{
-      echo"";
-    }
+                  </div>
+                  <div class= "controls">
+                  <p>Votre nouveau mot de passe :</p>
+                  <input type="password" name="pwd" value="';
 
-    echo         '">
-                 <p>confirmation :</p>
-                 <input type="password" name="pwd2" value="';
+     if (isset($_SESSION["form_post"]["pwd"])) {
+       echo $_SESSION["form_post"]["pwd"];
+     }else{
+       echo"";
+     }
 
-    if (isset($_SESSION["form_post"]["pwd2"])) {
-      echo $_SESSION["form_post"]["pwd2"];
-    }else{
-      echo"";
-    }
+     echo         '">
+                  </div>
+                  <div>
+                  <p>confirmation :</p>
+                  <input type="password" name="pwd2" value="';
+     if (isset($_SESSION["form_post"]["pwd2"])) {
+       echo $_SESSION["form_post"]["pwd2"];
+     }else{
+       echo"";
+     }
+     echo         '">
+                  </div>
 
-    echo         '">
-                 <p>Validation :</p>
-                 <input type="submit" name="submit" value="Valider">
+
+                <div class= "controls">
+                <p>Validation :</p>
+                <input class="btn btn-primary" type="submit" name="submit" value="Valider">
+                </div>
+
+                 </div>
                  <div id="error-validation">
                  </div>
                </form>
@@ -89,7 +101,6 @@ if (isset($_GET["pseudo"]) && isset($_GET["access_token"]) && isset($_GET["user_
 }else {
   http_response_code(400);
 }
-var_dump(get_defined_vars());
   include 'footer.php';
   unset($_SESSION["form_post"]);
   unset($_SESSION["form_errors"]);

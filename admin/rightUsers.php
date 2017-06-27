@@ -1,77 +1,70 @@
 <?php
 session_start();
   require_once '../lib.php';
-  require 'libSQL.php';
-  require 'libCountPage.php';
-  require 'libModOne.php';
+  require 'classUsers.php';
 
-  $checkMod = checkMod($_REQUEST["access_token"]);
-  $connection = dbConnect ();
-  $query = $connection -> prepare ("SELECT moderator FROM USERS WHERE email =:email");
-  $query -> execute(["email"=>$Request["email"]]);
-  $users = $query -> fetch ();
+  $mod = new User;
+  $mod->createWithToken($_POST["access_token"]);
+  $user = new User;
+  $user->createWithEmail($_POST["user_email"]);
+  var_dump($_POST["user_email"]);
+  var_dump($user);
 
-  if ($_REQUEST["option"] == "down") {
 
-    switch ($checkMod[1]) {
+  if ($_POST["option"] == "down") {
+
+    switch ($mod->isMod()[1]) {
 
       case 'User':
-        echo "<h4>Bien mais essaie encore :)</h4>";
-      }break;
+        http_response_code(401);
+      break;
 
       case 'Moderator':
 
-        if ($user["moderator"] == 1 && $user['access_token'] == $_REQUEST["access_token"]) {
-          $query = $connection->prepare("UPDATE USERS SET moderator = 0  WHERE email=:email;");
-        	$query -> execute (["email"=>$Request["email"]]);
-          echo $users["firstname"].' '.$users["lastname"].' a vu ses droits '.$checkMod[1].' retirés :/';
-        } break;
-
+        if ($user->moderator == 2 && $user->access_token == $mod->access_token) {
+          $user->updateUser(["moderator" => 1]);
+          echo $user->firstname.' '.$user->lastname.' a vu ses droits Moderator retirés :/';
+        }
+         break;
       case 'Supermoderator':
 
-        if ($user["moderator"] == 1) {
+        if ($user->moderator == 2) {
+          $user->updateUser(["moderator" => 1]);
+          echo $user->firstname.' '.$user->lastname.' a vu ses droits Moderator retirés :/';
 
-          $query = $connection->prepare("UPDATE USERS SET moderator = 0  WHERE email=:email;");
-        	$query -> execute (["email"=>$Request["email"]]);
-          echo $users["firstname"].' '.$users["lastname"].' a vu ses droits '.$checkMod[1].' retirés :/';
-
-        }if ($user["moderator"] == 2 && $user['access_token'] == $_REQUEST["access_token"]) {
-
-          $query = $connection->prepare("UPDATE USERS SET moderator = 1  WHERE email=:email;");
-          $query -> execute (["email"=>$Request["email"]]);
-          echo $users["firstname"].' '.$users["lastname"].' a vu ses droits '.$checkMod[1].' retirés :/';
+        }if ($user->moderator == 3 && $user->access_token == $mod->access_token) {
+          $user->updateUser(["moderator" => 2]);
+          echo $user->firstname.' '.$user->lastname.' a vu ses droits Supermoderator retirés :/';
         }
         break;
 
       case 'Error':
 
-        echo "<h4>Bien mais essaie encore :)</h4>";
+      http_response_code(402);
         break;
 
       default:
 
-        echo "<h4>Bien mais essaie encore :)</h4>";
+      http_response_code(403);
         break;
     }
 
-  }if ($_REQUEST["option"] == "up" && $checkMod == "Supermoderator") {
+  }if ($_REQUEST["option"] == "up" && $mod->isMod()[1] == "Supermoderator") {
 
-        if ($user["moderator"] == 1) {
+        if ($user->moderator == 2) {
 
-          $query = $connection->prepare("UPDATE USERS SET moderator = 2  WHERE email=:email;");
-          $query -> execute (["email"=>$Request["email"]]);
-          echo $users["firstname"].' '.$users["lastname"].' a vu ses droits '.$checkMod[1].' augmentés :)';
+          $user->updateUser(["moderator" => 3]);
+          echo $user->firstname.' '.$user->lastname.' a vu ses droits Moderator augmentés :)';
+        }
+        if ($user->moderator == 1) {
 
-        if ($user["moderator"] == 0) {
-
-          $query = $connection->prepare("UPDATE USERS SET moderator = 1  WHERE email=:email;");
-          $query -> execute (["email"=>$Request["email"]]);
-          echo $users["firstname"].' '.$users["lastname"].' a vu ses droits '.$checkMod[1].' augmentés :)';
-
+          $user->updateUser(["moderator" => 2]);
+          echo $user->firstname.' '.$user->lastname.' a vu ses droits User augmentés :)';
+        }
   }else {
-        echo "<h4>Bien mais essaie encore :)</h4>";
+        http_response_code(404);
   }
-  // if ($checkMod[1] != "Error") {
+  // if ($user->isMod()[1] != "Error") {
   //   $connection = dbConnect ();
   //   $query = $connection -> prepare ("SELECT moderator FROM USERS WHERE email =:email");
   //   $query -> execute(["email"=>$Request["email"]]);
