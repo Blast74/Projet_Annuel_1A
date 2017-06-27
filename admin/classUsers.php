@@ -92,7 +92,7 @@ class User
     if (!$result) {
         return $result;
     }else{
-      
+
       if ($result) {
 
         foreach ($user as $key => $value) {
@@ -145,8 +145,8 @@ class User
       if (!empty($this->access_token)) {
 
         $connection = dbConnect();
-        $query = $connection->prepare("SELECT * FROM USERS where access_token=:access_token");
-        $query -> execute (["access_token" => $this->access_token]);
+        $query = $connection->prepare("SELECT * FROM USERS where id=?");
+        $query -> execute ([$this->id]);
         $result = $query->fetch();
 
           switch ($result["moderator"]) {
@@ -192,7 +192,7 @@ class User
    }
    $params = implode(',', $result);
    $connection = dbConnect ();
-   $query = $connection -> prepare ('UPDATE USERS SET '.$params." WHERE access_token='".$this->access_token."';");
+   $query = $connection -> prepare ('UPDATE USERS SET '.$params." WHERE id='".$this->id."';");
    $result = $query -> execute();
    return $result;
   }
@@ -200,16 +200,32 @@ class User
   public function changeStatut($param){
 
     if($param = 1 || $param = 0){
-      $connection = dbConnect ();
-      $query = $connection -> prepare("UPDATE USERS SET active_account= ? WHERE access_token= ? ;");
-      $result = $query->execute([$param, $this->access_token]);
+      $result = $this->updateUser(["active_account" => $param]);
     }
     if ($result){
       $this->active_account = $param ;
+      return $result ;
     }else{
-      return False;
+      return $result;
     }
   }
+
+  public function changeMod($param){
+
+    if($param = 1 || $param = 2 || $param = 3){
+      echo "1";
+      $result = $this->updateUser(["moderator" => $param]);
+    }
+    if ($result){
+      echo "2";
+      $this->moderator = $param ;
+      return $result ;
+    }else{
+      echo "3";
+      return $result;
+    }
+  }
+
   public function sendMail($subject, $content){
     return mail($this->mail,$subject, $mail);
   }

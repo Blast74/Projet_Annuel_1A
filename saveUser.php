@@ -88,8 +88,6 @@
             $listOfErrors[] =4;
         }
       }
-      var_dump($error);
-      var_dump($listOfErrors);
 
       //Connexion à la BDD s'il n'y pas d'erreurs et dernières vérifications
       if ($error && $right) {
@@ -118,7 +116,6 @@
       }else{  //enregistrement du formulaire dans la BDD
         if ($right){
           $pwd = uniqid();
-          var_dump($pwd);
           $accessToken = md5(uniqid().$_POST["email"].time());
           $contentMail = registerMailContent($_POST["pseudo"], $accessToken, $pwd);
           $headers = mailHeaderHtml();
@@ -178,14 +175,14 @@
                   "pwd" => $pwd,
                   "id" => $user->id
                 ]);
-                var_dump($_POST);
+              var_dump($querry);
               $_SESSION["inscription"] = "Email";
               header('Location: index.php');
               die();
                     // la ou il y a   :pseudo;, on met la valeur de $_POST["pseudo"]
             }else{
               $connection = dbConnect();
-              $querry = $connection -> prepare("UPDATE USERS SET email=:email, pseudo=:pseudo, gender=:gender, firstname=:firstname, lastname=:lastname, birthday=:birthday, country=:country WHERE id = :id");
+              $test = $querry = $connection -> prepare("UPDATE USERS SET email=:email, pseudo=:pseudo, gender=:gender, firstname=:firstname, lastname=:lastname, birthday=:birthday, country=:country WHERE id = :id");
               $querry -> execute([
                   "email" => $_POST["email"],
                   "pseudo" => $_POST["pseudo"],
@@ -197,6 +194,7 @@
                   "id" => $user->id
 
                 ]);
+                var_dump($test);
                 $_SESSION["inscription"] = "Email";
                 header('Location: index.php');
                 die();
@@ -209,7 +207,7 @@
     }
   }
 
-  if ($_GET["user_informations"] == "activate"){
+  if ($_GET["user_informations"] == "activate" || $_GET["user_informations"] == "activate"){
     $user = new User;
     $user->createWithToken($_GET["access_token"]);
     if ($user->id != null) {
@@ -236,7 +234,6 @@
           $content = mailPwdChanged($user->pseudo, $_POST["pwd"]);
           $headers = mailHeaderHtml();
           mail($user->email, "Identifiant changés", $content, $headers);
-          echo 'test';
           $_SESSION["inscription"] = "OK";
           header('Location: index.php');
           die();
@@ -244,12 +241,7 @@
       }else{
           $_SESSION["form_post"] = $_POST;
           $_SESSION["form_errors"] = $listOfErrors;
-          var_dump(get_defined_vars());
-          var_dump(!(password_verify ($_POST["old_pwd"], $user->pwd)));
-          var_dump($user->pwd);
-          var_dump($_POST["old_pwd"]);
-
-           header('location: changePwd.php?user_informations=activate&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"]);
+          header('location: changePwd.php?user_informations=activate&pseudo='.$_GET["pseudo"].'&access_token='.$_GET["access_token"]);
            die();
       }
     }else{

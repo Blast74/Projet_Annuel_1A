@@ -41,7 +41,31 @@ function changeToForm(tr){
   tr.childNodes.forEach(function(td){
     console.log(td.headers);
     var old = td.innerHTMl;
-    
+
 
   });
+}
+
+function editRight(right, emailUser){
+  var access = getCookie("access");
+  var ajaxRequest = new XMLHttpRequest;
+  console.log(access);
+  ajaxRequest.onreadystatechange = (function(){
+    if (ajaxRequest.readyState == 4){
+      if (ajaxRequest.status == 200){
+        var tableUsers = ajaxRequest.responseText;
+        console.log(ajaxRequest.responseText);
+        var result = document.getElementById('resultRightOperation');
+        var op = document.createElement('li');
+        op.innerHTML = ajaxRequest.responseText;
+        result.appendChild(op);
+      }
+    }
+  });
+  var param = [`option=${right}`, `user_email=${emailUser}`, `access_token=${access[1]}`];
+  param = param.join("&");
+  ajaxRequest.open("POST", `admin/rightUsers.php`, 0);
+  ajaxRequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  ajaxRequest.send(param);
+  listHtmlUsers('listUsers');
 }

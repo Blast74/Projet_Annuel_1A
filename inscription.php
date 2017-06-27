@@ -22,7 +22,7 @@
                 <h1 class="page-header">
                     <?php
                         $user = new User;
-
+                        $url = "";
                         if (!(isset($_SESSION["id"]))) {
                             echo 'Inscrivez vous !';
                             $url = "";
@@ -48,8 +48,6 @@
                         }
                     }
                     echo "</div>";
-
-
                 ?>
 
                 <form method="POST" action=<?php echo "saveUser.php?&user_informations=create".$url ?> >
@@ -105,26 +103,6 @@
                             ?>
                         </div>
                     </div>
-                    <?php
-                        if (isset($_SESSION["id"])) {
-
-                            echo '
-                                    <div class="control-group form-group">
-                                        <div class="controls">
-                                            <label>Nouveau mot de passe:</label>
-                                            <input type="password" name="pwd" placeholder="Votre mot de passe" class="form-control">
-                                            <p class="help-block"></p>
-                                        </div>
-                                    </div>
-                                    <div class="control-group form-group">
-                                        <div class="controls">
-                                            <label>Confirmation du mot de passe:</label>
-                                            <input type="password" name="pwd2" placeholder="Confirmez mot de passe" class="form-control">
-                                            <p class="help-block"></p>
-                                        </div>
-                                    </div>';
-                        }
-                     ?>
 
                     <div class="control-group form-group">
                         <div class="controls">
@@ -147,7 +125,7 @@
                                 echo $gender;
                                 $defaultGender = (isset($user->gender))?$user->gender : 'm';
 
-                                if ($key == $defaultGender){
+                                if ($key == 'm'){
                                     echo "<input type='radio' name='gender' value='".$key."' checked='checked'>";
                                 }
                                 else{
@@ -168,6 +146,32 @@
                             ?>
                       </select>
                     </div>
+                    <div class="control-group form-group">
+<?php
+    if (isset($_SESSION["id"])) {
+
+
+                // <div class="control-group form-group">
+                //     <div class="controls">
+                //         <label>Nouveau mot de passe:</label>
+                //         <input type="password" name="pwd" placeholder="Votre mot de passe" class="form-control">
+                //         <p class="help-block"></p>
+                //     </div>
+                // </div>
+                // <div class="control-group form-group">
+                //     <div class="controls">
+                //         <label>Confirmation du mot de passe:</label>
+                //         <input type="password" name="pwd2" placeholder="Confirmez mot de passe" class="form-control">
+                //         <p class="help-block"></p>
+                //     </div>
+                // </div>
+        echo '
+                <a href="changePwd.php?user_informations=activate&pseudo='.$user->pseudo.'&access_token='.$user->access_token.'"><input class="btn btn-primary" type="button" name="pwd" value="Changer mot de passe"></a>
+                <br />    ';
+    }
+ ?>
+                    </div>
+
                     <div id="success"></div>
                     <button type="submit" class="btn btn-primary">
                         <?php
