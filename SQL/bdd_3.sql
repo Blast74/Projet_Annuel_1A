@@ -51,6 +51,18 @@ CREATE TABLE USERS(
 );
 
 
+
+CREATE TABLE articles (
+  article_id int(11) NOT NULL PRIMARY KEY,
+  article_author varchar(25) DEFAULT NULL,
+  article_title varchar(60) NOT NULL,
+  article_content text NOT NULL,
+  article_subject char(3) DEFAULT NULL,
+  upLoadDate char(25) DEFAULT NULL,
+  email varchar(60) DEFAULT NULL
+);
+
+
 # Table: VISIT
 
 
@@ -133,6 +145,3 @@ INSERT INTO `users`     ( `email`, `pseudo`, `image`, `gender`, `firstname`, `la
                         ('izejfioejff@eufhiqehoe.fr', 'lejfzpoefk', NULL, 'm', 'ukzefuizefize', 'iefjziofjipoe', '1993-06-18', '1993-06-18', 'fr', '$2y$10$GcQp9/WuE7Uvn9cO4TT9pOXkUzwgxPxfHUeqAUYF7n201bVkatnQC', 1, NULL, NULL, 1),
                         ('moqejfepojkfpq@efqlefjpod.com', 'ioqejfqopjoejjf', NULL, 'm', 'zefiozhofir', 'pcdkspkvzef', '1996-08-15', '1996-08-15', 'fr', '$2y$10$GJZqZDGiOxFHwPDB3YrWg.xK59BNFp8jo.FtiKPc3W82Vs5a89K82', 1, NULL, NULL, 1),
                         ('dhdjfckzjuk@djzuejsiz.fr', 'usqhlfezuehp', NULL, 'm', 'iqfheuhqzhf', 'cieofnomzeif', '1988-03-08', '1988-03-08', 'fr', '$2y$10$2J2DgxvqSz0fsyipiFdTMuwqSfAN2m34uJRyStxjFCuqAq7uo4YNi', 1, NULL, NULL, 1);
-
-
-

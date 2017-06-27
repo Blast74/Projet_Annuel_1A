@@ -1,7 +1,13 @@
 <?php
-	require "/lib.php";
-    $pdo = $dbConnect();
 
+require_once "../../lib.php";
+
+echo ($_POST['id']);
+echo ($_POST['commentaire']);
+echo ($_POST["pseudo"]);
+
+
+$pdo = dbConnect ();
 
      $params = [
        $_POST['id'],

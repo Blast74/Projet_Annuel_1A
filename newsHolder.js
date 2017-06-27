@@ -1,3 +1,6 @@
+
+
+
 function getNews()
 {
 	var request = new XMLHttpRequest();
@@ -12,6 +15,7 @@ function getNews()
 	request.open('GET', `java/services/getNews.php`, 0);
 	request.send();
 
+	console.log(request.responseText);
 
 	return(request.responseText);
 }
@@ -20,28 +24,19 @@ function getNews()
 
 function displayNews()
 {
-	console.log("ok !");
+	getNews();
 
-
-	var addingTopic = document.getElementById("addingTopic");
-	addingTopic.innerHTML = "";
-	var BigDaddy = document.getElementById("BigDaddy");
-	BigDaddy.innerHTML = "";
-
-
+	var makeTopic = document.getElementById("makeTopic");
+	makeTopic.style = "display : none;";
 	var content = getNews();
-}
-/*
+	var bigDaddy = document.getElementById("bigDaddy");
+
+	bigDaddy.innerHTML = "";
 
 
 	topic = content.split('#_@_#');
-
-
-	console.log("++++++++");
-	console.log(topic);
-
-
-	var forum = []
+	
+	var forum = [];
 	var index = 0;
 	while(topic[index] != "")
 	{
@@ -49,36 +44,23 @@ function displayNews()
 		forum[index] = topic[index].split("#@#");
 		index++;
 	}
+	index--;
+	console.log(forum[0]);
+	console.log(forum[1]);
+
+	for(var i=0; i < forum.length; i++)
+	{
+		var div = document.createElement("div");
+		div.id = "div"+i;
+		bigDaddy.appendChild(div);
+		var divA = document.getElementById("div"+i);
+		divA.innerHTML = `<div><a><h2>`+forum[i][1]+`</h2></a><p></p><hr><p><i class="fa fa-clock-o"></i> Posté le `+forum[i][3]+`</p><p>`+forum[i][2]+` </p><hr></div><p>Un article de `+forum[i][0]+` </p><br><br>`;
+	// save > i <
+	}
+}
 
 
- for (var i=0; i < forum.length; i++){
 
 
 
-	var div = document.createElement("div");
-	div.id = "div"+i;
-
-	BigDaddy.appendChild(div);
-
-	var divA = document.getElementById("div"+i);
-
-	divA.innerHTML = `<div onclick="check(`+i+`)"><a><h2>`+forum[i][1]+`</h2></a><p><i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:45 PM</p><hr><a href="articles.php"></a><hr></div>`;
-
-
-
-<h2>
-                    <a href="articles.php">C'était mieux avant</a>
-                </h2>
-
-                <p><i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:00 PM</p>
-                <hr>
-                <a href="articles.php">
-                    <img class="img-responsive img-hover" src="images/900x300.jpg" alt="">
-                </a>
-                <hr>
-                <p>C'était mieux avant</p>
-                <a class="btn btn-primary" href="articles.php">En savoir plus <i class="fa fa-angle-right"></i></a>
-
-                <hr>
-            }
-        }*/
+displayNews();
