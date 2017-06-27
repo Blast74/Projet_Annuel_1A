@@ -2,7 +2,7 @@
     session_start();
     if(!empty($_SESSION))
     {
-        setcookie("accesstoken", $_SESSION["id"]);  
+        setcookie("accesstoken", $_SESSION["id"]);
     }
 
     include 'navbar.php';
@@ -19,9 +19,9 @@
             <br>
             <div class="col-md-8">
 
-        
-            <?php 
-            
+
+            <?php
+
 
 
 
@@ -40,30 +40,29 @@
 
 <div id="content0" style="display: none;" >
     <?php echo $content0; ?>
-</div>       
+</div>
 
 <div id="bigDaddy">
 
 
 
-    
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
 </div>
-
-
-
-
-
-
-
-
-            <!-- Blog Sidebar Widgets Column -->
-            
-
-        </div>
-        <!-- /.row -->
 <script type="text/javascript" src="forumJava.js"></script>
 <script src="newsHolder.js"></script>
 
 <?php
-    include 'footer.php'; 
+    include 'footer.php';
 ?>

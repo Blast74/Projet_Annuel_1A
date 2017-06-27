@@ -100,7 +100,7 @@ function addTopic()
     `exposure=${exposure}`,
     `pseudo=${pseudo}`
   ];
-
+console.log(params);
   	console.log(request.responseText);
 
 	var addingtopic = document.getElementById("addingTopic");

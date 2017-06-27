@@ -1,7 +1,8 @@
 <?php
-    require "/lib.php";
-    $pdo = $dbConnect();
 
+require_once "../../lib.php";
+
+$pdo = dbConnect ();
      $params = [
        $_POST['title'],
        $_POST['content'],

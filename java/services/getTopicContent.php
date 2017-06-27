@@ -1,7 +1,13 @@
 <?php
 
-require "/lib.php";
-    $pdo = $dbConnect();
+require_once "../../lib.php";
+//header('Content-Type: application/json');
+
+
+$pdo = dbConnect ();
+//	$requete = $pdo->prepare('SELECT rate FROM (SELECT rate FROM note WHERE email = ?) WHERE genre = ? ');
+
+//	$_GET['email'] = "email@email.com";
 
 
 

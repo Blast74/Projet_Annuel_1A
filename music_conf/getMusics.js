@@ -6,11 +6,6 @@ news: {style: null, page: 1},    //nouvelles musiques
 suggestion: {style: null, page:1}//Suggestions
 };
 
-//Cherche si l'utilisateur à déja voté ou non renvoi false ou
-function test () {
-  getFollow ('Antoine');
-}
-
 
 function like (tag) {
   var id = tag.id.split ('-');
@@ -112,6 +107,7 @@ function follow (tag) {
   request.onreadystatechange = function () {
     if (request.readyState == 4) {
       if (request.status == 200) {
+        console.log(request.responseText);
       }
     }
   }

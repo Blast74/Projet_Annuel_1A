@@ -1,8 +1,8 @@
 <?php
 
-require "/lib.php";
-    $pdo = $dbConnect();
+//header('Content-Type: application/json');
 
+$pdo = dbConnect ();
 
 $result = $pdo->query("SELECT * FROM music");
 $index = 0;
@@ -60,13 +60,13 @@ $rap = 0;
 $variete = 0;
 $electro = 0;
 
-for ($i=0; $i < 1; $i++) {
-
+for ($i=0; $i < 1; $i++) { 
+	
 	$resultat = $requete->execute(['email', 'rock']);
 	var_dump($requete);
 	var_dump($resultat);
 	$rock = $rock + intval($resultat['rate']);
-
+	
 	$resultat = $requete->execute(['rap', 'email']);
 
 	$rap = $rap + $resultat['rate'];
@@ -74,7 +74,7 @@ for ($i=0; $i < 1; $i++) {
 	$variete = $variete + $resultat['rate'];
 	$resultat = $requete->execute(['electro', 'email']);
 	$electro = $electro + $resultat['rate'];
-
+	
 }
 echo $rock;
 echo $rap;
